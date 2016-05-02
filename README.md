@@ -1,0 +1,2 @@
+# desktop
+tsadm desktop client
