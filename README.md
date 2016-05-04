@@ -1,2 +1,2 @@
-# desktop
+# tsdesktop
 tsadm desktop client
