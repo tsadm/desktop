@@ -1,0 +1,9 @@
+#!/bin/bash
+
+datadir=/var/lib/mysql
+
+test -d ${datadir}/mysql || {
+    mysql_install_db
+}
+
+mysqld_safe --skip-syslog
