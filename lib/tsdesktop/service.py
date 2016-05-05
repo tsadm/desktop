@@ -10,7 +10,7 @@ class _service:
         elif act == "start":
             return docker.start(self)
         else:
-            print("E: invalid service action")
+            print("E: invalid service action:", act)
             return 1
 
     def _status(self):
