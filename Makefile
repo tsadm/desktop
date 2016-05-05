@@ -6,16 +6,21 @@ default: compile
 .PHONY: clean
 clean:
 	@find . -type d -name __pycache__ | xargs rm -rfv
-	@rm -vf tsdesktop.bin
+	@rm -vf lib/tsdesktop.zip
 
 .PHONY: compile
 compile:
 	@python3 -m compileall lib/
 
-tsdesktop.bin: compile
-	python3 -m zipapp lib -o tsdesktop.bin -p '/usr/bin/env python3' -m 'tsdesktop.cmd:main'
+lib/tsdesktop.zip: compile
+	@cd lib && zip -9r tsdesktop.zip tsdesktop/
+
+.PHONY: build
+build: lib/tsdesktop.zip
 
 .PHONY: install
-install: tsdesktop.bin
+install: build
 	@mkdir -vp $(PREFIX)/bin
-	@install -v -m 755 tsdesktop.bin $(PREFIX)/bin/tsdesktop
+	@mkdir -vp $(PREFIX)/lib
+	@install -v -m 755 bin/tsdesktop.py $(PREFIX)/bin/tsdesktop
+	@install -v -m 644 lib/tsdesktop.zip $(PREFIX)/lib/tsdesktop.zip
