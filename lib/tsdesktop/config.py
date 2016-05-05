@@ -8,7 +8,13 @@ def _init():
     if cfg is None:
         cfg = ConfigParser()
         cfg['DEFAULT'] = {}
+        cfg['service:httpd'] = {
+            'enable': True,
+        }
+        cfg['service:mysqld'] = {
+            'enable': True,
+        }
 
 def read():
     _init()
-    return cfg.read([expanduser("~/.tsdesktop.ini"), ".tsdesktop.ini"], 'utf8')
+    return cfg.read([expanduser("~/.tsdesktop.ini"), ".tsdesktop.ini"])
