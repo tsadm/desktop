@@ -12,4 +12,4 @@ compile:
 
 .PHONY: build
 build: compile
-	@python3 -m zipapp lib/tsdesktop -o tsdesktop.bin -p '/usr/bin/env python3' -m 'cmd:main'
+	@python3 -m zipapp lib/tsdesktop -o tsdesktop.bin -p '/usr/bin/env python3'
