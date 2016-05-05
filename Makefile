@@ -1,5 +1,5 @@
 .PHONY: default
-default:
+default: build
 
 .PHONY: clean
 clean:
