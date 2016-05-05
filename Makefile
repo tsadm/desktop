@@ -1,5 +1,7 @@
+PREFIX ?= /usr/local
+
 .PHONY: default
-default: build
+default: compile
 
 .PHONY: clean
 clean:
@@ -10,6 +12,10 @@ clean:
 compile:
 	@python3 -m compileall lib/
 
-.PHONY: build
-build: compile
-	@python3 -m zipapp lib/tsdesktop -o tsdesktop.bin -p '/usr/bin/env python3'
+tsdesktop.bin: compile
+	python3 -m zipapp lib -o tsdesktop.bin -p '/usr/bin/env python3' -m 'tsdesktop.cmd:main'
+
+.PHONY: install
+install: tsdesktop.bin
+	@mkdir -vp $(PREFIX)/bin
+	@install -v -m 755 tsdesktop.bin $(PREFIX)/bin/tsdesktop
