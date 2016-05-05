@@ -1,4 +1,3 @@
-from sys import stdout
 from os.path import expanduser
 from configparser import ConfigParser
 
@@ -12,6 +11,4 @@ def _init():
 
 def read():
     _init()
-    ok = cfg.read([expanduser("~/.tsdesktop.ini"), ".tsdesktop.ini"], 'utf8')
-    print("read:", " ".join(ok), end="\n\n")
-    cfg.write(stdout)
+    return cfg.read([expanduser("~/.tsdesktop.ini"), ".tsdesktop.ini"], 'utf8')

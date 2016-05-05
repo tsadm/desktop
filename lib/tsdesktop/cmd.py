@@ -3,7 +3,9 @@ from argparse import ArgumentParser
 from tsdesktop import config
 
 def _configCmd():
-    config.read()
+    ok = config.read()
+    print("read:", " ".join(ok), end="\n\n")
+    config.cfg.write(sys.stdout)
 
 def _serviceCmd(service, action):
     from tsdesktop.service import srvMap
