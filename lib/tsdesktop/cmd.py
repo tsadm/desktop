@@ -1,8 +1,8 @@
 import sys
 
 def _serviceCmd(name, action):
-    from tsdesktop.service import cmdMap
-    kls = cmdMap.get(name, None)
+    from tsdesktop.service import srvMap
+    kls = srvMap.get(name, None)
     if kls is None:
         print("E: invalid service:", name)
         return 2
