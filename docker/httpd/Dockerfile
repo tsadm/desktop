@@ -8,5 +8,14 @@ RUN apt-get update -y \
 
 EXPOSE 80 443
 
+RUN cd /etc/php5/apache2 \
+    && rm -f php.ini \
+    && ln -s /usr/share/php5/php.ini-development php.ini \
+    && cd /etc/php5/cli \
+    && rm -f php.ini \
+    && ln -s /usr/share/php5/php.ini-development php.ini
+
+COPY apache2/ /etc/apache2/
+
 COPY httpd.start /root/tsdesktop-httpd.start
 CMD ["/root/tsdesktop-httpd.start"]
