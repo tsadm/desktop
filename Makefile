@@ -45,4 +45,4 @@ test: compile
 
 .PHONY: test-v
 test-v:
-	@make test TEST_VERBOSE='-v'
+	@make -s test TEST_VERBOSE='-v'
