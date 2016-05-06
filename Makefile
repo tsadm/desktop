@@ -1,4 +1,4 @@
-PREFIX ?= /usr/local
+PREFIX ?= ${HOME}
 
 .PHONY: default
 default: compile
