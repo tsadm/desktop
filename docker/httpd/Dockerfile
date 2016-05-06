@@ -3,6 +3,7 @@ FROM tsdesktop/base
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends \
         mysql-client apache2-mpm-prefork libapache2-mod-php5 \
+        php5-mysql \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*.deb \
         /var/cache/apt/*cache.bin
 
