@@ -10,10 +10,14 @@ clean:
 
 .PHONY: compile
 compile:
-	@python3 -m compileall lib/
+	@python3 -m compileall -x '.*_test\.py' lib/
+
 
 lib/tsdesktop.zip: compile
-	@cd lib && zip -9r tsdesktop.zip tsdesktop/ -x '*_test.py' -x '*_test.*.py[co]'
+	@cd lib && zip -9r tsdesktop.zip \
+		tsdesktop/*.py \
+		tsdesktop/__pycache__ \
+		-x '*_test.*.py[co]'
 
 .PHONY: build
 build: lib/tsdesktop.zip
