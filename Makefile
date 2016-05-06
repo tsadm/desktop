@@ -1,4 +1,5 @@
 PREFIX ?= ${HOME}
+TEST_VERBOSE ?=
 
 .PHONY: default
 default: compile
@@ -40,4 +41,8 @@ install: build
 test: compile
 	@PYTHONPATH=${PWD}/lib python3 lib/tsdesktop/version.py
 	@PYTHONPATH=${PWD}/lib python3 -m unittest \
-		discover tsdesktop -p '*_test.py'
+		discover tsdesktop -p '*_test.py' $(TEST_VERBOSE)
+
+.PHONY: test-v
+test-v:
+	@make test TEST_VERBOSE='-v'
