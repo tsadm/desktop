@@ -10,7 +10,7 @@ clean:
 
 .PHONY: compile
 compile:
-	@python3 -m compileall -x '.*_test\.py' lib/
+	@python3 -OO -m compileall -x '.*_test\.py' lib/
 
 lib/tsdesktop.zip: compile
 	@cd lib && zip -q9r tsdesktop.zip __main__.py __pycache__/ \
