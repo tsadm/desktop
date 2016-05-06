@@ -38,5 +38,6 @@ install: build
 
 .PHONY: test
 test: compile
+	@PYTHONPATH=${PWD}/lib python3 lib/tsdesktop/version.py
 	@PYTHONPATH=${PWD}/lib python3 -m unittest \
 		discover tsdesktop -p '*_test.py'
