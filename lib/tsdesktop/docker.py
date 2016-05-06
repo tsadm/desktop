@@ -21,6 +21,10 @@ def start(srv):
         detach = ["--rm", "-it"]
     args.extend(detach)
     args.extend(srv.runArgs)
+    args.extend([
+        "-e", "TSDESKTOP_UID={}".format(os.getuid()),
+        "-e", "TSDESKTOP_GID={}".format(os.getgid()),
+    ])
     args.append(img)
     if srv.detach:
         return _cmd(srv, args, wait=False)
