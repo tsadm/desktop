@@ -8,6 +8,9 @@ def _init():
     if cfg is None:
         cfg = ConfigParser()
         cfg['DEFAULT'] = {}
+        cfg['user'] = {
+            'cachedir': expanduser('~/.cache/tsdesktop'),
+        }
         cfg['service:httpd'] = {
             'enable': True,
         }

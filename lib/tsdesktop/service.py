@@ -1,7 +1,6 @@
-from os import makedirs
-from os.path import expanduser
+from os import path, makedirs
 from time import sleep
-from tsdesktop import docker
+from tsdesktop import docker, config
 
 class _service:
     name = None
@@ -28,15 +27,18 @@ class _service:
         """should be reimplemented"""
         pass
 
+    def cachePath(self, *names):
+        return path.join(config.cfg.get('user', 'cachedir'), 'service', self.name, *names)
+
 class _mysqld(_service):
     name = "mysqld"
-    _datadir = "~/.cache/tsdesktop/service/mysqld/datadir"
+    _datadir = None
 
     def __init__(self):
+        self._datadir = self.cachePath('datadir')
         self.runArgs = ["-v", self._datadir+":/var/lib/mysql"]
 
     def preChecks(self):
-        self._datadir = expanduser(self._datadir)
         makedirs(self._datadir, mode=510, exist_ok=True)
 
 class _httpd(_service):

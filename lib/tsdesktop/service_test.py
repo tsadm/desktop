@@ -25,8 +25,11 @@ class TestService(TestCase):
             s.preChecks()
 
     def test_service_runArgs(self):
+        from os.path import expanduser
         for s in self.srvcs:
             if s.name == 'mysqld':
+                self.assertEqual(s._datadir,
+                    expanduser('~/.cache/tsdesktop/service/mysqld/datadir'))
                 self.assertListEqual(s.runArgs,
                     ['-v', s._datadir+':/var/lib/mysql'])
             else:
