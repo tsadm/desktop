@@ -8,7 +8,8 @@ class _service:
     runArgs = []
 
     def action(self, act):
-        self.preChecks()
+        if not self.preChecks():
+            return 1
         if act == "status":
             return self._status()
         elif act == "start":
@@ -17,7 +18,7 @@ class _service:
             return docker.stop(self)
         else:
             print("E: invalid service action:", act)
-            return 1
+            return 2
 
     def _status(self):
         print(self.name+" status")
@@ -25,7 +26,7 @@ class _service:
 
     def preChecks(self):
         """should be reimplemented"""
-        pass
+        return True
 
     def cachePath(self, *names):
         return path.join(config.cfg.get('user', 'cachedir'), 'service', self.name, *names)
@@ -40,10 +41,26 @@ class _mysqld(_service):
 
     def preChecks(self):
         makedirs(self._datadir, mode=510, exist_ok=True)
+        return path.exists(self._datadir)
 
 class _httpd(_service):
     name = "httpd"
     detach = False
+    _docroot = None
+
+    def __init__(self):
+        self._docroot = path.join(path.abspath(path.curdir),
+                                    config.cfg.get('site', 'docroot'))
+        self.runArgs = [
+            "-p", "127.0.0.1:33380:80",
+            "-v", "{}:/var/www/html".format(self._docroot),
+        ]
+
+    def preChecks(self):
+        if not path.exists(self._docroot):
+            print("E: site docroot not found:", self._docroot)
+            return False
+        return True
 
 srvMap = {
     "mysqld": _mysqld,

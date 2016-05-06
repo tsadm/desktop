@@ -22,15 +22,24 @@ class TestService(TestCase):
 
     def test_service_preChecks(self):
         for s in self.srvcs:
-            s.preChecks()
+            if s.name == 'httpd':
+                self.assertFalse(s.preChecks())
+            else:
+                self.assertTrue(s.preChecks())
 
     def test_service_runArgs(self):
-        from os.path import expanduser
+        from os import path
         for s in self.srvcs:
             if s.name == 'mysqld':
                 self.assertEqual(s._datadir,
-                    expanduser('~/.cache/tsdesktop/service/mysqld/datadir'))
+                    path.expanduser('~/.cache/tsdesktop/service/mysqld/datadir'))
                 self.assertListEqual(s.runArgs,
                     ['-v', s._datadir+':/var/lib/mysql'])
+            elif s.name == 'httpd':
+                self.assertEqual(s._docroot,
+                    path.join(path.abspath(path.curdir), 'docroot'))
+                self.assertListEqual(s.runArgs,
+                    ['-p', '127.0.0.1:33380:80',
+                     '-v', s._docroot+':/var/www/html'])
             else:
                 self.assertListEqual(s.runArgs, [])

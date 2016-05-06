@@ -1,10 +1,8 @@
 import sys
 from argparse import ArgumentParser
-from tsdesktop import config, service
-from tsdesktop import version
+from tsdesktop import config, service, version
 
 def _workCmd():
-    config.read()
     stat = service.startEnabled(config.cfg)
     if stat != 0:
         return stat
@@ -33,6 +31,7 @@ def _parseArgs():
     return parser
 
 def main():
+    config.read()
     parser = _parseArgs()
     args = parser.parse_args()
     if args.config:

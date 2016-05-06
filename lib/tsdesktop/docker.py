@@ -4,7 +4,6 @@ from subprocess import Popen
 def _cmd(srv, args, wait=True):
     c = ["docker"]
     c.extend(args)
-    c.extend(srv.runArgs)
     print("docker run:", " ".join(c))
     proc = Popen(c)
     print("docker run PID:", proc.pid)
@@ -21,6 +20,7 @@ def start(srv):
     if not srv.detach:
         detach = ["--rm", "-it"]
     args.extend(detach)
+    args.extend(srv.runArgs)
     args.append(img)
     if srv.detach:
         return _cmd(srv, args, wait=False)
