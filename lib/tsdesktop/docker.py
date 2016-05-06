@@ -4,6 +4,7 @@ from subprocess import Popen
 def _cmd(srv, args, wait=True):
     c = ["docker"]
     c.extend(args)
+    c.extend(srv.runArgs)
     print("docker run:", " ".join(c))
     proc = Popen(c)
     print("docker run PID:", proc.pid)

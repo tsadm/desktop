@@ -6,6 +6,7 @@ from tsdesktop import docker
 class _service:
     name = None
     detach = True
+    runArgs = []
 
     def action(self, act):
         self.preChecks()
