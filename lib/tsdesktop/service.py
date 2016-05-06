@@ -1,10 +1,11 @@
 from os import makedirs
 from os.path import expanduser
+from time import sleep
 from tsdesktop import docker
 
 class _service:
     name = None
-    runArgs = []
+    detach = True
 
     def action(self, act):
         self.preChecks()
@@ -39,8 +40,21 @@ class _mysqld(_service):
 
 class _httpd(_service):
     name = "httpd"
+    detach = False
 
 srvMap = {
     "mysqld": _mysqld,
     "httpd": _httpd,
 }
+
+def startEnabled(cfg):
+    for name in srvMap.keys():
+        if name == 'httpd':
+            print('httpd will be started at the end')
+            continue
+        if cfg['service:'+name] and cfg['service:'+name].getboolean('enable'):
+            kls = srvMap.get(name)
+            kls().action('start')
+        sleep(2)
+    kls = srvMap.get('httpd')
+    kls().action('start')

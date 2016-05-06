@@ -2,23 +2,30 @@ import os
 from subprocess import Popen
 
 def _cmd(srv, args, wait=True):
-    c = ["/usr/bin/env", "docker"]
+    c = ["docker"]
     c.extend(args)
-    pid = Popen(c).pid
-    print("docker run:", " ".join(c), "PID:", pid)
+    print("docker run:", " ".join(c))
+    proc = Popen(c)
+    print("docker run PID:", proc.pid)
     if wait:
-        _, stat = os.wait()
-        return stat
+        return proc.wait()
     else:
-        return pid
+        return proc
 
 def start(srv):
     img = "tsdesktop/"+srv.name
     print("docker start:", srv.name, img)
-    args = ["run", "-d", "--name="+img.replace("/", "-")]
-    args.extend(srv.runArgs)
+    args = ["run", "--name="+img.replace("/", "-")]
+    detach = ["-d"]
+    if not srv.detach:
+        detach = ["--rm", "-it"]
+    args.extend(detach)
     args.append(img)
-    return _cmd(srv, args, wait=False)
+    if srv.detach:
+        return _cmd(srv, args, wait=False)
+    else:
+        proc = _cmd(srv, args, wait=False)
+        proc.communicate()
 
 def stop(srv):
     container = "tsdesktop-"+srv.name
