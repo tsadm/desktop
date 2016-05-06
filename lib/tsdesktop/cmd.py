@@ -2,6 +2,9 @@ import sys
 from argparse import ArgumentParser
 from tsdesktop import config
 
+def _workCmd():
+    return 0
+
 def _configCmd():
     ok = config.read()
     print("read:", " ".join(ok), end="\n\n")
@@ -18,9 +21,10 @@ def _serviceCmd(service, action):
 
 def _parseArgs():
     parser = ArgumentParser(description='tsadm desktop client')
-    parser.add_argument('--config', action='store_true', help='show config')
+    parser.add_argument('--config', action='store_true', help='dump config')
     parser.add_argument('--service-start', metavar="service", help='start service container')
     parser.add_argument('--service-stop', metavar="service", help='stop service container')
+    parser.add_argument('--work', action='store_true', help='work on current site installation')
     return parser
 
 def main():
@@ -32,6 +36,8 @@ def main():
         return _serviceCmd(args.service_start, 'start')
     elif args.service_stop:
         return _serviceCmd(args.service_stop, 'stop')
+    elif args.work:
+        return _workCmd()
     else:
         print("E: no subcommand requested")
         parser.print_help()
