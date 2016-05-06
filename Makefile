@@ -38,7 +38,9 @@ install: build
 	@install -v -m 755 tsdesktop.bin $(PREFIX)/bin/tsdesktop
 
 .PHONY: test
-test: compile
+test:
+	@make clean >/dev/null
+	@make compile >/dev/null
 	@PYTHONPATH=${PWD}/lib python3 lib/tsdesktop/version.py
 	@PYTHONPATH=${PWD}/lib python3 -m unittest \
 		discover tsdesktop -p '*_test.py' $(TEST_VERBOSE)
