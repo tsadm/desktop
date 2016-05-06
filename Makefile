@@ -13,7 +13,7 @@ compile:
 	@python3 -m compileall lib/
 
 lib/tsdesktop.zip: compile
-	@cd lib && zip -9r tsdesktop.zip tsdesktop/
+	@cd lib && zip -9r tsdesktop.zip tsdesktop/ -x '*_test.py' -x '*_test.*.py[co]'
 
 .PHONY: build
 build: lib/tsdesktop.zip
@@ -24,3 +24,7 @@ install: build
 	@mkdir -vp $(PREFIX)/lib
 	@install -v -m 755 bin/tsdesktop.py $(PREFIX)/bin/tsdesktop
 	@install -v -m 644 lib/tsdesktop.zip $(PREFIX)/lib/tsdesktop.zip
+
+.PHONY: test
+test:
+	@tests/run.bash
