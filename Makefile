@@ -11,7 +11,7 @@ clean:
 
 .PHONY: compile
 compile:
-	@python3 -OO -m compileall -x '.*_test\.py' lib/
+	@python3 -m compileall -x '.*_test\.py' lib/
 
 lib/tsdesktop.zip: compile
 	@cp -a lib/tsdesktop/buildinfo.py lib/tsdesktop/buildinfo.py.orig
