@@ -6,29 +6,31 @@ default: compile
 .PHONY: clean
 clean:
 	@find . -type d -name __pycache__ | xargs rm -rfv
-	@rm -vf lib/tsdesktop.zip
+	@rm -vf tsdesktop.bin lib/tsdesktop.zip
 
 .PHONY: compile
 compile:
 	@python3 -m compileall -x '.*_test\.py' lib/
 
-
 lib/tsdesktop.zip: compile
-	@cd lib && zip -9r tsdesktop.zip \
-		tsdesktop/*.py \
-		tsdesktop/__pycache__ \
+	@cd lib && zip -q9r tsdesktop.zip __main__.py __pycache__/ \
+		tsdesktop/*.py tsdesktop/__pycache__/ \
+		-x '*_test.py' \
 		-x '*_test.*.py[co]'
 
+tsdesktop.bin: lib/tsdesktop.zip
+	@python3 -m zipapp -o tsdesktop.bin -p '/usr/bin/env python3' \
+		lib/tsdesktop.zip
+
 .PHONY: build
-build: lib/tsdesktop.zip
+build: tsdesktop.bin
 
 .PHONY: install
 install: build
 	@mkdir -vp $(PREFIX)/bin
-	@mkdir -vp $(PREFIX)/lib
-	@install -v -m 755 bin/tsdesktop.py $(PREFIX)/bin/tsdesktop
-	@install -v -m 644 lib/tsdesktop.zip $(PREFIX)/lib/tsdesktop.zip
+	@install -v -m 755 tsdesktop.bin $(PREFIX)/bin/tsdesktop
 
 .PHONY: test
-test:
-	@tests/run.bash
+test: compile
+	@PYTHONPATH=${PWD}/lib python3 -m unittest \
+		discover tsdesktop -p '*_test.py'
