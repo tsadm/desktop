@@ -15,6 +15,8 @@ def _init():
             'enable': True,
         }
 
-def read():
+def read(filenames=None):
     _init()
-    return cfg.read([expanduser("~/.tsdesktop.ini"), ".tsdesktop.ini"])
+    if filenames is None:
+        filenames = [expanduser("~/.tsdesktop.ini"), ".tsdesktop.ini"]
+    return cfg.read(filenames)
