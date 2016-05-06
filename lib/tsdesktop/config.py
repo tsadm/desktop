@@ -17,6 +17,9 @@ def _init():
         cfg['service:mysqld'] = {
             'enable': True,
         }
+        cfg['site'] = {
+            'docroot': 'docroot',
+        }
 
 def read(filenames=None):
     _init()
