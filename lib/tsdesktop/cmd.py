@@ -1,7 +1,7 @@
 import sys
 from argparse import ArgumentParser
 from tsdesktop import config, service
-from tsdesktop.version import VERSION
+from tsdesktop import version
 
 def _workCmd():
     config.read()
@@ -29,7 +29,7 @@ def _parseArgs():
     parser.add_argument('-S', '--service-start', metavar="service", help='start service container')
     parser.add_argument('-K', '--service-stop', metavar="service", help='stop service container')
     parser.add_argument('-w', '--work', action='store_true', help='work on current site installation')
-    parser.add_argument('-v', '--version', action='store_true', help='show version')
+    parser.add_argument('-V', '--version', action='store_true', help='show version and build info')
     return parser
 
 def main():
@@ -44,7 +44,7 @@ def main():
     elif args.work:
         return _workCmd()
     elif args.version:
-        print("tsdesktop v{}".format(VERSION))
+        version.println()
         return 0
     else:
         parser.print_help()
