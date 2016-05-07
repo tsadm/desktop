@@ -18,3 +18,7 @@ script:
 after_success:
   - coverage report
   - codecov
+
+notifications:
+  irc:
+    - irc.freenode.org#tsadm
