@@ -17,7 +17,9 @@ def _cmd(srv, args, wait=True):
 def start(srv, docker_cmd=None):
     img = srv.containerImage()
     print("docker start:", srv.name, img)
-    args = ["run", "--name={}".format(srv.containerName())]
+    args = ["run",
+        "--name={}".format(srv.containerName()),
+        "--hostname={}".format(srv.containerName())]
     detach = ["-d"]
     if not srv.detach:
         detach = ["--rm", "-it"]
