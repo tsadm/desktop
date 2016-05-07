@@ -13,7 +13,7 @@ install:
   - make build
 
 script:
-  - coverage run --source='.' make test-v
+  - coverage run --source='.' test.py
 
 after_success:
   - coverage report
