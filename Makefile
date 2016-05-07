@@ -1,5 +1,4 @@
 PREFIX ?= ${HOME}
-TEST_VERBOSE ?=
 
 .PHONY: default
 default: compile
@@ -42,10 +41,17 @@ install: build
 test:
 	@make clean >/dev/null
 	@make compile >/dev/null
-	@PYTHONPATH=${PWD}/lib python3 lib/tsdesktop/version.py
-	@PYTHONPATH=${PWD}/lib python3 -m unittest \
-		discover tsdesktop -p '*_test.py' $(TEST_VERBOSE)
+	@python3 test.py
 
 .PHONY: test-v
 test-v:
-	@make -s test TEST_VERBOSE='-v'
+	@make clean >/dev/null
+	@make compile >/dev/null
+	@python3 test.py -v
+
+.PHONY: test-coverage
+test-coverage:
+	@make clean >/dev/null
+	@make compile >/dev/null
+	@python3 -m coverage run --source='.' test.py
+	@python3 -m coverage report
