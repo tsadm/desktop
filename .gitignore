@@ -1,4 +1,5 @@
 .*.swp
+.coverage
 __pycache__/
 tsdesktop.bin
 lib/tsdesktop.zip
