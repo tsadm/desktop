@@ -30,16 +30,17 @@ class TestService(TestCase):
     def test_service_runArgs(self):
         from os import path
         for s in self.srvcs:
+            s.preChecks()
             if s.name == 'mysqld':
                 self.assertEqual(s._datadir,
                     path.expanduser('~/.cache/tsdesktop/service/mysqld/datadir'))
                 self.assertListEqual(s.runArgs,
                     ['-v', s._datadir+':/var/lib/mysql'])
             elif s.name == 'httpd':
-                self.assertEqual(s._docroot,
+                self.assertEqual(s.site.docroot,
                     path.join(path.abspath(path.curdir), 'docroot'))
                 self.assertListEqual(s.runArgs,
                     ['-p', '127.0.0.1:33380:80',
-                     '-v', s._docroot+':/var/www/html'])
+                     '-v', s.site.docroot+':/var/www/html'])
             else:
                 self.assertListEqual(s.runArgs, [])

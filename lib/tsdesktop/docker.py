@@ -1,6 +1,7 @@
 import os
 from subprocess import Popen
 
+
 def _cmd(srv, args, wait=True):
     c = ["docker"]
     c.extend(args)
@@ -12,10 +13,11 @@ def _cmd(srv, args, wait=True):
     else:
         return proc
 
+
 def start(srv):
-    img = "tsdesktop/"+srv.name
+    img = srv.containerImage()
     print("docker start:", srv.name, img)
-    args = ["run", "--name="+img.replace("/", "-")]
+    args = ["run", "--name={}".format(srv.containerName())]
     detach = ["-d"]
     if not srv.detach:
         detach = ["--rm", "-it"]
@@ -24,6 +26,7 @@ def start(srv):
     args.extend([
         "-e", "TSDESKTOP_UID={}".format(os.getuid()),
         "-e", "TSDESKTOP_GID={}".format(os.getgid()),
+        "-e", "TSDESKTOP_SITE={}".format(srv.site.name),
     ])
     args.append(img)
     if srv.detach:
@@ -31,6 +34,7 @@ def start(srv):
     else:
         proc = _cmd(srv, args, wait=False)
         proc.communicate()
+
 
 def stop(srv):
     container = "tsdesktop-"+srv.name

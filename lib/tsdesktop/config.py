@@ -25,4 +25,6 @@ def read(filenames=None):
     _init()
     if filenames is None:
         filenames = [expanduser("~/.tsdesktop.ini"), ".tsdesktop.ini"]
-    return cfg.read(filenames)
+    ok = cfg.read(filenames)
+    #~ print("config read:", " ".join(ok))
+    return ok

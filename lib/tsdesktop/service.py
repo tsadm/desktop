@@ -1,11 +1,27 @@
 from os import path, makedirs
 from time import sleep
-from tsdesktop import docker, config
+from tsdesktop import docker
+from tsdesktop import config
+
+
+class _site:
+    name = None
+    docroot = None
+
+    def __init__(self):
+        self.docroot = path.join(path.abspath(path.curdir),
+                                    config.cfg.get('site', 'docroot'))
+        self.name = path.basename(path.dirname(self.docroot))
+
 
 class _service:
     name = None
     detach = True
     runArgs = []
+    site = None
+
+    def __init__(self):
+        self.site = _site()
 
     def action(self, act):
         if not self.preChecks():
@@ -29,50 +45,57 @@ class _service:
         return True
 
     def cachePath(self, *names):
-        return path.join(config.cfg.get('user', 'cachedir'), 'service', self.name, *names)
+        return path.join(config.cfg.get('user', 'cachedir'),
+                            'service', self.name, *names)
+
+    def containerName(self):
+        if self.detach:
+            return "tsdesktop-{}".format(self.name)
+        else:
+            return "tsdesktop-{}-{}".format(self.name, self.site.name)
+
+    def containerImage(self):
+        return "tsdesktop/{}".format(self.name)
+
 
 class _mysqld(_service):
     name = "mysqld"
     _datadir = None
 
-    def __init__(self):
+    def preChecks(self):
         self._datadir = self.cachePath('datadir')
         self.runArgs = ["-v", self._datadir+":/var/lib/mysql"]
-
-    def preChecks(self):
         makedirs(self._datadir, mode=510, exist_ok=True)
         return path.exists(self._datadir)
+
 
 class _httpd(_service):
     name = "httpd"
     detach = False
-    _docroot = None
-
-    def __init__(self):
-        self._docroot = path.join(path.abspath(path.curdir),
-                                    config.cfg.get('site', 'docroot'))
-        self.runArgs = [
-            "-p", "127.0.0.1:33380:80",
-            "-v", "{}:/var/www/html".format(self._docroot),
-        ]
 
     def preChecks(self):
-        if not path.exists(self._docroot):
-            print("E: site docroot not found:", self._docroot)
+        self.runArgs = [
+            "-p", "127.0.0.1:33380:80",
+            "-v", "{}:/var/www/html".format(self.site.docroot),
+        ]
+        if not path.exists(self.site.docroot):
+            print("E: site docroot not found:", self.site.docroot)
             return False
         return True
+
 
 srvMap = {
     "mysqld": _mysqld,
     "httpd": _httpd,
 }
 
-def startEnabled(cfg):
+
+def startEnabled():
     for name in srvMap.keys():
         if name == 'httpd':
             print('httpd will be started at the end')
             continue
-        if cfg['service:'+name] and cfg['service:'+name].getboolean('enable'):
+        if config.cfg.getboolean('service:'+name, 'enable'):
             kls = srvMap.get(name)
             kls().action('start')
         sleep(2)

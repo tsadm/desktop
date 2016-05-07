@@ -3,7 +3,7 @@ from argparse import ArgumentParser
 from tsdesktop import config, service, version
 
 def _workCmd():
-    stat = service.startEnabled(config.cfg)
+    stat = service.startEnabled()
     if stat != 0:
         return stat
     return 0
