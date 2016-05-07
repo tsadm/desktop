@@ -1,6 +1,11 @@
 #!/bin/bash
 
+env
+
 datadir=/var/lib/mysql
+
+usermod -o -u ${TSDESKTOP_UID} mysql
+groupmod -o -g ${TSDESKTOP_GID} mysql
 
 test -d ${datadir}/mysql || {
     mysql_install_db
