@@ -26,6 +26,7 @@ def _parseArgs():
     parser.add_argument('-D', '--config', action='store_true', help='dump config')
     parser.add_argument('-S', '--service-start', metavar="service", help='start service container')
     parser.add_argument('-K', '--service-stop', metavar="service", help='stop service container')
+    parser.add_argument('-L', '--service-login', metavar="service", help='login to a service container')
     parser.add_argument('-w', '--work', action='store_true', help='work on current site installation')
     parser.add_argument('-V', '--version', action='store_true', help='show version and build info')
     return parser
@@ -40,6 +41,8 @@ def main():
         return _serviceCmd(args.service_start, 'start')
     elif args.service_stop:
         return _serviceCmd(args.service_stop, 'stop')
+    elif args.service_login:
+        return _serviceCmd(args.service_login, 'login')
     elif args.work:
         return _workCmd()
     elif args.version:

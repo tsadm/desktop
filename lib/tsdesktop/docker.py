@@ -14,7 +14,7 @@ def _cmd(srv, args, wait=True):
         return proc
 
 
-def start(srv):
+def start(srv, docker_cmd=None):
     img = srv.containerImage()
     print("docker start:", srv.name, img)
     args = ["run", "--name={}".format(srv.containerName())]
@@ -29,6 +29,8 @@ def start(srv):
         "-e", "TSDESKTOP_SITE={}".format(srv.site.name),
     ])
     args.append(img)
+    if docker_cmd is not None:
+        args.extend(docker_cmd.split())
     if srv.detach:
         return _cmd(srv, args, wait=False)
     else:
@@ -44,3 +46,8 @@ def stop(srv):
         return stat
     print("docker remove:", srv.name)
     return _cmd(srv, ["rm", "-v", container])
+
+
+def login(srv):
+    srv.detach = False
+    return start(srv, '/bin/bash -l')

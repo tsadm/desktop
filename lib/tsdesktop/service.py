@@ -32,6 +32,8 @@ class _service:
             return docker.start(self)
         elif act == "stop":
             return docker.stop(self)
+        elif act == "login":
+            return docker.login(self)
         else:
             print("E: invalid service action:", act)
             return 2
