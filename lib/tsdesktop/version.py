@@ -4,7 +4,9 @@ VERSION = "16.05"
 
 def println():
     s = "tsdesktop v{}".format(VERSION)
-    if not buildinfo.ID is None:
+    if buildinfo.ID is None:
+        s = "{} (devel)".format(s)
+    else:
         s = "{} ({} {})".format(s, buildinfo.ID[:7], buildinfo.DATE)
     print(s)
 
