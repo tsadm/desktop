@@ -1,5 +1,6 @@
 .*.swp
 .coverage
 __pycache__/
-tsdesktop.bin
+htmlcov/
 lib/tsdesktop.zip
+tsdesktop.bin

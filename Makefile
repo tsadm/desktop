@@ -7,6 +7,7 @@ default: compile
 clean:
 	@find . -type d -name __pycache__ | xargs rm -rfv
 	@rm -vf tsdesktop.bin lib/tsdesktop.zip
+	@rm -rf .coverage htmlcov
 
 .PHONY: compile
 compile:
@@ -55,3 +56,4 @@ test-coverage:
 	@make compile >/dev/null
 	@python3 -m coverage run --source='.' test.py
 	@python3 -m coverage report
+	@python3 -m coverage html
