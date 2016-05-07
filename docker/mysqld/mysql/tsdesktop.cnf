@@ -1,0 +1,5 @@
+[mysqld_safe]
+skip-syslog = 1
+
+[mysqld]
+bind-address = 0.0.0.0

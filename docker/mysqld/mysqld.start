@@ -1,14 +1,17 @@
 #!/bin/bash
 
-env
+env | sort
 
 datadir=/var/lib/mysql
+rundir=/var/run/mysqld
 
 usermod -o -u ${TSDESKTOP_UID} mysql
 groupmod -o -g ${TSDESKTOP_GID} mysql
+
+chown mysql ${rundir}
 
 test -d ${datadir}/mysql || {
     mysql_install_db
 }
 
-mysqld_safe --skip-syslog
+mysqld_safe --defaults-extra-file=/etc/mysql/tsdesktop.cnf
