@@ -1,6 +1,6 @@
 #!/bin/bash
 
-env
+env | sort
 
 usermod -o -u ${TSDESKTOP_UID} www-data
 groupmod -o -g ${TSDESKTOP_GID} www-data
