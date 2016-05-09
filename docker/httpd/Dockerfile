@@ -17,6 +17,11 @@ RUN cd /etc/php5/apache2 \
     && ln -s /usr/share/php5/php.ini-development php.ini
 
 COPY apache2/ /etc/apache2/
+COPY tsadm.home/ /home/tsadm/
+RUN chmod 644 /home/tsadm/*.php
 
-COPY httpd.start /root/tsdesktop-httpd.start
-CMD ["/root/tsdesktop-httpd.start"]
+COPY utils/ /opt/tsdesktop/
+RUN chmod 755 /opt/tsdesktop/*.*
+
+
+CMD ["/opt/tsdesktop/httpd.start"]
