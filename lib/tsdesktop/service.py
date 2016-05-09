@@ -13,6 +13,23 @@ class _site:
                                     config.cfg.get('site', 'docroot'))
         self.name = path.basename(path.dirname(self.docroot))
 
+    def _dbName(self):
+        return "{}db".format(self.name)
+
+    def _dbUser(self):
+        return "{}".format(self.name)
+
+    def initDB(self, container):
+        m = srvMap.get("mysqld")()
+        stat = docker.exec(m,
+            ["/opt/tsdesktop/site.initdb", self._dbName(),
+            self._dbUser(), container])
+        if stat == 0:
+            return True
+        else:
+            print("I: docker exec stat:", stat)
+            return False
+
 
 class _service:
     name = None
@@ -60,10 +77,6 @@ class _service:
     def containerImage(self):
         return "tsdesktop/{}".format(self.name)
 
-    def postStart(self):
-        """should be reimplemented"""
-        return True
-
 
 class _mysqld(_service):
     name = "mysqld"
@@ -89,13 +102,7 @@ class _httpd(_service):
             print("E: site docroot not found:", self.site.docroot)
             return False
         if config.cfg.getboolean('service:mysqld', 'enable'):
-            m = srvMap.get("mysqld")()
-            stat = docker.exec(m, ["/opt/tsdesktop/site.initdb", "lalaladb", "lalalauser", "lalala.host"])
-            if stat == 0:
-                return True
-            else:
-                print("I: docker exec stat:", stat)
-                return False
+            return self.site.initDB(self.containerName())
         else:
             return True
 
