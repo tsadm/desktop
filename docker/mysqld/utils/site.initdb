@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DBNAME=${1:?'dbname?'}
+DBUSER=${2:?'dbuser?'}
+HOST=${3:?'client host?'}
+
+dbdir=/var/lib/mysql/${DBNAME}
+
+test -d ${dbdir} || {
+    set -e
+    mysqladmin create ${DBNAME}
+    echo "GRANT ALL ON ${DBNAME}.* TO '${DBUSER}'@'${HOST}';" | mysql mysql
+}
+exit 0

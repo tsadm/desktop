@@ -10,6 +10,7 @@ EXPOSE 3306
 VOLUME ["/var/lib/mysql"]
 
 COPY mysql/ /etc/mysql/
+COPY utils/ /opt/tsdesktop/
+RUN chmod 755 /opt/tsdesktop/*.*
 
-COPY mysqld.start /root/tsdesktop-mysqld.start
-CMD ["/root/tsdesktop-mysqld.start"]
+CMD ["/opt/tsdesktop/mysqld.start"]
