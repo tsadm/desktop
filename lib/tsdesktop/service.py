@@ -25,6 +25,7 @@ class _service:
 
     def action(self, act):
         if not self.preChecks():
+            print("E: service preChecks failed")
             return 1
         if act == "status":
             return self._status()
@@ -59,6 +60,10 @@ class _service:
     def containerImage(self):
         return "tsdesktop/{}".format(self.name)
 
+    def postStart(self):
+        """should be reimplemented"""
+        return True
+
 
 class _mysqld(_service):
     name = "mysqld"
@@ -83,7 +88,16 @@ class _httpd(_service):
         if not path.exists(self.site.docroot):
             print("E: site docroot not found:", self.site.docroot)
             return False
-        return True
+        if config.cfg.getboolean('service:mysqld', 'enable'):
+            m = srvMap.get("mysqld")()
+            stat = docker.exec(m, ["/opt/tsdesktop/site.initdb", "lalaladb", "lalalauser", "lalala.host"])
+            if stat == 0:
+                return True
+            else:
+                print("I: docker exec stat:", stat)
+                return False
+        else:
+            return True
 
 
 srvMap = {
