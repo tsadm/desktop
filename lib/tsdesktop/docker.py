@@ -5,9 +5,9 @@ from subprocess import Popen
 def _cmd(srv, args, wait=True):
     c = ["docker"]
     c.extend(args)
-    print("docker run:", " ".join(c))
+    print("docker cmd:", " ".join(c))
     proc = Popen(c)
-    print("docker run PID:", proc.pid)
+    print("docker cmd PID:", proc.pid)
     if wait:
         return proc.wait()
     else:
@@ -38,6 +38,7 @@ def start(srv, docker_cmd=None):
     else:
         proc = _cmd(srv, args, wait=False)
         proc.communicate()
+        return proc.returncode
 
 
 def stop(srv):
@@ -53,3 +54,9 @@ def stop(srv):
 def login(srv):
     srv.detach = False
     return start(srv, '/bin/bash -l')
+
+
+def exec(srv, command):
+    args = ["exec", srv.containerName()]
+    args.extend(command)
+    return _cmd(srv, args)
