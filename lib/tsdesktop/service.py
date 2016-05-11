@@ -20,7 +20,7 @@ class _site:
         return "{}".format(self.name)
 
     def initDB(self, container):
-        m = srvMap.get("mysqld")()
+        m = _srvMap.get("mysqld")()
         stat = docker.exec(m,
             ["/opt/tsdesktop/site.initdb", self._dbName(),
             self._dbUser(), container])
@@ -107,20 +107,28 @@ class _httpd(_service):
             return True
 
 
-srvMap = {
+_srvMap = {
     "mysqld": _mysqld,
     "httpd": _httpd,
 }
 
 
+def new(name):
+    k = _srvMap.get(name, None)
+    if k is None:
+        return None
+    else:
+        return k()
+
+
 def startEnabled():
-    for name in srvMap.keys():
+    for name in _srvMap.keys():
         if name == 'httpd':
-            print('httpd will be started at the end')
+            #~ print('httpd will be started at the end')
             continue
         if config.cfg.getboolean('service:'+name, 'enable'):
-            kls = srvMap.get(name)
+            kls = _srvMap.get(name)
             kls().action('start')
         sleep(2)
-    kls = srvMap.get('httpd')
+    kls = _srvMap.get('httpd')
     kls().action('start')

@@ -6,11 +6,11 @@ class TestService(TestCase):
 
     def setUp(self):
         if self.srvcs is None:
-            self.srvcs = [c() for _, c in service.srvMap.items()]
+            self.srvcs = [c() for _, c in service._srvMap.items()]
 
     def test_service_class_map_name(self):
-        for name in service.srvMap.keys():
-            s = service.srvMap.get(name)()
+        for name in service._srvMap.keys():
+            s = service.new(name)
             self.assertEqual(s.name, name)
 
     def test_service_detach(self):
