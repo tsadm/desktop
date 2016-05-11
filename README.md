@@ -39,6 +39,6 @@ tsdesktop uses as the *sitename* the name of the current directory, and your sit
 
 If the php site is a drupal site, it can be integrated with tsadm as explained in tsadm's help pages. (including /home/tsadm/drupal.settings.php).
 
-Any plain HTML or php site should be able to run under the httpd container. If it requires a mysql database, it should be configured to connect to `tsdesktop-mysqld` server at port `3306`, as `sitename` user (ie: `my-php-site`) to `sitenamedb` database (ie: `my-php-sitedb`), with an empty password.
+Any plain HTML or php site should be able to run under the httpd container. If it requires a mysql database, it should be configured to connect to `tsdesktop-mysqld` server, as `sitename` user (ie: `my-php-site`) to `sitenamedb` database (ie: `my-php-sitedb`), with an empty password (ie: `""`).
 
 Just a few basic php modules are installed in httpd container, mainly trying to keep its size at minimum, but more can be added as needed.
