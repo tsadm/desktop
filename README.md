@@ -35,7 +35,7 @@ Either /usr/local/bin or $HOME/bin should be in your PATH environment variable. 
 
 ## site integration
 
-tsdesktop uses as the *sitename* the name of the current directory, and your site's document root should be under a directory called `docroot`.
+tsdesktop uses as the *sitename* the name of the current directory, and your site's document root should be under a directory called *docroot*. For this example, the sitename would be `my-php-site` and the site should be installed under `$HOME/src/my-php-site/docroot` directory.
 
 If the php site is a drupal site, it can be integrated with tsadm as explained in tsadm's help pages. (including /home/tsadm/drupal.settings.php).
 
