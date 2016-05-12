@@ -30,8 +30,6 @@ Official docs: [GNU/Linux](https://docs.docker.com/linux/step_one/) - [Mac OSX](
 
 On Debian or Ubuntu systems, you can `apt-get install docker.io`.
 
-## Mac OSX
-
 Under OSX systems you have to run tsdesktop from a *Docker Quickstart Terminal*.
 
 ## usage
