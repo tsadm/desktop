@@ -1,5 +1,6 @@
 # tsdesktop [![Build Status](https://travis-ci.org/tsadm/desktop.svg?branch=master)](https://travis-ci.org/tsadm/desktop) [![codecov](https://codecov.io/gh/tsadm/desktop/branch/master/graph/badge.svg)](https://codecov.io/gh/tsadm/desktop)
-tsadm desktop client
+
+tsadm desktop client - docker based environments for running web sites locally
 
 ## install
 
@@ -20,6 +21,18 @@ Or install under your $HOME directory (the default PREFIX):
 > desktop$ sudo make install
 
 Either /usr/local/bin or $HOME/bin should be in your PATH environment variable. In order for the commands documented below to work.
+
+## install docker
+
+tsdesktop runs httpd, mysqld and other services using docker containers, so you need a working installation of docker before to start using this tool.
+
+Official docs: [GNU/Linux](https://docs.docker.com/linux/step_one/) - [Mac OSX](https://docs.docker.com/mac/step_one/)
+
+On Debian or Ubuntu systems, you can `apt-get install docker.io`.
+
+## Mac OSX
+
+Under OSX systems you have to run tsdesktop from a *Docker Quickstart Terminal*.
 
 ## usage
 
