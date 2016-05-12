@@ -132,3 +132,11 @@ def startEnabled():
         sleep(2)
     kls = _srvMap.get('httpd')
     kls().action('start')
+
+
+def cmd(srv, action):
+    s = new(srv)
+    if s is None:
+        print("E: invalid service:", srv)
+        return 2
+    return s.action(action)

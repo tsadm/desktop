@@ -9,14 +9,6 @@ def _workCmd():
     return 0
 
 
-def _serviceCmd(srv, action):
-    s = service.new(srv)
-    if s is None:
-        print("E: invalid service:", service)
-        return 2
-    return s.action(action)
-
-
 def _parseArgs():
     parser = ArgumentParser(description='tsadm desktop client')
     parser.add_argument('-V', '--version', action='store_true', help='show version and build info')
@@ -38,13 +30,13 @@ def main():
         return config.cmd()
 
     elif args.service_start:
-        return _serviceCmd(args.service_start, 'start')
+        return service.cmd(args.service_start, 'start')
 
     elif args.service_stop:
-        return _serviceCmd(args.service_stop, 'stop')
+        return service.cmd(args.service_stop, 'stop')
 
     elif args.service_login:
-        return _serviceCmd(args.service_login, 'login')
+        return service.cmd(args.service_login, 'login')
 
     elif args.work:
         return _workCmd()
