@@ -7,6 +7,6 @@ pull-deps:
 
 .PHONY: build
 build:
-	docker build -t tsdesktop/base base
-	docker build -t tsdesktop/mysqld mysqld
-	docker build -t tsdesktop/httpd httpd
+	docker build -t tsadm/desktop base
+	docker build -t tsadm/desktop:mysqld mysqld
+	docker build -t tsadm/desktop:httpd httpd

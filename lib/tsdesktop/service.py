@@ -75,7 +75,7 @@ class _service:
             return "tsdesktop-{}-{}".format(self.name, self.site.name)
 
     def containerImage(self):
-        return "tsdesktop/{}".format(self.name)
+        return "tsadm/desktop:{}".format(self.name)
 
 
 class _mysqld(_service):

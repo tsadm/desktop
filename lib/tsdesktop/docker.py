@@ -43,7 +43,7 @@ def start(srv, docker_cmd=None):
 
 
 def stop(srv):
-    container = "tsdesktop-"+srv.name
+    container = srv.containerName()
     print("docker stop:", srv.name)
     stat = _cmd(srv, ["stop", container])
     if stat != 0:

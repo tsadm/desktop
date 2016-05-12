@@ -1,4 +1,4 @@
-FROM tsdesktop/base
+FROM tsadm/desktop
 
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends \
