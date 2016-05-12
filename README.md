@@ -42,3 +42,11 @@ If the php site is a drupal site, it can be integrated with tsadm as explained i
 Any plain HTML or php site should be able to run under the httpd container. If it requires a mysql database, it should be configured to connect to `tsdesktop-mysqld` server, as `sitename` user (ie: `my-php-site`) to `sitenamedb` database (ie: `my-php-sitedb`), with an empty password (ie: `""`).
 
 Just a few basic php modules are installed in httpd container, mainly trying to keep its size at minimum, but more can be added as needed.
+
+### import sql file to site's database
+
+> my-php-site$ tsdesktop --sql-import dbdump.sql
+
+The command above will import the .sql file to the site's database using the mysqld service container.
+
+Databases are saved locally in your machine (not inside the container) under `~/.cache/tsdesktop` directory.
