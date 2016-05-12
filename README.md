@@ -38,6 +38,8 @@ Under OSX systems you have to run tsdesktop from a *Docker Quickstart Terminal*.
 >
 > ~$ docker pull tsadm/desktop:mysqld
 
+[docker.io images repository](https://hub.docker.com/r/tsadm/desktop/)
+
 ## usage
 
 > ~$ cd src/my-php-site
