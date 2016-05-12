@@ -32,6 +32,12 @@ On Debian or Ubuntu systems, you can `apt-get install docker.io`.
 
 Under OSX systems you have to run tsdesktop from a *Docker Quickstart Terminal*.
 
+### pull tsdesktop docker images
+
+> ~$ docker pull tsadm/desktop:httpd
+>
+> ~$ docker pull tsadm/desktop:mysqld
+
 ## usage
 
 > ~$ cd src/my-php-site
