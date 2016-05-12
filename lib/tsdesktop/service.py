@@ -13,7 +13,7 @@ class _site:
                                     config.cfg.get('site', 'docroot'))
         self.name = path.basename(path.dirname(self.docroot))
 
-    def _dbName(self):
+    def dbName(self):
         return "{}db".format(self.name)
 
     def _dbUser(self):
@@ -22,7 +22,7 @@ class _site:
     def initDB(self, container):
         m = _srvMap.get("mysqld")()
         stat = docker.exec(m,
-            ["/opt/tsdesktop/site.initdb", self._dbName(),
+            ["/opt/tsdesktop/site.initdb", self.dbName(),
             self._dbUser(), container])
         if stat == 0:
             return True

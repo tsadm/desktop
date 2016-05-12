@@ -2,11 +2,12 @@ import os
 from subprocess import Popen
 
 
-def _cmd(srv, args, wait=True):
+def _cmd(srv, args, wait=True, stdin=None):
     c = ["docker"]
     c.extend(args)
     print("docker cmd:", " ".join(c))
-    proc = Popen(c)
+    #~ print("Popen:", c, stdin)
+    proc = Popen(c, stdin=stdin)
     print("docker cmd PID:", proc.pid)
     if wait:
         return proc.wait()
@@ -34,7 +35,7 @@ def start(srv, docker_cmd=None):
     if docker_cmd is not None:
         args.extend(docker_cmd.split())
     if srv.detach:
-        return _cmd(srv, args, wait=False)
+        return _cmd(srv, args, wait=False).returncode
     else:
         proc = _cmd(srv, args, wait=False)
         proc.communicate()
@@ -56,7 +57,10 @@ def login(srv):
     return start(srv, '/bin/bash -l')
 
 
-def exec(srv, command):
-    args = ["exec", srv.containerName()]
+def exec(srv, command, wait=True, stdin=None):
+    args = ["exec"]
+    if stdin is not None:
+        args.append("-i")
+    args.append(srv.containerName())
     args.extend(command)
-    return _cmd(srv, args)
+    return _cmd(srv, args, wait, stdin)
