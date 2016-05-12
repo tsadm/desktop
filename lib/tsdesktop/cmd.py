@@ -1,4 +1,3 @@
-import sys
 from argparse import ArgumentParser
 from tsdesktop import config, service, version, cmd_mysql
 
@@ -8,12 +7,6 @@ def _workCmd():
     if stat != 0:
         return stat
     return 0
-
-
-def _configCmd():
-    ok = config.read()
-    print("read:", " ".join(ok), end="\n\n")
-    config.cfg.write(sys.stdout)
 
 
 def _serviceCmd(srv, action):
@@ -42,7 +35,7 @@ def main():
     args = parser.parse_args()
 
     if args.config:
-        return _configCmd()
+        return config.cmd()
 
     elif args.service_start:
         return _serviceCmd(args.service_start, 'start')

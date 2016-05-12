@@ -1,3 +1,4 @@
+import sys
 from os.path import expanduser
 from configparser import ConfigParser
 
@@ -28,3 +29,9 @@ def read(filenames=None):
     ok = cfg.read(filenames)
     #~ print("config read:", " ".join(ok))
     return ok
+
+def cmd():
+    ok = read()
+    print("read:", " ".join(ok), end="\n\n")
+    cfg.write(sys.stdout)
+    return 0
