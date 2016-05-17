@@ -1,6 +1,6 @@
 from tsdesktop import buildinfo
 
-VERSION = "16.05.2"
+VERSION = "16.05.2+next"
 
 def println():
     s = "tsdesktop v{}".format(VERSION)
