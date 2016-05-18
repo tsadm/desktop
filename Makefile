@@ -6,7 +6,7 @@ default: compile
 .PHONY: clean
 clean:
 	@rm -rf .coverage htmlcov
-	@$(PYTHON) setup.py clean -a
+	@$(PYTHON) setup.py clean -a 2>/dev/null
 	@rm -rf dist lib/tsdesktop.egg-info
 	@find . -type d -name __pycache__ | xargs rm -rfv
 
