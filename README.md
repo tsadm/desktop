@@ -2,37 +2,55 @@
 
 tsadm desktop client - docker based environments for running web sites locally
 
-## install
+## requirements
 
-> ~$ mkdir -vp src/tsadm && cd src/tsadm
->
-> tsadm$ git clone https://github.com/tsadm/desktop.git
->
-> tsadm$ cd desktop
->
-> desktop$ make install PREFIX=/usr/local
+Python3 (>=3.4.4) and Docker are required dependencies for tsdesktop to work.
 
-Try using sudo if you get write errors under /usr/local:
+Python2 is not supported.
 
-> desktop$ sudo make install PREFIX=/usr/local
+### install python
 
-Or install under your $HOME directory (the default PREFIX):
+For Mac OSX you can download the latest Python3 realease from the official site: [Mac OSX](https://www.python.org/downloads/mac-osx/)
 
-> desktop$ sudo make install
+Most of GNU/Linux distributions already provide an installation of python3 or you can install it via the package manager, for Debian like systems:
 
-Either /usr/local/bin or $HOME/bin should be in your PATH environment variable. In order for the commands documented below to work.
+> ~$ sudo apt-get install python3 python3-pip
 
-## install docker
+### install docker
 
 tsdesktop runs httpd, mysqld and other services using docker containers, so you need a working installation of docker before to start using this tool.
 
 Official docs: [GNU/Linux](https://docs.docker.com/linux/step_one/) - [Mac OSX](https://docs.docker.com/mac/step_one/)
 
-On Debian or Ubuntu systems, you can `apt-get install docker.io`.
+On Debian or Ubuntu systems, you can `sudo apt-get install docker.io`.
 
 Under OSX systems you have to run tsdesktop from a *Docker Quickstart Terminal*.
 
-### pull tsdesktop docker images
+## install using pip
+
+> ~$ pip3 install https://github.com/tsadm/desktop/tarball/master
+
+Check in pip3 output that tsdesktop was installed in a directory already in your PATH environment variable, otherwise add it.
+
+Like in example for Mac OSX, you could need to do the following:
+
+> ~$ echo 'export PATH=/Library/Frameworks/Python.framework/Versions/3.5/bin:$PATH' >>.bash_profile
+>
+> ~$ exec bash
+
+## run from source
+
+> ~$ mkdir -vp src/tsadm && cd src/tsadm
+>
+> tsadm$ git clone https://github.com/tsadm/desktop.git
+
+$HOME/src/tsadm/desktop/bin should be added to the PATH environment variable:
+
+> ~$ echo 'export PATH=$HOME/src/tsadm/desktop/bin:$PATH' >>.bash_profile
+>
+> ~$ exec bash
+
+## pull docker images
 
 > ~$ docker pull tsadm/desktop:httpd
 >
