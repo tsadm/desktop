@@ -1,4 +1,4 @@
-VERSION = "16.5.3"
+VERSION = "16.5.3+next"
 
 def println():
     print("tsdesktop v{}".format(VERSION))
