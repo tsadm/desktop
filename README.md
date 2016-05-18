@@ -30,9 +30,7 @@ Under OSX systems you have to run tsdesktop from a *Docker Quickstart Terminal*.
 
 > ~$ pip3 install https://github.com/tsadm/desktop/tarball/master
 
-Check in pip3 output that tsdesktop was installed in a directory already in your PATH environment variable, otherwise add it.
-
-Like in example for Mac OSX, you could need to do the following:
+Under OSX you could need to do the following, in case Python bin dir is not already in PATH environment variable (check whith `echo $PATH`):
 
 > ~$ echo 'export PATH=/Library/Frameworks/Python.framework/Versions/3.5/bin:$PATH' >>.bash_profile
 >
