@@ -8,10 +8,13 @@ python:
   - 3.4.4
   - 3.5.1
 
+build:
+  - make build
+
 install:
   - pip install coverage
   - pip install codecov
-  - make build
+  - make install
 
 script:
   - coverage run --source='.' test.py
