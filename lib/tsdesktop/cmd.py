@@ -22,6 +22,7 @@ def _parseArgs():
 
 
 def main():
+    version.println()
     config.read()
     parser = _parseArgs()
     args = parser.parse_args()
@@ -42,7 +43,7 @@ def main():
         return _workCmd()
 
     elif args.version:
-        version.println()
+        #~ version.println()
         return 0
 
     elif args.sql_import:
