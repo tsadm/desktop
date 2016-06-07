@@ -6,3 +6,4 @@ build/
 dist/
 htmlcov/
 lib/tsdesktop.egg-info/
+venv/

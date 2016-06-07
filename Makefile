@@ -38,3 +38,8 @@ test-coverage:
 	@$(PYTHON) -m coverage run --source='.' test.py
 	@$(PYTHON) -m coverage report
 	@$(PYTHON) -m coverage html
+
+.PHONY: venv
+venv:
+	@$(PYTHON) -m virtualenv -p $(PYTHON) venv
+	@venv/bin/python setup.py install
