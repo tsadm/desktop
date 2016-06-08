@@ -1,8 +1,8 @@
 <!-- navbar -->
-<ul class="w3-navbar w3-card-2 w3-theme-dark w3-wide">
+<ul class="w3-navbar w3-card-2 w3-theme-dark">
 
 %if req.path == '/':
-    <li class="w3-opacity">
+    <li class="w3-theme-l2">
 %else:
     <li>
 %end
@@ -10,7 +10,7 @@
     </li>
 
 %if req.path == '/settings':
-    <li class="w3-opacity">
+    <li class="w3-theme-l2">
 %else:
     <li>
 %end
