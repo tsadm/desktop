@@ -13,8 +13,12 @@
     <div class="w3-content w3-theme-l5 w3-padding-0 w3-card-8">
 
         %include('navbar.tpl')
-        %include('dockman_status.tpl')
-        %include('dockman_modals.tpl')
+
+        %if dockmanServices:
+            %include('dockman_status.tpl')
+            %include('dockman_modals.tpl')
+            <script src="/static/dockman.js"></script>
+        %end
 
         <!-- content -->
         <div class="w3-container">

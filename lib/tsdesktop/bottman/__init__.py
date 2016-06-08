@@ -4,9 +4,16 @@ from .utils import render, staticFile
 
 app = Bottle()
 
+
 @app.route('/')
 def index():
-    return render('index')
+    tdata = {
+        'dockmanServices': [
+            {'name': 'mysqld'},
+            {'name': 'faked'},
+        ],
+    }
+    return render('index', **tdata)
 
 
 @app.route('/static/<fpath:path>')

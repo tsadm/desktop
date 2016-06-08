@@ -19,6 +19,7 @@ def render(tpl, **kwargs):
             ('dashboard', '/'),
             ('settings', '/settings'),
         ],
+        'dockmanServices': [],
     }
     tdata.update(kwargs)
     return template(tpl, **tdata)
