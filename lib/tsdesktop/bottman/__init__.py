@@ -1,6 +1,7 @@
-from bottle import Bottle
+from bottle import Bottle, abort
 from os import path
 from .utils import render, staticFile
+from tsdesktop import dockman
 
 app = Bottle()
 
@@ -26,6 +27,21 @@ def error404(err):
     return render('error', err=err)
 
 
+@app.error(500)
+def error500(err):
+    return render('error', err=err)
+
+
 @app.route('/settings')
-def index():
+def settings():
     return render('settings')
+
+
+@app.route('/docker')
+def docker():
+    try:
+        cli = dockman.getClient()
+        cli.ping()
+    except Exception as e:
+        abort(500, e)
+    return render('docker', docker=cli)
