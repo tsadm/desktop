@@ -7,7 +7,7 @@ default: compile
 clean:
 	@rm -rf .coverage htmlcov
 	@$(PYTHON) setup.py clean -a 2>/dev/null
-	@rm -rf dist lib/tsdesktop.egg-info
+	@rm -rf dist tsdesktop.egg-info
 	@find lib/ -type d -name __pycache__ | xargs rm -rfv
 
 .PHONY: compile

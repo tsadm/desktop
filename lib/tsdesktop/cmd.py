@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from tsdesktop import config, service, version, cmd_mysql
+from tsdesktop import config, service, version, cmd_mysql, bottman
 
 
 def _workCmd():
@@ -12,6 +12,8 @@ def _workCmd():
 def _parseArgs():
     parser = ArgumentParser(description='tsadm desktop client')
     parser.add_argument('-V', '--version', action='store_true', help='show version and build info')
+    parser.add_argument('--http', nargs='?', type=int, const=3680, metavar="PORT", help='start web interface (default port: 3680)')
+    parser.add_argument('-d', '--debug', action='store_true', help='enable debug mode')
     parser.add_argument('-D', '--config', action='store_true', help='dump config')
     parser.add_argument('-S', '--service-start', metavar="service", help='start service container')
     parser.add_argument('-K', '--service-stop', metavar="service", help='stop service container')
@@ -27,7 +29,10 @@ def main():
     parser = _parseArgs()
     args = parser.parse_args()
 
-    if args.config:
+    if args.http:
+        return bottman.app.run(host='localhost', port=args.http, debug=args.debug)
+
+    elif args.config:
         return config.cmd()
 
     elif args.service_start:

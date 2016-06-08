@@ -35,13 +35,20 @@ setup(
     ],
 
     install_requires=[
-        'pkg-resources',
         'bottle>=0.12.9',
         'docker-py>=1.8.1',
     ],
 
-    packages=['tsdesktop'],
-    package_dir={'': 'lib'},
+    packages=[
+        'tsdesktop',
+        'tsdesktop.bottman',
+    ],
+    package_dir={
+        'tsdesktop': 'lib/tsdesktop',
+    },
+    package_data={
+        'tsdesktop.bottman': ['views/*.tpl'],
+    },
 
     entry_points={
         'console_scripts': [
