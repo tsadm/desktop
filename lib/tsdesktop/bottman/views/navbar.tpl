@@ -1,21 +1,21 @@
 <!-- navbar -->
-<ul class="w3-navbar w3-card-2 w3-theme-dark">
+<ul class="w3-navbar w3-card-2 w3-theme-l1">
 
-%if req.path == '/':
-    <li class="w3-theme-l2">
-%else:
-    <li>
-%end
-        <a href="/">dashboard</a>
-    </li>
+    <li><a href="/">
+    %if req.path == '/':
+        <b>dashboard</b>
+    %else:
+        dashboard
+    %end
+    </a></li>
 
-%if req.path == '/settings':
-    <li class="w3-theme-l2">
-%else:
-    <li>
-%end
-        <a href="/settings">settings</a>
-    </li>
+    <li><a href="/settings">
+    %if req.path == '/settings':
+        <b>settings</b>
+    %else:
+        settings
+    %end
+    </a></li>
 
 </ul>
 <!-- navbar -->

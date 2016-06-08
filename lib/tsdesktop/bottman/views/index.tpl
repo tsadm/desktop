@@ -1,2 +1,2 @@
 %rebase('base.tpl')
-<p>bashboard...</p>
+<p>dashboard...</p>
