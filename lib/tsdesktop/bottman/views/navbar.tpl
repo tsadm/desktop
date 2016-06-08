@@ -1,5 +1,5 @@
 <!-- navbar -->
-<ul class="w3-navbar w3-theme-l1">
+<ul class="w3-navbar w3-theme-dark">
 
     <li><a href="/">
     %if req.path == '/':
