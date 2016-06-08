@@ -15,6 +15,10 @@ def render(tpl, **kwargs):
         'appVersion': version.VERSION,
         'req': request,
         'now': strftime('%a %b %d %H:%M:%S %Y %z'),
+        'navbarLinks': [
+            ('dashboard', '/'),
+            ('settings', '/settings'),
+        ],
     }
     tdata.update(kwargs)
     return template(tpl, **tdata)
