@@ -1,6 +1,6 @@
 from os import path
 import bottle
-from bottle import template, static_file
+from bottle import template, static_file, request
 from tsdesktop import version
 
 _viewsDir = path.abspath(path.join(path.dirname(__file__), 'views'))
@@ -12,6 +12,7 @@ def render(tpl, **kwargs):
     tdata = {
         'appName': version.APPNAME,
         'appVersion': version.VERSION,
+        'req': request,
     }
     tdata.update(kwargs)
     return template(tpl, **tdata)
