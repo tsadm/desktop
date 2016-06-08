@@ -21,6 +21,11 @@ def static(fpath):
     return staticFile(fpath)
 
 
+@app.error(404)
+def error404(err):
+    return render('error', err=err)
+
+
 @app.route('/settings')
 def index():
     return render('settings')
