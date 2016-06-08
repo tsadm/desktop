@@ -47,7 +47,7 @@ setup(
         'tsdesktop': 'lib/tsdesktop',
     },
     package_data={
-        'tsdesktop.bottman': ['views/*.tpl'],
+        'tsdesktop.bottman': ['views/*.tpl', 'views/static/*.*'],
     },
 
     entry_points={
