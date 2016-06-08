@@ -2,6 +2,7 @@ from os import path
 import bottle
 from bottle import template, static_file, request
 from tsdesktop import version
+from time import strftime
 
 _viewsDir = path.abspath(path.join(path.dirname(__file__), 'views'))
 _staticDir = path.join(_viewsDir, 'static')
@@ -13,6 +14,7 @@ def render(tpl, **kwargs):
         'appName': version.APPNAME,
         'appVersion': version.VERSION,
         'req': request,
+        'now': strftime('%a %b %d %H:%M:%S %Y %z'),
     }
     tdata.update(kwargs)
     return template(tpl, **tdata)
