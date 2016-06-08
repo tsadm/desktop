@@ -1,7 +1,8 @@
 %rebase('base.tpl')
 <p>
     <b>Ping:</b> {{docker.ping()}}<br>
-%for ik, iv in docker.version().items():
-    <b>{{ik}}:</b> {{iv}}<br>
+%setdefault('dockinf', docker.version())
+%for ik in sorted(dockinf.keys()):
+    <b>{{ik}}:</b> {{dockinf.get(ik)}}<br>
 %end
 </p>
