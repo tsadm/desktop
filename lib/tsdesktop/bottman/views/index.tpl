@@ -1,2 +1,2 @@
-% rebase('base.tpl')
+%rebase('base.tpl')
 <p>hello world!!</p>
