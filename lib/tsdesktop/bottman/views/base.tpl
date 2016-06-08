@@ -14,6 +14,7 @@
 
         %include('navbar.tpl')
         %include('dockman_status.tpl')
+        %include('dockman_modals.tpl')
 
         <!-- content -->
         <div class="w3-container">
