@@ -8,6 +8,12 @@ app = Bottle()
 def index():
     return render('index')
 
+
 @app.route('/static/<fpath:path>')
 def static(fpath):
     return staticFile(fpath)
+
+
+@app.route('/settings')
+def index():
+    return render('settings')
