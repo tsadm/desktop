@@ -34,6 +34,12 @@ setup(
         'Operating System :: POSIX :: Linux',
     ],
 
+    install_requires=[
+        'pkg-resources',
+        'bottle>=0.12.9',
+        'docker-py>=1.8.1',
+    ],
+
     packages=['tsdesktop'],
     package_dir={'': 'lib'},
 
