@@ -3,8 +3,8 @@
 %for srv in dockmanServices:
     <button
         class="w3-btn w3-round-xxlarge w3-grey"
-        onclick="dockmanShow('dockman_{{srv['name']}}')"
-    >{{srv['name']}}</button>
+        onclick="dockmanShow('dockman_{{srv.name}}')"
+    >{{srv.name}}</button>
 %end
 </div>
 <!-- dockman status -->

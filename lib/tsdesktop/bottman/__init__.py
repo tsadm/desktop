@@ -2,17 +2,15 @@ from bottle import Bottle, abort
 from os import path
 from .utils import render, staticFile
 from tsdesktop import dockman
+from tsdesktop.dockman import services
 
 app = Bottle()
 
 # -- dashboard
 @app.route('/')
 def index():
-    services = [
-        {'name': 'mysqld'},
-        {'name': 'faked'},
-    ]
-    return render('index', dockmanServices=services)
+    sl = [s() for s in services.classMap.values()]
+    return render('index', dockmanServices=sl)
 
 
 # -- static content
