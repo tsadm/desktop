@@ -10,13 +10,12 @@ python:
   - 3.4.2
   - 3.5.1
 
-build:
-  - make build
-
 install:
   - pip install coverage
   - pip install codecov
-  - make install PYTHON=python
+  - pip install bottle
+  - pip install docker-py
+  - pip install configparser
 
 script:
   - coverage run --source='.' test.py
