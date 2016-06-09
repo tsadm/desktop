@@ -4,14 +4,14 @@ from bottle import abort
 
 
 # -- docker info
-def dockerInfo():
+def dockman():
     try:
         cli = getClient()
         cli.ping()
     except Exception as e:
         abort(500, e)
-    return render('docker', docker=cli)
+    return render('dockman', docker=cli)
 
 
 def init(app):
-    app.route('/docker', callback=dockerInfo)
+    app.route('/dockman', callback=dockman)

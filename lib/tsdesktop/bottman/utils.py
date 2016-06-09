@@ -17,7 +17,7 @@ def render(tpl, **kwargs):
         'now': strftime('%a %b %d %H:%M:%S %Y %z'),
         'navbarLinks': [
             ('dashboard', '/'),
-            ('docker', '/docker'),
+            ('docker', '/dockman'),
             ('settings', '/settings'),
         ],
     }
