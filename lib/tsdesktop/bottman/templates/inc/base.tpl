@@ -12,7 +12,7 @@
     <!-- main -->
     <div class="w3-content w3-theme-l5 w3-padding-0 w3-card-8">
 
-        %include('navbar.tpl')
+        %include('inc/navbar.tpl')
 
         <!-- content -->
         <div class="w3-container">
@@ -23,6 +23,6 @@
     </div>
     <!-- main  -->
 
-    %include('footer.tpl')
+    %include('inc/footer.tpl')
 </body>
 </html>

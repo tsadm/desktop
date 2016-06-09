@@ -1,4 +1,4 @@
-%rebase('base.tpl')
+%rebase('inc/base.tpl')
 <h2>Docker</h2>
 <p>
     <b>Ping:</b> {{docker.ping()}}<br>
