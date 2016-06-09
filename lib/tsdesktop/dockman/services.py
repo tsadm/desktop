@@ -1,11 +1,17 @@
-class Services:
+class Service:
     name = None
 
-class _faked(Services):
+    def status(self):
+        return 'NONE'
+
+
+class _faked(Service):
     name = 'faked'
 
-class _mysqld(Services):
+
+class _mysqld(Service):
     name = 'mysqld'
+
 
 classMap = {
     'mysqld': _mysqld,
