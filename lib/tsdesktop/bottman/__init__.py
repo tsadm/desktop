@@ -2,13 +2,19 @@ from bottle import Bottle
 from .utils import render, staticFile
 from .views import dashboard, dockman
 
-app = Bottle()
+app = Bottle(catchall=True)
 
 
 # -- static content
 @app.route('/static/<fpath:path>')
 def static(fpath):
     return staticFile(fpath)
+
+
+# -- error 400
+@app.error(400)
+def error400(err):
+    return render('error', err=err)
 
 
 # -- error 404

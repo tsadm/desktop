@@ -13,6 +13,15 @@ class ImageInfo:
         elif info:
             self.status = 'ok'
 
+    def repository(self):
+        return self.name.split(':')[0]
+
+    def tag(self):
+        try:
+            return self.name.split(':')[1]
+        except IndexError:
+            return ''
+
 
 class Service:
     name = None
@@ -55,11 +64,11 @@ class _mysqld(Service):
     name = 'mysqld'
 
 
-_clsMap = {
+classMap = {
     'mysqld': _mysqld,
     'httpd': _httpd,
 }
 
 
 def classList():
-    return [_clsMap[k]() for k in sorted(_clsMap.keys())]
+    return [classMap[k]() for k in sorted(classMap.keys())]
