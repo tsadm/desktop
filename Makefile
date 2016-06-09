@@ -9,6 +9,7 @@ clean:
 	@$(PYTHON) setup.py clean -a 2>/dev/null
 	@rm -rf dist tsdesktop.egg-info
 	@find lib/ -type d -name __pycache__ | xargs rm -rfv
+	@find lib/ -type f -name '*.py[co]' | xargs rm -rfv
 
 .PHONY: compile
 compile:
