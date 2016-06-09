@@ -1,0 +1,18 @@
+osx_image: xcode7.3
+
+build:
+  - brew update
+  - brew install make
+  - brew install python
+  - brew install python3
+  - make virtualenv
+
+install:
+  - make install
+
+script:
+  - make test-all
+
+notifications:
+  irc:
+    - irc.freenode.org#tsadm
