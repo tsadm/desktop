@@ -2,7 +2,7 @@ from . import getClient
 
 class ImageInfo:
     name = None
-    status = 'NONE'
+    status = None
 
     def __init__(self, name, info=None, missing=False, error=False):
         self.name = name
