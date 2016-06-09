@@ -14,12 +14,6 @@
 
         %include('navbar.tpl')
 
-        %if dockmanServices:
-            %include('dockman_status.tpl')
-            %include('dockman_modals.tpl')
-            <script src="/static/dockman.js"></script>
-        %end
-
         <!-- content -->
         <div class="w3-container">
             {{!base}}

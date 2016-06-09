@@ -20,7 +20,6 @@ def render(tpl, **kwargs):
             ('docker', '/docker'),
             ('settings', '/settings'),
         ],
-        'dockmanServices': [],
     }
     tdata.update(kwargs)
     return template(tpl, **tdata)
