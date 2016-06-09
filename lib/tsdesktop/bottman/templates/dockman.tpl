@@ -1,5 +1,5 @@
 %rebase('inc/base.tpl')
-<h2>Docker</h2>
+<h3>Docker</h3>
 <p>
     <b>Ping:</b> {{docker.ping()}}<br>
 %setdefault('dockinf', docker.version())
@@ -8,4 +8,4 @@
 %end
 </p>
 
-<h2>Container Images</h2>
+<h3>Container Images</h3>
