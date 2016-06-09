@@ -9,17 +9,15 @@
     <title>{{appName}} - {{req.path}}</title>
 </head>
 <body class="w3-theme-l1" style="font-family:monospace;font-size:16px">
+    %include('inc/navbar.tpl')
+
     <!-- main -->
     <div class="w3-content w3-theme-l5 w3-padding-0 w3-card-8">
-
-        %include('inc/navbar.tpl')
-
         <!-- content -->
         <div class="w3-container">
             {{!base}}
         </div>
         <!-- content -->
-
     </div>
     <!-- main  -->
 
