@@ -11,7 +11,7 @@ from tsdesktop import version
 desc = """tsadm desktop client - docker based environments for running web sites locally"""
 
 setup(
-    name='tsdesktop',
+    name=version.APPNAME,
     version=version.VERSION,
 
     description=desc,
@@ -42,6 +42,7 @@ setup(
     packages=[
         'tsdesktop',
         'tsdesktop.bottman',
+        'tsdesktop.dockman',
     ],
     package_dir={
         'tsdesktop': 'lib/tsdesktop',
