@@ -16,7 +16,7 @@ build:
 install:
   - pip install coverage
   - pip install codecov
-  - make install
+  - make install PYTHON=python
 
 script:
   - coverage run --source='.' test.py
