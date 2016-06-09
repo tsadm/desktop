@@ -6,4 +6,4 @@
     <script src="/static/dockman.js"></script>
 </div>
 <!-- dockman main -->
-<p>dashboard...</p>
+<p></p>

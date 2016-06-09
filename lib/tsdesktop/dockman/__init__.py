@@ -1,4 +1,9 @@
 from docker import Client
 
+_cli = None
+
 def getClient():
-    return Client(version='auto', timeout=15)
+    global _cli
+    if _cli is None:
+        _cli = Client(version='auto', timeout=15)
+    return _cli
