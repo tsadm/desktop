@@ -42,13 +42,14 @@ setup(
     packages=[
         'tsdesktop',
         'tsdesktop.bottman',
+        'tsdesktop.bottman.views',
         'tsdesktop.dockman',
     ],
     package_dir={
         'tsdesktop': 'lib/tsdesktop',
     },
     package_data={
-        'tsdesktop.bottman': ['views/*.tpl', 'views/static/*.*'],
+        'tsdesktop.bottman': ['templates/*.tpl', 'templates/static/*.*'],
     },
 
     entry_points={
