@@ -13,7 +13,8 @@ clean:
 
 .PHONY: compile
 compile:
-	@$(PYTHON) -m compileall -x '*.egg-info' -x '.*_test\.py' lib/
+	@#$(PYTHON) -m compileall -x '*.egg-info' -x '.*_test\.py' lib/
+	@$(PYTHON) -m compileall lib/
 
 .PHONY: build
 build:
@@ -33,6 +34,17 @@ test-v:
 	@make compile >/dev/null
 	@$(PYTHON) test.py -v
 
+.PHONY: test-py2
+test-py2:
+	@make test PYTHON=venv.py2/bin/python
+
+.PHONY: test-py3
+test-py3:
+	@make test PYTHON=venv.py3/bin/python
+
+.PHONY: test-all
+test-all: test-py2 test-py3
+
 .PHONY: test-coverage
 test-coverage:
 	@make compile >/dev/null
@@ -40,7 +52,15 @@ test-coverage:
 	@$(PYTHON) -m coverage report
 	@$(PYTHON) -m coverage html
 
-.PHONY: venv
-venv:
-	@$(PYTHON) -m virtualenv -p $(PYTHON) venv
-	@venv/bin/python setup.py install
+.PHONY: virtualenv
+virtualenv:
+	@$(PYTHON) -m virtualenv -p python3 venv.py3
+	@venv.py3/bin/python setup.py install
+	@$(PYTHON) -m virtualenv -p python2 venv.py2
+	@venv.py2/bin/python setup.py install
+
+.PHONY: venv-travis
+venv-travis:
+	@$(PYTHON) -m virtualenv -p python3 venv.travis
+	@venv.travis/bin/pip install coverage
+	@venv.travis/bin/pip install codecov

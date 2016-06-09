@@ -10,6 +10,13 @@ from tsdesktop import version
 
 desc = """tsadm desktop client - docker based environments for running web sites locally"""
 
+install_requires=[
+    'bottle>=0.12.9',
+    'docker-py>=1.8.1',
+]
+if sys.version_info.major == 2:
+    install_requires.append('configparser>=3.5.0')
+
 setup(
     name=version.APPNAME,
     version=version.VERSION,
@@ -34,10 +41,7 @@ setup(
         'Operating System :: POSIX :: Linux',
     ],
 
-    install_requires=[
-        'bottle>=0.12.9',
-        'docker-py>=1.8.1',
-    ],
+    install_requires=install_requires,
 
     packages=[
         'tsdesktop',
