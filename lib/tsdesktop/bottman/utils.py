@@ -4,9 +4,9 @@ from bottle import template, static_file, request
 from tsdesktop import version
 from time import strftime
 
-_viewsDir = path.abspath(path.join(path.dirname(__file__), 'views'))
-_staticDir = path.join(_viewsDir, 'static')
-bottle.TEMPLATE_PATH.insert(0, _viewsDir)
+_tplsDir = path.abspath(path.join(path.dirname(__file__), 'templates'))
+_staticDir = path.join(_tplsDir, 'static')
+bottle.TEMPLATE_PATH.insert(0, _tplsDir)
 
 
 def render(tpl, **kwargs):
