@@ -49,7 +49,13 @@ setup(
         'tsdesktop': 'lib/tsdesktop',
     },
     package_data={
-        'tsdesktop.bottman': ['templates/*.tpl', 'templates/static/*.*'],
+        'tsdesktop.bottman': [
+            'templates/*.tpl',
+            'templates/inc/*.tpl',
+            'templates/static/*.css',
+            'templates/static/*.ico',
+            'templates/static/*.js',
+        ],
     },
 
     entry_points={
