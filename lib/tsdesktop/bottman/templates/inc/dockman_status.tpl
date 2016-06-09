@@ -1,4 +1,5 @@
 <!-- dockman status -->
+<br>
 <div class="w3-container w3-tiny w3-wide w3-padding-0">
 %for srv in dockmanServices:
     %if not srv.dedicated:
@@ -18,4 +19,6 @@
     %end
 %end
 </div>
+%include('inc/dockman_modals.tpl')
+<script src="/static/dockman.js"></script>
 <!-- dockman status -->

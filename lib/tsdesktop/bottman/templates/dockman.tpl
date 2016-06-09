@@ -1,4 +1,6 @@
 %rebase('inc/base.tpl')
+%include('inc/dockman_status.tpl')
+
 <h3>images</h3>
 <p>
 %for srv in dockmanServices:
