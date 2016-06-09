@@ -1,16 +1,10 @@
 from bottle import Bottle, abort
 from os import path
 from .utils import render, staticFile
+from .views import dashboard
 from tsdesktop import dockman
-from tsdesktop.dockman import services
 
 app = Bottle()
-
-# -- dashboard
-@app.route('/')
-def index():
-    sl = [s() for s in services.classMap.values()]
-    return render('index', dockmanServices=sl)
 
 
 # -- static content
@@ -29,6 +23,10 @@ def error404(err):
 @app.error(500)
 def error500(err):
     return render('error', err=err)
+
+
+# -- init views
+dashboard.init(app)
 
 
 # -- settings
