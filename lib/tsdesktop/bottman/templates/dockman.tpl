@@ -4,8 +4,8 @@
 <h3>images</h3>
 <p>
 %for srv in dockmanServices:
-    %imgInfo = srv.imageInfo()
     <b>{{srv.name}}</b>:
+    %imgInfo = srv.imageInfo()
     <small>&lt;{{imgInfo.name}}&gt;
     %if imgInfo.status == 'missing':
         <span class="w3-small w3-badge w3-yellow">miss</span>

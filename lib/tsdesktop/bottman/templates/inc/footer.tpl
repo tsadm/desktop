@@ -3,6 +3,9 @@
     <p class="w3-opacity w3-text-shadow">
         {{appName}} v{{appVersion}}<br>
         {{now}}
+    %if reqTook:
+        <br>{{reqTook}}s
+    %end
     </p>
 </div>
 <!-- footer -->

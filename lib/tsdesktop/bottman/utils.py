@@ -2,7 +2,7 @@ from os import path
 import bottle
 from bottle import template, static_file, request
 from tsdesktop import version
-from time import strftime
+from time import time, strftime
 
 _tplsDir = path.abspath(path.join(path.dirname(__file__), 'templates'))
 _staticDir = path.join(_tplsDir, 'static')
@@ -20,8 +20,12 @@ def render(tpl, **kwargs):
             ('docker', '/dockman'),
             ('settings', '/settings'),
         ],
+        'startTime': None,
+        'reqTook': None,
     }
     tdata.update(kwargs)
+    if tdata['startTime'] is not None:
+        tdata['reqTook'] = '{:.5f}'.format(time() - tdata['startTime'])
     return template(tpl, **tdata)
 
 
