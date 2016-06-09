@@ -1,4 +1,4 @@
-from tsdesktop.dockman import getClient
+from tsdesktop.dockman import getClient, services
 from ..utils import render
 from bottle import abort
 
@@ -10,7 +10,8 @@ def dockman():
         cli.ping()
     except Exception as e:
         abort(500, e)
-    return render('dockman', docker=cli)
+    images = ['lalala']
+    return render('dockman', docker=cli, dockmanServices=services.classList())
 
 
 def init(app):
