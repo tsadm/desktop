@@ -8,7 +8,7 @@ class Service:
         cli = getClient()
         s = cli.containers(all=True, filters={'name': self.containerName()})
         if s:
-            return 'NONE'
+            return 'running'
         else:
             return 'error'
 
