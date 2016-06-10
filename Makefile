@@ -44,7 +44,7 @@ test-all: test-py2 test-py3
 .PHONY: test-coverage
 test-coverage:
 	@make compile >/dev/null
-	@$(PYTHON) -m coverage run --source='.' test.py
+	@$(PYTHON) -m coverage run --source='lib/tsdesktop' test.py
 	@$(PYTHON) -m coverage report
 	@$(PYTHON) -m coverage html
 
@@ -52,11 +52,7 @@ test-coverage:
 virtualenv:
 	@$(PYTHON) -m virtualenv -p python3 venv.py3
 	@venv.py3/bin/python setup.py install
+	@venv.py3/bin/pip install coverage
 	@$(PYTHON) -m virtualenv -p python2 venv.py2
 	@venv.py2/bin/python setup.py install
-
-.PHONY: venv-travis
-venv-travis:
-	@$(PYTHON) -m virtualenv -p python3 venv.travis
-	@venv.travis/bin/pip install coverage
-	@venv.travis/bin/pip install codecov
+	@venv.py2/bin/pip install coverage
