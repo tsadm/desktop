@@ -1,4 +1,5 @@
 PYTHON ?= python3
+TEST_ARGS ?=
 
 .PHONY: default
 default: compile
@@ -27,12 +28,7 @@ install: build
 .PHONY: test
 test:
 	@make compile >/dev/null
-	@$(PYTHON) test.py
-
-.PHONY: test-v
-test-v:
-	@make compile >/dev/null
-	@$(PYTHON) test.py -v
+	@$(PYTHON) test.py $(TEST_ARGS)
 
 .PHONY: test-py2
 test-py2:
