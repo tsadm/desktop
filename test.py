@@ -3,8 +3,11 @@ import sys
 from os import path
 from unittest import TestLoader, TextTestRunner
 
-libdir = path.join(path.abspath(path.curdir), 'lib')
-sys.path.insert(0, libdir)
+print("Python {}".format(sys.version))
+
+if not '--test-installed' in sys.argv:
+    libdir = path.join(path.abspath(path.curdir), 'lib')
+    sys.path.insert(0, libdir)
 
 from tsdesktop import version
 version.println()

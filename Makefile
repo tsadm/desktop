@@ -1,4 +1,5 @@
 PYTHON ?= python3
+TEST_ARGS ?=
 
 .PHONY: default
 default: compile
@@ -27,20 +28,15 @@ install: build
 .PHONY: test
 test:
 	@make compile >/dev/null
-	@$(PYTHON) test.py
-
-.PHONY: test-v
-test-v:
-	@make compile >/dev/null
-	@$(PYTHON) test.py -v
+	@$(PYTHON) test.py $(TEST_ARGS)
 
 .PHONY: test-py2
 test-py2:
-	@make test PYTHON=venv.py2/bin/python
+	@make -s test PYTHON=venv.py2/bin/python
 
 .PHONY: test-py3
 test-py3:
-	@make test PYTHON=venv.py3/bin/python
+	@make -s test PYTHON=venv.py3/bin/python
 
 .PHONY: test-all
 test-all: test-py2 test-py3
@@ -48,7 +44,7 @@ test-all: test-py2 test-py3
 .PHONY: test-coverage
 test-coverage:
 	@make compile >/dev/null
-	@$(PYTHON) -m coverage run --source='.' test.py
+	@$(PYTHON) -m coverage run --source='lib/tsdesktop' test.py
 	@$(PYTHON) -m coverage report
 	@$(PYTHON) -m coverage html
 
@@ -56,11 +52,7 @@ test-coverage:
 virtualenv:
 	@$(PYTHON) -m virtualenv -p python3 venv.py3
 	@venv.py3/bin/python setup.py install
+	@venv.py3/bin/pip install coverage
 	@$(PYTHON) -m virtualenv -p python2 venv.py2
 	@venv.py2/bin/python setup.py install
-
-.PHONY: venv-travis
-venv-travis:
-	@$(PYTHON) -m virtualenv -p python3 venv.travis
-	@venv.travis/bin/pip install coverage
-	@venv.travis/bin/pip install codecov
+	@venv.py2/bin/pip install coverage
