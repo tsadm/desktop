@@ -20,10 +20,9 @@ install:
 
 script:
   - make test TEST_ARGS='--test-installed'
-  - coverage run --source='lib/tsdesktop' test.py
+  - make test-coverage
 
 after_success:
-  - coverage report
   - codecov
 
 notifications:
