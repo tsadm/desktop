@@ -10,7 +10,8 @@ install:
   - make virtualenv
 
 script:
-  - docker-machine start
+  - eval "$(docker-machine env default)"
+  - docker-machine ls
   - docker version
   - make test-all
 
