@@ -36,11 +36,11 @@ test-v:
 
 .PHONY: test-py2
 test-py2:
-	@make test PYTHON=venv.py2/bin/python
+	@make -s test PYTHON=venv.py2/bin/python
 
 .PHONY: test-py3
 test-py3:
-	@make test PYTHON=venv.py3/bin/python
+	@make -s test PYTHON=venv.py3/bin/python
 
 .PHONY: test-all
 test-all: test-py2 test-py3

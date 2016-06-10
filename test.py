@@ -3,6 +3,8 @@ import sys
 from os import path
 from unittest import TestLoader, TextTestRunner
 
+print("Python {}".format(sys.version))
+
 libdir = path.join(path.abspath(path.curdir), 'lib')
 sys.path.insert(0, libdir)
 
