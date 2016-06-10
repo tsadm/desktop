@@ -5,10 +5,11 @@ dist: trusty
 language: python
 
 python:
-  - 2.7.9
-  - 2.7.11
-  - 3.4.2
-  - 3.5.1
+  - 2.6
+  - 2.7
+  - 3.4
+  - 3.5
+  - nightly
 
 install:
   - pip install coverage
