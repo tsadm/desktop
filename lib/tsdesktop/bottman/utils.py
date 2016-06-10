@@ -15,11 +15,11 @@ def render(tpl, **kwargs):
         'appVersion': version.VERSION,
         'req': request,
         'now': strftime('%a %b %d %H:%M:%S %Y %z'),
-        'navbarLinks': [
+        'navbarLinks': (
             ('dashboard', '/'),
             ('docker', '/dockman'),
             ('settings', '/settings'),
-        ],
+        ),
         'startTime': None,
         'reqTook': None,
     }
