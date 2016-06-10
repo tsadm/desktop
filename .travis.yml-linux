@@ -10,14 +10,16 @@ python:
   - 3.5
   - nightly
 
+env:
+  - PYTHON=python
+
 install:
   - pip install coverage
   - pip install codecov
-  - pip install bottle
-  - pip install docker-py
-  - pip install configparser
+  - make install
 
 script:
+  - make test TEST_ARGS='--test-installed'
   - coverage run --source='lib/tsdesktop' test.py
 
 after_success:
