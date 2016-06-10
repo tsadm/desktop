@@ -8,6 +8,7 @@ install:
   - brew update
   - brew install python
   - brew install python3
+  - pip3 install virtualenv
   - make virtualenv
 
 script:
