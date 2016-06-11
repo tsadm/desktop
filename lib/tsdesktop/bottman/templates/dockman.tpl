@@ -7,16 +7,16 @@
     <b>{{srv.name}}</b>:
     %imgInfo = srv.imageInfo()
     <small>&lt;{{imgInfo.name}}&gt;
+    %linkAction = 'pull'
     %if imgInfo.status == 'missing':
         <span class="w3-small w3-badge w3-yellow">miss</span>
-        <a href="/dockman/{{srv.name}}/pull-image/">pull</a>
     %elif imgInfo.status == 'ok':
         <span class="w3-small w3-badge w3-green">ok</span>
-        <a href="/dockman/{{srv.name}}/pull-image/">update</a>
+        %linkAction = 'update'
     %else:
         <span class="w3-small w3-badge w3-red">err</span>
-        <a href="/dockman/{{srv.name}}/pull-image/">pull</a>
     %end
+        <a href="/dockman/{{srv.name}}/pull-image/">{{linkAction}}</a>
     </small>
     <br>
 %end
