@@ -4,5 +4,5 @@ APPNAME = 'tsdesktop'
 def println():
     print("{} v{}".format(APPNAME, VERSION))
 
-if __name__ == '__main__':
+if __name__ == '__main__': # coverage: exclude
     println()

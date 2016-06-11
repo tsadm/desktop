@@ -29,7 +29,7 @@ def read(filenames=None):
     ok = cfg.read(filenames)
     return ok
 
-def cmd():
+def cmd(): # coverage: exclude
     ok = read()
     sys.stdout.write("read: "+" ".join(ok)+"\n\n")
     cfg.write(sys.stdout)
