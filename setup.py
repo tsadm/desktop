@@ -17,6 +17,8 @@ install_requires=[
 if sys.version_info.major == 2:
     install_requires.append('configparser>=3.5.0')
 
+version.writeBuildInfo()
+
 setup(
     name=version.APPNAME,
     version=version.VERSION,
@@ -53,6 +55,7 @@ setup(
         'tsdesktop': 'lib/tsdesktop',
     },
     package_data={
+        'tsdesktop': ['buildinfo.json'],
         'tsdesktop.bottman': [
             'templates/*.tpl',
             'templates/inc/*.tpl',

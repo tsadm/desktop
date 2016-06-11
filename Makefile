@@ -9,6 +9,7 @@ clean:
 	@rm -rf .coverage htmlcov
 	@$(PYCMD) setup.py clean -a 2>/dev/null
 	@rm -rf build dist tsdesktop.egg-info
+	@rm -vf lib/tsdesktop/buildinfo.json
 	@find lib/ -type d -name __pycache__ | xargs rm -rfv
 	@find lib/ -type f -name '*.py[co]' | xargs rm -rfv
 
