@@ -7,7 +7,11 @@ class TSDesktopTest(TestCase):
         found = 0
         for l in src.splitlines():
             lno += 1
-            if l.find(text) > 0:
+            try:
+                l.index(text)
+            except ValueError:
+                pass
+            else:
                 found = lno
                 break
         self.assertTrue(found, msg='not found: '+text)
