@@ -1,7 +1,7 @@
 import time
 from tsdesktop.dockman import getClient, services
 from ..utils import render
-from bottle import abort, HTTPError
+from bottle import abort, HTTPError, redirect
 
 
 # -- docker pull image
@@ -25,7 +25,9 @@ def dockman(srvName=None, action=None):
         abort(500, e)
     if action == 'pull-image':
         err = _pullImage(cli, srvName)
-        if err is not None:
+        if err is None:
+            redirect('/dockman')
+        else:
             return err
     return render('dockman', docker=cli, dockmanServices=services.classList(), startTime=sT)
 
