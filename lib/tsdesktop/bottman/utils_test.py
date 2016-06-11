@@ -23,4 +23,4 @@ class Render(TestCase):
 
     def test_render(self):
         v = dashboard.view()
-        self.assertEqual(len(v), 2378)
+        self.assertEqual(len(v), 2397)

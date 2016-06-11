@@ -10,16 +10,16 @@ class Views(TestCase):
 
     def test_error400(self):
         v = error400(bottle.HTTPError(400, 'fake error'))
-        self.assertEqual(len(v), 1310)
+        self.assertEqual(len(v), 1331)
 
     def test_error404(self):
         v = error404(bottle.HTTPError(404, 'fake error'))
-        self.assertEqual(len(v), 1308)
+        self.assertEqual(len(v), 1329)
 
     def test_error500(self):
         v = error500(bottle.HTTPError(500, 'fake error'))
-        self.assertEqual(len(v), 1320)
+        self.assertEqual(len(v), 1341)
 
     def test_settings(self):
         v = settings()
-        self.assertEqual(len(v), 1246)
+        self.assertEqual(len(v), 1267)
