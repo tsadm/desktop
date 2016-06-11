@@ -21,8 +21,13 @@ class Views(TSDesktopTest):
         self.assertEqual(len(v), 1341)
 
     def test_settings(self):
+        from tsdesktop import config
+        config.read('/dev/null')
         v = settings()
-        self.assertEqual(len(v), 1267)
+        self.assertLinesContains(v, '[user]')
+        self.assertLinesContains(v, '[site]')
+        self.assertLinesContains(v, '[service:httpd]')
+        self.assertLinesContains(v, '[service:mysqld]')
 
     def test_about(self):
         v = about()

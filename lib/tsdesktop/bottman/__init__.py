@@ -32,7 +32,12 @@ def error500(err):
 # -- settings
 @app.route('/settings')
 def settings():
-    return render('settings')
+    from tsdesktop.config import cfg
+    from io import StringIO
+    buf = StringIO()
+    cfg.write(buf)
+    buf.seek(0, 0)
+    return render('settings', config=buf)
 
 
 # -- about
