@@ -1,8 +1,8 @@
-from unittest import TestCase
-from . import static, error400, error404, error500, settings
+from tsdesktop.testing import TSDesktopTest
+from . import static, error400, error404, error500, settings, about
 import bottle
 
-class Views(TestCase):
+class Views(TSDesktopTest):
 
     def test_static(self):
         v = static('w3.css')
@@ -23,3 +23,7 @@ class Views(TestCase):
     def test_settings(self):
         v = settings()
         self.assertEqual(len(v), 1267)
+
+    def test_about(self):
+        v = about()
+        self.assertLinesContains(v, '<h3>tsdesktop v')
