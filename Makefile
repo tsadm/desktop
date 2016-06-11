@@ -44,7 +44,7 @@ test-all: test-py2 test-py3
 .PHONY: test-coverage
 test-coverage:
 	@make compile >/dev/null
-	@$(PYCMD) -m coverage run --source='lib/tsdesktop' test.py
+	@$(PYCMD) -m coverage run test.py
 	@$(PYCMD) -m coverage report
 	@$(PYCMD) -m coverage html
 
