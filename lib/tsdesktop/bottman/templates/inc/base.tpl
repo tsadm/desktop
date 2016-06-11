@@ -9,6 +9,8 @@
     <title>{{appName}} - {{req.path}}</title>
 </head>
 <body class="w3-theme-l1" style="font-family:monospace;font-size:16px">
+    <script src="/static/utils.js"></script>
+
     %include('inc/navbar.tpl')
 
     <!-- main -->
