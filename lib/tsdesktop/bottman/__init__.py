@@ -35,6 +35,19 @@ def settings():
     return render('settings')
 
 
+# -- about
+@app.route('/about')
+def about():
+    from sys import version as python_version
+    from bottle import __version__ as bottle_version
+    from docker import version as dockerpy_version
+    return render('about',
+        bottleVersion=bottle_version,
+        pythonVersion=python_version,
+        dockerpyVersion=dockerpy_version,
+    )
+
+
 # -- init views
 dashboard.init(app)
 dockman.init(app)
