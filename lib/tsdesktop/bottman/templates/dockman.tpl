@@ -1,32 +1,36 @@
-%rebase('inc/base.tpl')
-%include('inc/dockman_status.tpl')
+% rebase('inc/base.tpl')
+% include('inc/dockman_status.tpl')
 
 <h3>images</h3>
 <p>
-%for srv in dockmanServices:
+% for srv in dockmanServices:
+    % imgInfo = srv.imageInfo()
+    % linkAction = 'pull'
+    % btnColor = 'w3-red'
+    % if imgInfo.status == 'missing':
+        % btnColor = 'w3-yellow'
+    % elif imgInfo.status == 'ok':
+        % btnColor = 'w3-green'
+        % linkAction = 'update'
+    % end
+    % modalName = 'dockman-'+linkAction+'-image-'+srv.name
+    % modalMessage = linkAction+' image: '+imgInfo.name
+    % destURL = '/dockman/'+srv.name+'/pull-image'
     <b>{{srv.name}}</b>:
-    %imgInfo = srv.imageInfo()
-    <small>&lt;{{imgInfo.name}}&gt;
-    %if imgInfo.status == 'missing':
-        <span class="w3-small w3-badge w3-yellow">miss</span>
-        <a href="/dockman/{{srv.name}}/pull-image/">pull</a>
-    %elif imgInfo.status == 'ok':
-        <span class="w3-small w3-badge w3-green">ok</span>
-        <a href="/dockman/{{srv.name}}/pull-image/">update</a>
-    %else:
-        <span class="w3-small w3-badge w3-red">err</span>
-        <a href="/dockman/{{srv.name}}/pull-image/">pull</a>
-    %end
-    </small>
-    <br>
-%end
+    <small>&lt;{{imgInfo.name}}&gt;</small>
+    <button
+        class="w3-btn w3-small w3-padding-tiny w3-border {{btnColor}}"
+        onclick="modalShow('{{modalName}}')"
+    >{{linkAction}}</button>
+    % include('inc/modal_confirm.tpl')
+% end
 </p>
 
 <h3>docker</h3>
 <p class="w3-small">
     Ping: {{docker.ping()}}<br>
-%dockinf = docker.version()
-%for ik in sorted(dockinf.keys()):
+% dockinf = docker.version()
+% for ik in sorted(dockinf.keys()):
     {{ik}}: {{dockinf.get(ik)}}<br>
-%end
+% end
 </p>

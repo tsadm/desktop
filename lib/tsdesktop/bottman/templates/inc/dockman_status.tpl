@@ -14,11 +14,10 @@
         %>
             <button
                 class="w3-btn w3-round-xxlarge {{btnColor}}"
-                onclick="dockmanShow('dockman_{{srv.name}}')"
+                onclick="modalShow('dockman_{{srv.name}}')"
             >{{srv.name}}</button>
     %end
 %end
 </div>
 %include('inc/dockman_modals.tpl')
-<script src="/static/dockman.js"></script>
 <!-- dockman status -->

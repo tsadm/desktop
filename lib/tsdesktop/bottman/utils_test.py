@@ -1,10 +1,10 @@
-from unittest import TestCase
+from tsdesktop.testing import TSDesktopTest
 from .utils import staticFile
 from .views import dashboard
 import bottle
 
 
-class StaticFile(TestCase):
+class StaticFile(TSDesktopTest):
 
     def test_staticFile(self):
         sf = staticFile('w3.css')
@@ -19,8 +19,14 @@ class StaticFile(TestCase):
         self.assertEqual(sf.status_code, 404)
 
 
-class Render(TestCase):
+class Render(TSDesktopTest):
 
     def test_render(self):
         v = dashboard.view()
-        self.assertEqual(len(v), 2378)
+        self.assertLinesContains(v, '<!DOCTYPE html>')
+        self.assertLinesContains(v, '<html>')
+        self.assertLinesContains(v, '<head>')
+        self.assertLinesContains(v, '</head>')
+        self.assertLinesContains(v, '<body class=')
+        self.assertLinesContains(v, '</body>')
+        self.assertLinesContains(v, '</html>')

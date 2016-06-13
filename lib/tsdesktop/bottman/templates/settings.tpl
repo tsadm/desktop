@@ -1,2 +1,6 @@
 %rebase('inc/base.tpl')
-<p>settings...</p>
+<p>
+%for line in config.readlines():
+    {{line}}<br>
+%end
+</p>
