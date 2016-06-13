@@ -6,7 +6,7 @@ class TSDesktopTest(TestCase):
     def skipOSX(self):
         print(platform.system())
         if platform.system() == 'Darwin':
-            self.skipTest()
+            self.skipTest('tsdesktop skipOSK')
             return True
         return False
 
