@@ -22,11 +22,12 @@ class StaticFile(TSDesktopTest):
 class Render(TSDesktopTest):
 
     def test_render(self):
-        v = dashboard.view()
-        self.assertLinesContains(v, '<!DOCTYPE html>')
-        self.assertLinesContains(v, '<html>')
-        self.assertLinesContains(v, '<head>')
-        self.assertLinesContains(v, '</head>')
-        self.assertLinesContains(v, '<body class=')
-        self.assertLinesContains(v, '</body>')
-        self.assertLinesContains(v, '</html>')
+        if not self.skipOSX():
+            v = dashboard.view()
+            self.assertLinesContains(v, '<!DOCTYPE html>')
+            self.assertLinesContains(v, '<html>')
+            self.assertLinesContains(v, '<head>')
+            self.assertLinesContains(v, '</head>')
+            self.assertLinesContains(v, '<body class=')
+            self.assertLinesContains(v, '</body>')
+            self.assertLinesContains(v, '</html>')

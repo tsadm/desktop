@@ -1,6 +1,14 @@
+import platform
 from unittest import TestCase
 
 class TSDesktopTest(TestCase):
+
+    def skipOSX(self):
+        print(platform.system())
+        if platform.system() == 'Darwin':
+            self.skipTest()
+            return True
+        return False
 
     def assertLinesContains(self, src, text):
         lno = 0
