@@ -34,5 +34,5 @@ def dockman(srvName=None, action=None):
 
 # -- package init
 def init(app):
-    app.route('/dockman/<srvName>/<action>/', callback=dockman)
+    app.route('/dockman/<srvName>/<action>', callback=dockman)
     app.route('/dockman', callback=dockman)
