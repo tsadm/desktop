@@ -2,7 +2,7 @@ import time
 import json
 from os import path
 
-VERSION = '16.6'
+VERSION = (16, 6, 0)
 APPNAME = 'tsdesktop'
 
 buildinfo = {
@@ -28,16 +28,22 @@ def readBuildInfo():
     except IOError:
         pass
 
-def println():
+def _version():
+    return '.'.join([str(i) for i in VERSION])
+
+def string():
     readBuildInfo()
-    v = "{} v{}".format(APPNAME, VERSION)
+    v = "{} v{}".format(APPNAME, _version())
     if buildinfo['TIME'] is not None:
-        v = "{} ({:.3f} {})".format(
+        v = "{} ({} {})".format(
             v,
-            buildinfo['TIME'],
+            time.strftime('%d%b%Y', time.localtime(buildinfo['TIME'])),
             buildinfo['AUTHOR'],
         )
-    print(v)
+    return v
+
+def println():
+    print(string())
 
 if __name__ == '__main__': # coverage: exclude
     println()
