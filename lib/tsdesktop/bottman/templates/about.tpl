@@ -1,5 +1,5 @@
 %rebase('inc/base.tpl')
-<h3>{{appName}} v{{appVersion}}</h3>
+<h3>{{appVersionString}}</h3>
 <ul>
     <li>
         <a href="https://www.python.org/" target="_blank">Python</a>

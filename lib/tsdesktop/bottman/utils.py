@@ -12,7 +12,8 @@ bottle.TEMPLATE_PATH.insert(0, _tplsDir)
 def render(tpl, **kwargs):
     tdata = {
         'appName': version.APPNAME,
-        'appVersion': version.VERSION,
+        'appVersion': version._version(),
+        'appVersionString': version.string(),
         'req': request,
         'now': strftime('%a %b %d %H:%M:%S %Y %z'),
         'navbarLinks': (
