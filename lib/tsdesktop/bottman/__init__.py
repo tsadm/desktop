@@ -2,6 +2,11 @@ from bottle import Bottle
 from .utils import render, staticFile
 from .views import dashboard, dockman
 from time import time
+from platform import python_version, system, machine
+from bottle import __version__ as bottle_version
+from docker import version as dockerpy_version
+from io import StringIO
+
 
 app = Bottle(catchall=True)
 
@@ -34,7 +39,6 @@ def error500(err):
 @app.route('/settings')
 def settings():
     from tsdesktop.config import cfg
-    from io import StringIO
     buf = StringIO()
     cfg.write(buf)
     buf.seek(0, 0)
@@ -44,12 +48,9 @@ def settings():
 # -- about
 @app.route('/about')
 def about():
-    from sys import version as python_version
-    from bottle import __version__ as bottle_version
-    from docker import version as dockerpy_version
     return render('about',
+        pythonVersion='{} ({} {})'.format(python_version(), system(), machine()),
         bottleVersion=bottle_version,
-        pythonVersion=python_version,
         dockerpyVersion=dockerpy_version,
         startTime=time(),
     )
