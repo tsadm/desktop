@@ -2,7 +2,7 @@ import time
 import json
 from os import path
 from getpass import getuser
-from platform import uname
+from platform import node
 
 VERSION = (16, 6, 0)
 APPNAME = 'tsdesktop'
@@ -16,7 +16,7 @@ def writeBuildInfo():
     global buildinfo
     buildinfo['TIME'] = time.time()
     buildinfo['AUTHOR'] = getuser()
-    buildinfo['HOSTNAME'] = uname().node
+    buildinfo['HOSTNAME'] = node()
     with open(binfoFile, 'w') as fh:
         json.dump(buildinfo, fh)
         fh.close()
