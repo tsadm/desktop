@@ -1,6 +1,7 @@
 from bottle import Bottle
 from .utils import render, staticFile
 from .views import dashboard, dockman
+from time import time
 
 app = Bottle(catchall=True)
 
@@ -50,6 +51,7 @@ def about():
         bottleVersion=bottle_version,
         pythonVersion=python_version,
         dockerpyVersion=dockerpy_version,
+        startTime=time(),
     )
 
 
