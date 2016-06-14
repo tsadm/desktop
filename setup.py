@@ -21,7 +21,7 @@ version.writeBuildInfo()
 
 setup(
     name=version.APPNAME,
-    version=[str(i) for i in version.VERSION],
+    version=version._version(),
 
     description=desc,
     long_description=desc,
