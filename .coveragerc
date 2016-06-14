@@ -2,8 +2,11 @@
 source = lib/tsdesktop
 
 omit =
+    *_test.py
+    lib/tsdesktop/__init__.py
     lib/tsdesktop/cmd.py
     lib/tsdesktop/dockman/__main__.py
+    lib/tsdesktop/bottman/views/__init__.py
 
 [report]
 exclude_lines =
