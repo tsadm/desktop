@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-import sys
+import sys, platform
 from os import path
 from unittest import TestLoader, TextTestRunner
 
-print("Python {}".format(sys.version))
+print("Python {} {} {}".format(platform.python_version(), platform.system(), platform.machine()))
 
 if not '--test-installed' in sys.argv:
     libdir = path.join(path.abspath(path.curdir), 'lib')
