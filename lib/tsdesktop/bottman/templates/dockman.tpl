@@ -1,8 +1,11 @@
 % rebase('inc/base.tpl')
 % include('inc/dockman_status.tpl')
 
+<script src="/static/dockman.js"></script>
+
 <h3>images</h3>
 <div class="w3-container">
+% modalCallback = 'dockmanPullImage'
 % for srv in dockmanServices:
     % imgInfo = srv.imageInfo()
     % linkAction = 'pull'
