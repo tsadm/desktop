@@ -14,9 +14,9 @@
                 style="dispaly:block"
                 class="w3-center"
             >
-                <button class="w3-btn" onclick="modalCallback()">OK</button>
+                <button class="w3-btn" onclick="modalCallback()">ok</button>
                 -
-                <button class="w3-btn" onclick="modalHide('{{modalName}}')">Cancel</button>
+                <button class="w3-btn" onclick="modalHide('{{modalName}}')">cancel</button>
             </p>
             <!-- close button -->
             <p
@@ -27,7 +27,7 @@
                 <button
                     class="w3-btn"
                     onclick="stopPrgrsBar('{{modalName}}'); modalHide('{{modalName}}')"
-                >Close</button>
+                >close</button>
             </p>
         </div>
     </div>
