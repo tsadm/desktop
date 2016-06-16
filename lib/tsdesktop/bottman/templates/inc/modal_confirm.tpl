@@ -14,15 +14,9 @@
                 style="dispaly:block"
                 class="w3-center"
             >
-                <button
-                    class="w3-btn"
-                    onclick="{{modalCallback}}('{{modalName}}')"
-                >OK</button>
+                <button class="w3-btn" onclick="modalCallback()">OK</button>
                 -
-                <button
-                    class="w3-btn"
-                    onclick="modalHide('{{modalName}}')"
-                >Cancel</button>
+                <button class="w3-btn" onclick="modalHide('{{modalName}}')">Cancel</button>
             </p>
             <!-- close button -->
             <p

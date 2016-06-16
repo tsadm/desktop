@@ -7,7 +7,7 @@
     <div
         id="{{modalName}}-prgrsBar"
         class="w3-progressbar w3-blue w3-round-large"
-        style="width:0"
+        style="width:1"
     ></div>
 </div>
 <!-- modal_progressbar -->

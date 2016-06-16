@@ -5,7 +5,6 @@
 
 <h3>images</h3>
 <div class="w3-container">
-% modalCallback = 'dockmanPullImage'
 % for srv in dockmanServices:
     % imgInfo = srv.imageInfo()
     % linkAction = 'pull'
@@ -24,7 +23,7 @@
         <small>&lt;{{imgInfo.name}}&gt;</small>
         <button
             class="w3-btn w3-small w3-padding-tiny w3-border {{btnColor}}"
-            onclick="modalShow('{{modalName}}')"
+            onclick="dockmanPullImage('{{modalName}}', '{{srv.name}}')"
         >{{linkAction}}</button>
     </p>
     % include('inc/modal_confirm.tpl')
