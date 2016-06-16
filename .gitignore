@@ -1,6 +1,7 @@
 *.py[co]
 .coverage
 .*.swp
+*.patch
 __pycache__/
 build/
 dist/

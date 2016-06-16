@@ -20,6 +20,7 @@ install:
 
 script:
   - make test TEST_ARGS='--test-installed'
+  - make clean
   - make test-coverage
 
 after_success:

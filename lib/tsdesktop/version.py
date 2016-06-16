@@ -1,6 +1,8 @@
 import time
 import json
 from os import path
+from getpass import getuser
+from platform import node
 
 VERSION = (16, 6, 0)
 APPNAME = 'tsdesktop'
@@ -12,9 +14,9 @@ binfoFile = path.join(path.dirname(__file__), 'buildinfo.json')
 
 def writeBuildInfo():
     global buildinfo
-    from getpass import getuser
     buildinfo['TIME'] = time.time()
     buildinfo['AUTHOR'] = getuser()
+    buildinfo['HOSTNAME'] = node()
     with open(binfoFile, 'w') as fh:
         json.dump(buildinfo, fh)
         fh.close()
@@ -35,10 +37,11 @@ def string():
     readBuildInfo()
     v = "{} v{}".format(APPNAME, _version())
     if buildinfo['TIME'] is not None:
-        v = "{} ({} {})".format(
+        v = "{} ({} {}@{})".format(
             v,
             time.strftime('%d%b%Y', time.localtime(buildinfo['TIME'])),
             buildinfo['AUTHOR'],
+            buildinfo['HOSTNAME'],
         )
     return v
 
