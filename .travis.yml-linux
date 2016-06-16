@@ -14,13 +14,14 @@ env:
   - PYCMD=python
 
 install:
+  - docker version
   - pip install coverage
   - pip install codecov
   - make install
 
 script:
   - make test TEST_ARGS='--test-installed'
-  - make clean
+  - make clean >/dev/null
   - make test-coverage
 
 after_success:
