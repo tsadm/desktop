@@ -15,7 +15,7 @@ script:
   - eval "$(docker-machine env default)"
   - docker-machine ls
   - docker version || true
-  - make test-all
+  - make test-all TEST_ARGS='--test-installed'
 
 notifications:
   irc:
