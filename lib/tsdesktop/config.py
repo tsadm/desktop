@@ -31,6 +31,7 @@ def read(filenames=None):
 
 def cmd(): # coverage: exclude
     ok = read()
-    sys.stdout.write("read: "+" ".join(ok)+"\n\n")
+    readFiles = ok or ['(no config files)']
+    sys.stdout.write("read: "+" ".join(readFiles)+"\n\n")
     cfg.write(sys.stdout)
     return 0
