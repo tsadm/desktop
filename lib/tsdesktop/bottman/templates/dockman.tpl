@@ -17,7 +17,6 @@
     % end
     % modalName = 'dockman-'+linkAction+'-image-'+srv.name
     % modalMessage = linkAction+' image: '+imgInfo.name
-    % destURL = '/dockman/'+srv.name+'/pull-image'
     <p>
         <b>{{srv.name}}</b>:
         <small>&lt;{{imgInfo.name}}&gt;</small>
