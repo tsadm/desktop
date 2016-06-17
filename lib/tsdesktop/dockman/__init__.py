@@ -10,10 +10,7 @@ def getClient():
     return _cli
 
 def checkOutput(out):
-    print(type(out), out)
-    lno = 0
     for line in out.splitlines():
-        lno += 1
         try:
             l = json.loads(line)
             if 'error' in l.keys():
