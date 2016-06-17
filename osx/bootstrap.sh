@@ -2,7 +2,7 @@
 
 set -x
 
-test -x brew || {
+test -x $(which brew) || {
     echo "ERROR brew command line tools seems not to be installed!!"
     echo "ERROR check Homebrew web site for installing: http://brew.sh"
     exit 1
