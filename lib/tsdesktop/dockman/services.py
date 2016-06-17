@@ -13,7 +13,7 @@ class ImageInfo:
         elif info:
             self.status = 'ok'
 
-    def repository(self):
+    def repo(self):
         return self.name.split(':')[0]
 
     def tag(self):

@@ -1,5 +1,5 @@
 import time
-from tsdesktop.dockman import getClient, services
+from tsdesktop.dockman import getClient, services, checkOutput
 from ..utils import render
 from bottle import abort, HTTPError, redirect
 
@@ -10,9 +10,9 @@ def _pullImage(cli, srvName):
     if srv is None:
         return HTTPError(400, 'service name: '+srvName)
     imgInfo = srv().imageInfo()
-    # FIXME: check pull status!
-    cli.pull(repository=imgInfo.repository(), tag=imgInfo.tag(), stream=False)
-    return None
+    err = checkOutput(cli.pull(repository=imgInfo.repo(), tag=imgInfo.tag()))
+    if err is not None:
+        return HTTPError(500, 'docker pull: '+err)
 
 
 # -- docker info
