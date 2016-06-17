@@ -1,5 +1,6 @@
 % rebase('inc/base.tpl')
 % include('inc/dockman_status.tpl')
+% include('inc/modal_confirm.tpl')
 
 <script src="/static/dockman.js"></script>
 
@@ -15,17 +16,14 @@
         % btnColor = 'w3-green'
         % linkAction = 'update'
     % end
-    % modalName = 'dockman-'+linkAction+'-image-'+srv.name
-    % modalMessage = linkAction+' image: '+imgInfo.name
     <p>
         <b>{{srv.name}}</b>:
         <small>&lt;{{imgInfo.name}}&gt;</small>
         <button
             class="w3-btn w3-small w3-padding-tiny w3-border {{btnColor}}"
-            onclick="dockmanPullImage('{{modalName}}', '{{srv.name}}')"
+            onclick="dockmanPullImage('{{srv.name}}')"
         >{{linkAction}}</button>
     </p>
-    % include('inc/modal_confirm.tpl')
 % end
 </div>
 
