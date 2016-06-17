@@ -6,11 +6,11 @@ from bottle import abort, HTTPError, redirect
 
 # -- docker pull image
 def _pullImage(cli, srvName):
-    # FIXME!
     srv = services.classMap.get(srvName, None)
     if srv is None:
         return HTTPError(400, 'service name: '+srvName)
     imgInfo = srv().imageInfo()
+    # FIXME: check pull status!
     cli.pull(repository=imgInfo.repository(), tag=imgInfo.tag(), stream=False)
     return None
 
