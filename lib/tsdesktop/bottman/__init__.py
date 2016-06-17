@@ -1,6 +1,6 @@
 from bottle import Bottle
 from .utils import render, staticFile
-from .views import dashboard, dockman
+from . import views
 from time import time
 from platform import python_version, system, machine
 from bottle import __version__ as bottle_version
@@ -57,5 +57,4 @@ def about():
 
 
 # -- init views
-dashboard.init(app)
-dockman.init(app)
+views.init(app)
