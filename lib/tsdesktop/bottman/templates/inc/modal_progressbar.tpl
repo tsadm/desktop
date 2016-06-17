@@ -6,7 +6,7 @@
 >
     <div
         id="prgrsBar"
-        class="w3-progressbar w3-blue w3-round-large"
+        class="w3-progressbar w3-blue w3-round-large w3-padding-tiny"
         style="width:0"
     ></div>
 </div>
