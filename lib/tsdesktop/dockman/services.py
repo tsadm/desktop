@@ -30,7 +30,6 @@ class Service:
     def status(self):
         cli = getClient()
         s = cli.containers(all=True, filters={'name': self._contName()})
-        print('Service.status: ', self._contName(), s)
         if s:
             stat = s[0].get('Status', None)
             if stat is None:

@@ -1,6 +1,6 @@
 from os import path
 import bottle
-from bottle import template, static_file, request
+from bottle import template, static_file, request, HTTPResponse
 from tsdesktop import version
 from time import time, strftime
 
@@ -32,3 +32,7 @@ def render(tpl, **kwargs):
 
 def staticFile(fpath):
     return static_file(fpath, _staticDir)
+
+
+def textPlain(body, status=200):
+    return HTTPResponse(body, status=status, headers={'Content-Type': 'text/plain; charset=UTF-8'})

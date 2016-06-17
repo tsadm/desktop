@@ -1,6 +1,6 @@
 import time
 from tsdesktop.dockman import getClient, services, checkOutput
-from ..utils import render
+from ..utils import render, textPlain
 from bottle import abort, HTTPError, redirect
 
 
@@ -8,10 +8,10 @@ from bottle import abort, HTTPError, redirect
 def _startService(cli, srvName):
     cls = services.classMap.get(srvName, None)
     if cls is None:
-        return HTTPError(400, 'service name: '+srvName)
+        return textPlain('service name: '+srvName, 400)
     err = cls().start()
     if err is not None:
-        return HTTPError(500, 'docker start: '+err)
+        return textPlain(err, 400)
     return None
 
 
