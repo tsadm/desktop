@@ -1,4 +1,4 @@
-<!-- modal_confirm -->
+<!-- modal_confirm START -->
 <div id="modalConfirm" class="w3-modal">
     <div class="w3-modal-content w3-card-8">
         <div class="w3-container w3-border">
@@ -18,4 +18,4 @@
         </div>
     </div>
 </div>
-<!-- modal_confirm -->
+<!-- modal_confirm END -->

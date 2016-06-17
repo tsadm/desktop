@@ -7,7 +7,7 @@
             <p><b>{{srv.name}}</b></p>
             <hr>
             <p>
-                <a href="#service-start">start</a>
+                <button class="w3-btn" onclick="dockmanStart('{{srv.name}}')">start</button>
             </p>
         </div>
     </div>

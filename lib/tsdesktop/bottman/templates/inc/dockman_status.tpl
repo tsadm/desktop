@@ -1,4 +1,5 @@
-<!-- dockman status -->
+<!-- dockman status START -->
+<script src="/static/dockman.js"></script>
 <br>
 <div class="w3-container w3-tiny w3-wide w3-padding-0">
 %for srv in dockmanServices:
@@ -20,4 +21,5 @@
 %end
 </div>
 %include('inc/dockman_modals.tpl')
-<!-- dockman status -->
+%include('inc/modal_confirm.tpl')
+<!-- dockman status END -->

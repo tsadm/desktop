@@ -1,8 +1,5 @@
 % rebase('inc/base.tpl')
 % include('inc/dockman_status.tpl')
-% include('inc/modal_confirm.tpl')
-
-<script src="/static/dockman.js"></script>
 
 <h3>images</h3>
 <div class="w3-container">
