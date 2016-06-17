@@ -23,13 +23,16 @@ def dockman(srvName=None, action=None):
         cli.ping()
     except Exception as e:
         abort(500, e)
-    if action == 'pull-image':
+    if action is None:
+        return render('dockman', docker=cli, dockmanServices=services.classList(), startTime=sT)
+    elif action == 'pull-image':
         err = _pullImage(cli, srvName)
         if err is None:
             redirect('/dockman')
         else:
             return err
-    return render('dockman', docker=cli, dockmanServices=services.classList(), startTime=sT)
+    else:
+        return HTTPError(400, 'bad request')
 
 
 # -- package init
