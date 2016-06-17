@@ -30,8 +30,15 @@ class Service:
     def status(self):
         cli = getClient()
         s = cli.containers(all=True, filters={'name': self._contName()})
+        print('Service.status: ', self._contName(), s)
         if s:
-            return 'running'
+            stat = s[0].get('Status', None)
+            if stat is None:
+                return 'error'
+            elif stat.startswith('Up'):
+                return 'running'
+            elif stat.startswith('Exited'):
+                return 'exit'
         else:
             return 'error'
 
@@ -53,6 +60,23 @@ class Service:
 
     def _imgName(self):
         return 'tsadm/desktop:'+self.name
+
+    def _container(self):
+        cli = getClient()
+        return cli.create_container(
+            name=self._contName(),
+            image=self._imgName(),
+        )
+
+    def start(self):
+        cli = getClient()
+        stat = self.status()
+        if stat == 'exit':
+            cli.remove_container(container=self._contName(), v=True)
+        elif stat == 'running':
+            return self._contName()+': already running'
+        cont = self._container()
+        return cli.start(container=cont.get('Id'))
 
 
 class _httpd(Service):
