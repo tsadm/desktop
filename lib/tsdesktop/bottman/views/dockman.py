@@ -15,6 +15,17 @@ def _startService(cli, srvName):
     return None
 
 
+# -- docker stop service container
+def _stopService(cli, srvName):
+    cls = services.classMap.get(srvName, None)
+    if cls is None:
+        return textPlain('service name: '+srvName, 400)
+    err = cls().stop()
+    if err is not None:
+        return textPlain(err, 400)
+    return None
+
+
 # -- docker pull image
 def _pullImage(cli, srvName):
     srv = services.classMap.get(srvName, None)
@@ -45,8 +56,11 @@ def dockman(srvName=None, action=None):
     elif action == 'start':
         err = _startService(cli, srvName)
 
+    elif action == 'stop':
+        err = _stopService(cli, srvName)
+
     else:
-        err = HTTPError(400, 'bad request')
+        err = textPlain('bad request', 400)
 
     if err is None:
         redirect('/dockman')

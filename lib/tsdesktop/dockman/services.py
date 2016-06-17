@@ -38,8 +38,10 @@ class Service:
                 return 'running'
             elif stat.startswith('Exited'):
                 return 'exit'
+            else:
+                return 'error'
         else:
-            return 'error'
+            return ''
 
     def _contName(self):
         return 'tsdesktop-'+self.name
@@ -76,6 +78,18 @@ class Service:
             return self._contName()+': already running'
         cont = self._container()
         return cli.start(container=cont.get('Id'))
+
+    def stop(self):
+        cli = getClient()
+        stat = self.status()
+        if stat == 'exit':
+            cli.remove_container(container=self._contName(), v=True)
+            return None
+        elif stat == 'running':
+            cli.stop(self._contName())
+            cli.remove_container(container=self._contName(), v=True)
+            return None
+        return self._contName()+': not running'
 
 
 class _httpd(Service):

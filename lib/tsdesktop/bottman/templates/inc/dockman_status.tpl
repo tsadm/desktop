@@ -9,6 +9,8 @@
                 btnColor='w3-green'
             elif srv.status() == 'error':
                 btnColor='w3-red'
+            elif srv.status() == 'exit':
+                btnColor='w3-yellow'
             else:
                 btnColor='w3-grey'
             end
