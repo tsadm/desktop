@@ -3,6 +3,7 @@ from os.path import expanduser
 from configparser import ConfigParser
 
 cfg = None
+readFiles = []
 
 def _init():
     global cfg
@@ -23,11 +24,13 @@ def _init():
         }
 
 def read(filenames=None):
+    global readFiles
     _init()
     if filenames is None:
         filenames = [expanduser("~/.tsdesktop.ini"), ".tsdesktop.ini"]
     ok = cfg.read(filenames)
-    return ok or ['(no config files)']
+    readFiles = ok or ['(no config files)']
+    return readFiles
 
 def cmd(): # coverage: exclude
     ok = read()

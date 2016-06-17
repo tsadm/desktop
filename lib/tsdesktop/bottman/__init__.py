@@ -38,11 +38,11 @@ def error500(err):
 # -- settings
 @app.route('/settings')
 def settings():
-    from tsdesktop.config import cfg
+    from tsdesktop.config import cfg, readFiles
     buf = StringIO()
     cfg.write(buf)
     buf.seek(0, 0)
-    return render('settings', config=buf)
+    return render('settings', config=buf, readFiles=readFiles)
 
 
 # -- about
