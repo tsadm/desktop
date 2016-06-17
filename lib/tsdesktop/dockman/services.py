@@ -13,7 +13,7 @@ class ImageInfo:
         elif info:
             self.status = 'ok'
 
-    def repository(self):
+    def repo(self):
         return self.name.split(':')[0]
 
     def tag(self):
@@ -31,9 +31,17 @@ class Service:
         cli = getClient()
         s = cli.containers(all=True, filters={'name': self._contName()})
         if s:
-            return 'running'
+            stat = s[0].get('Status', None)
+            if stat is None:
+                return 'error'
+            elif stat.startswith('Up'):
+                return 'running'
+            elif stat.startswith('Exited'):
+                return 'exit'
+            else:
+                return 'error'
         else:
-            return 'error'
+            return ''
 
     def _contName(self):
         return 'tsdesktop-'+self.name
@@ -53,6 +61,35 @@ class Service:
 
     def _imgName(self):
         return 'tsadm/desktop:'+self.name
+
+    def _container(self):
+        cli = getClient()
+        return cli.create_container(
+            name=self._contName(),
+            image=self._imgName(),
+        )
+
+    def start(self):
+        cli = getClient()
+        stat = self.status()
+        if stat == 'exit':
+            cli.remove_container(container=self._contName(), v=True)
+        elif stat == 'running':
+            return self._contName()+': already running'
+        cont = self._container()
+        return cli.start(container=cont.get('Id'))
+
+    def stop(self):
+        cli = getClient()
+        stat = self.status()
+        if stat == 'exit':
+            cli.remove_container(container=self._contName(), v=True)
+            return None
+        elif stat == 'running':
+            cli.stop(self._contName())
+            cli.remove_container(container=self._contName(), v=True)
+            return None
+        return self._contName()+': not running'
 
 
 class _httpd(Service):
