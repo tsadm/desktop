@@ -27,11 +27,10 @@ def read(filenames=None):
     if filenames is None:
         filenames = [expanduser("~/.tsdesktop.ini"), ".tsdesktop.ini"]
     ok = cfg.read(filenames)
-    return ok
+    return ok or ['(no config files)']
 
 def cmd(): # coverage: exclude
     ok = read()
-    readFiles = ok or ['(no config files)']
-    sys.stdout.write("read: "+" ".join(readFiles)+"\n\n")
+    sys.stdout.write("read: "+" ".join(ok)+"\n\n")
     cfg.write(sys.stdout)
     return 0
