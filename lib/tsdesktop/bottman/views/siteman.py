@@ -8,15 +8,23 @@ from tsdesktop.siteman import sitesAll, siteGet, siteAdd, site_name_re
 # -- edit site
 def siteEdit(name):
     # FIXME!!
-    return 'edit: '+name
+    st = time()
+    site = siteGet(name)
+    err = site.load()
+    if err is not None:
+        return HTTPError(400, 'could not load site: '+str(err))
+    return render('site_edit', site=site, startTime=st)
 
 
 # -- site info
 def siteView(name):
     # FIXME!!
+    st = time()
     site = siteGet(name)
-    site.load()
-    return 'view: '+html_escape(str(site))
+    err = site.load()
+    if err is not None:
+        return HTTPError(400, 'could not load site: '+str(err))
+    return render('site_view', site=site, startTime=st)
 
 
 # -- open site
