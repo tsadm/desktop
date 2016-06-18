@@ -1,6 +1,6 @@
 % rebase('inc/base.tpl')
 <br>
-<form class="w3-container" action="/site/open" method="post">
+<form class="w3-container" action="/sites/open" method="post">
 
 <label>site name (only: a-zA-Z0-9.-_ characters)<sup>*</sup>:</label>
 <input class="w3-input w3-border" required name="site_name"
@@ -11,7 +11,7 @@
 <input class="w3-input w3-border" required name="site_docroot"
     placeholder="/home/sweet/sites/my-php-site/docroot" type="text">
 
-<button class="w3-btn">open</button><br>
+<button class="w3-btn">add</button><br>
 <sub>*no spaces</sub>
 
 </form>
