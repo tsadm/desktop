@@ -1,11 +1,10 @@
 %rebase('inc/base.tpl')
-<p>
-    read files:
+<h3>
 %for fpath in readFiles:
     {{fpath}}
 %end
-</p>
-<p>
+</h3>
+<p class="w3-black w3-padding w3-text-green">
 %for line in config.readlines():
     {{line}}<br>
 %end
