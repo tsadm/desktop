@@ -38,6 +38,5 @@ def read():
         return '(no config file)'
 
 def cmd(): # coverage: exclude
-    sys.stdout.write("read: "+filepath+"\n\n")
     cfg.write(sys.stdout)
     return 0
