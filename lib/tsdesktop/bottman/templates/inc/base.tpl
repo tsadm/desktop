@@ -17,7 +17,8 @@
     %include('inc/navbar.tpl')
 
     <!-- main -->
-    <div class="w3-content w3-theme-l5 w3-padding-0 w3-card-8" style="min-width:90%">
+    <div class="w3-content w3-theme-l5 w3-padding-0 w3-card-8"
+        style="max-width:90%">
 
         <!-- content -->
         <div class="w3-container">
