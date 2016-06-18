@@ -9,6 +9,9 @@ class Site:
         self.name = name
         self.docroot = docroot
 
+    def __str__(self):
+        return "<Site: {}>".format(self.name)
+
     def load(self):
         dpath = path.abspath(self.docroot)
         if not path.exists(dpath):
