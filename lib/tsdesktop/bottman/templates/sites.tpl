@@ -19,4 +19,5 @@
 
 </form>
 
+<br>
 % include('inc/sites_status.tpl')
