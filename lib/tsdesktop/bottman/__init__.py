@@ -29,6 +29,12 @@ def error404(err):
     return render('error', err=err)
 
 
+# -- error 405
+@app.error(405)
+def error405(err):
+    return render('error', err=err)
+
+
 # -- error 500
 @app.error(500)
 def error500(err):
