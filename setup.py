@@ -50,6 +50,7 @@ setup(
         'tsdesktop.bottman',
         'tsdesktop.bottman.views',
         'tsdesktop.dockman',
+        'tsdesktop.siteman',
     ],
     package_dir={
         'tsdesktop': 'lib/tsdesktop',

@@ -6,7 +6,7 @@ default: compile
 
 .PHONY: clean
 clean:
-	@rm -rf .coverage htmlcov
+	@rm -rf .coverage htmlcov __pycache__
 	@$(PYCMD) setup.py clean -a 2>/dev/null
 	@rm -rf build dist tsdesktop.egg-info
 	@rm -vf lib/tsdesktop/buildinfo.json

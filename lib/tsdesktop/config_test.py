@@ -4,15 +4,15 @@ from tsdesktop import config
 class Config(TestCase):
 
     def setUp(self):
-        config.read('/dev/null')
-
-
-    def test_read_no_filenames(self):
         config.read()
 
 
     def test_defaults(self):
         from os.path import expanduser
+        fpathPrev = config.filepath
+        config.cfg = None
+        config.filepath = '/dev/null'
+        config.read()
         with self.assertRaises(KeyError):
             config.cfg['tsadm']
 

@@ -1,6 +1,6 @@
 from bottle import Bottle
 from .utils import render, staticFile
-from .views import dashboard, dockman
+from . import views
 from time import time
 from platform import python_version, system, machine
 from bottle import __version__ as bottle_version
@@ -29,6 +29,12 @@ def error404(err):
     return render('error', err=err)
 
 
+# -- error 405
+@app.error(405)
+def error405(err):
+    return render('error', err=err)
+
+
 # -- error 500
 @app.error(500)
 def error500(err):
@@ -38,11 +44,11 @@ def error500(err):
 # -- settings
 @app.route('/settings')
 def settings():
-    from tsdesktop.config import cfg
+    from tsdesktop.config import cfg, filepath
     buf = StringIO()
     cfg.write(buf)
     buf.seek(0, 0)
-    return render('settings', config=buf)
+    return render('settings', config=buf, filePath=filepath)
 
 
 # -- about
@@ -57,5 +63,4 @@ def about():
 
 
 # -- init views
-dashboard.init(app)
-dockman.init(app)
+views.init(app)

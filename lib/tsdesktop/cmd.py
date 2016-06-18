@@ -22,11 +22,12 @@ def _parseArgs():
 
 def main():
     version.println()
-    config.read()
+    cfgFile = config.read()
     parser = _parseArgs()
     args = parser.parse_args()
 
     if args.config:
+        print("read: {}".format(cfgFile))
         return config.cmd()
 
     elif args.version:

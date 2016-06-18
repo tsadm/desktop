@@ -4,6 +4,8 @@
     <li><a href="{{nl[1]}}">
     %if req.path == nl[1]:
         <b>{{nl[0]}}</b>
+    %elif req.path != '/' and req.path.startswith(nl[1]+'/'):
+        <b>{{nl[0]}}</b>
     %else:
         {{nl[0]}}
     %end
