@@ -3,7 +3,7 @@ from os.path import expanduser
 from configparser import ConfigParser
 
 cfg = None
-readFiles = []
+filepath = expanduser("~/.tsdesktop.ini")
 
 def _init():
     global cfg
@@ -23,17 +23,21 @@ def _init():
             'docroot': 'docroot',
         }
 
-def read(filenames=None):
-    global readFiles
+def write():
     _init()
-    if filenames is None:
-        filenames = [expanduser("~/.tsdesktop.ini"), ".tsdesktop.ini"]
-    ok = cfg.read(filenames)
-    readFiles = ok or ['(no config files)']
-    return readFiles
+    with open(filepath, 'w') as fh:
+        cfg.write(fh)
+        fh.close()
+
+def read():
+    _init()
+    ok = cfg.read(filepath)
+    if ok:
+        return filepath
+    else:
+        return '(no config file)'
 
 def cmd(): # coverage: exclude
-    ok = read()
-    sys.stdout.write("read: "+" ".join(ok)+"\n\n")
+    sys.stdout.write("read: "+filepath+"\n\n")
     cfg.write(sys.stdout)
     return 0

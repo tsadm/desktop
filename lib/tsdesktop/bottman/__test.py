@@ -22,7 +22,7 @@ class Views(TSDesktopTest):
 
     def test_settings(self):
         from tsdesktop import config
-        config.read('/dev/null')
+        config.read()
         v = settings()
         self.assertLinesContains(v, '[user]')
         self.assertLinesContains(v, '[site]')

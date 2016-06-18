@@ -44,11 +44,11 @@ def error500(err):
 # -- settings
 @app.route('/settings')
 def settings():
-    from tsdesktop.config import cfg, readFiles
+    from tsdesktop.config import cfg, filepath
     buf = StringIO()
     cfg.write(buf)
     buf.seek(0, 0)
-    return render('settings', config=buf, readFiles=readFiles)
+    return render('settings', config=buf, filePath=filepath)
 
 
 # -- about
