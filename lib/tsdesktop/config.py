@@ -28,6 +28,13 @@ def write():
     with open(filepath, 'w') as fh:
         cfg.write(fh)
         fh.close()
+    # reload config
+    _reload()
+
+def _reload():
+    global cfg
+    cfg = None
+    return read()
 
 def read():
     _init()
