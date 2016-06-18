@@ -2,6 +2,7 @@ import re
 from time import time
 from ..utils import render
 from bottle import request, HTTPError, redirect
+from tsdesktop.config import cfg
 from tsdesktop.siteman import openSite
 
 
@@ -16,6 +17,8 @@ def siteOpen():
     ok = re.match(r'^[a-zA-Z0-9.-_]+$', name)
     if not ok:
         return HTTPError(400, 'invalid site name: '+name)
+    if cfg.has_section('site:'+name):
+        return HTTPError(400, 'site already exists: '+name)
     docroot = request.params.get('site_docroot', None)
     err = openSite(name, docroot)
     if err is not None:

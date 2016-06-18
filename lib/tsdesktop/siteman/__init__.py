@@ -21,4 +21,4 @@ def openSite(name, docroot):
         return 'not a dir'
     site = Site(name, dpath)
     site.load()
-    return None
+    return site
