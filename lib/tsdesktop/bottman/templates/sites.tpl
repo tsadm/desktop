@@ -4,7 +4,7 @@
 
 <label>site docroot (public_html) full path:</label>
 <input class="w3-input w3-border" required name="site_docroot"
-    placeholder="/home/joe/sites/my-php-site/docroot" type="text">
+    placeholder="/home/sweet/sites/my-php-site/docroot" type="text">
 
 <button class="w3-btn">open</button>
 

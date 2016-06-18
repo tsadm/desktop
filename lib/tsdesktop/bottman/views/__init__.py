@@ -1,6 +1,6 @@
-from . import dashboard, dockman, sites
+from . import dashboard, dockman, siteman
 
 def init(app):
     dashboard.init(app)
     dockman.init(app)
-    sites.init(app)
+    siteman.init(app)
