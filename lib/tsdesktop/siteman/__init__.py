@@ -14,7 +14,6 @@ class Site:
 
     def load(self):
         inifile = path.join(path.dirname(self.docroot), '.tsdesktop.ini')
-        print('INIFILE:', inifile)
 
 
 def openSite(docroot):
