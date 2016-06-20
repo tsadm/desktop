@@ -39,13 +39,10 @@ def siteOpen():
         return HTTPError(400, 'site already exists: '+name)
     # get docroot
     docroot = request.params.get('site_docroot', None)
-    # load site
-    site = Site(name, docroot)
-    err = site.load()
+    # add site to config and save it to disk
+    err = siteAdd(name, docroot)
     if err is not None:
-        return HTTPError(400, 'could not open site: '+str(err))
-    # add site to config and save it to disk (write)
-    siteAdd(name, docroot)
+        return HTTPError(400, 'could not add site: '+str(err))
     # redirect to site's view
     return redirect('/sites/'+name+'/view')
 

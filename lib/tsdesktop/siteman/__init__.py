@@ -31,9 +31,15 @@ site_name_re = re.compile(r'^[a-zA-Z0-9.-_]+$')
 
 # -- add site to config
 def siteAdd(name, docroot):
+    # load site
+    site = Site(name, docroot)
+    err = site.load()
+    if err is not None:
+        return err
     config.cfg.add_section('site:'+name)
     config.cfg.set('site:'+name, 'docroot', docroot)
     config.write()
+    return None
 
 
 # -- get site from config
