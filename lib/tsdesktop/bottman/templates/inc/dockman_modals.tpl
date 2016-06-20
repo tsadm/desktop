@@ -5,7 +5,7 @@
     <div class="w3-modal-content w3-card-8 w3-animate-top">
         <div class="w3-container">
             <span class="w3-closebtn" onclick="modalHide('dockman_{{srv.name}}')">&times;</span>
-            <p><b>{{srv.name}}</b></p>
+            <h2>service: {{srv.name}}</h2>
             <hr>
             <p>
             % if status == 'running':
