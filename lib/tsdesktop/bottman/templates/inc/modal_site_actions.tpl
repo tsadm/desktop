@@ -4,10 +4,14 @@
 <div id="modal-site-actions-{{site.name}}" class="w3-modal">
     <div class="w3-modal-content w3-card-8">
         <div class="w3-container">
+
             <span class="w3-closebtn"
                 onclick="modalHide('modal-site-actions-{{site.name}}')">&times;</span>
-            <h2>site: {{site.name}}</h2>
+
+            <h2>site: <a href="/siteman/{{site.name}}/view">{{site.name}}</a></h2>
+
             <hr class="w3-border">
+
             <p>
 
                 <button class="w3-btn"
@@ -26,6 +30,7 @@
                 </button>
 
             </p>
+
         </div>
     </div>
 </div>

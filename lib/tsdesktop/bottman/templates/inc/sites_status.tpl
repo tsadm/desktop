@@ -13,7 +13,7 @@
     </div>
 
     % include('inc/modal_site_actions.tpl')
-    %include('inc/modal_confirm.tpl')
+    % include('inc/modal_confirm.tpl')
 % end
 
 <!-- sites_status END -->
