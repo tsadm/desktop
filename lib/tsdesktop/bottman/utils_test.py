@@ -39,3 +39,9 @@ class Plain(TSDesktopTest):
         self.assertEqual(r.status_code, 200)
         ct = r.headers.get('Content-Type')
         self.assertEqual(ct, 'text/plain; charset=UTF-8')
+
+    def test_textPlain400(self):
+        r = textPlain('fake error 400', 400)
+        self.assertEqual(r.status_code, 400)
+        ct = r.headers.get('Content-Type')
+        self.assertEqual(ct, 'text/plain; charset=UTF-8')
