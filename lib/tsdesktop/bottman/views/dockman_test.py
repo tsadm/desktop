@@ -4,6 +4,9 @@ from bottle import HTTPResponse, HTTPError
 
 class Views(TSDesktopTest):
 
+    def setUp(self):
+        self.skipOSX()
+
     def test_dockman(self):
         v = dockman()
         self.assertLinesContains(v,
