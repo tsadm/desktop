@@ -1,5 +1,5 @@
 from tsdesktop.testing import TSDesktopTest
-from .utils import staticFile
+from .utils import staticFile, textPlain
 from . import about
 import bottle
 
@@ -30,3 +30,18 @@ class Render(TSDesktopTest):
         self.assertLinesContains(v, '<body class=')
         self.assertLinesContains(v, '</body>')
         self.assertLinesContains(v, '</html>')
+
+
+class Plain(TSDesktopTest):
+
+    def test_textPlain(self):
+        r = textPlain('fake body')
+        self.assertEqual(r.status_code, 200)
+        ct = r.headers.get('Content-Type')
+        self.assertEqual(ct, 'text/plain; charset=UTF-8')
+
+    def test_textPlain400(self):
+        r = textPlain('fake error 400', 400)
+        self.assertEqual(r.status_code, 400)
+        ct = r.headers.get('Content-Type')
+        self.assertEqual(ct, 'text/plain; charset=UTF-8')

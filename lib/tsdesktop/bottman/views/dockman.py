@@ -5,59 +5,58 @@ from bottle import abort, HTTPError, redirect
 
 
 # -- docker start service container
-def _startService(cli, srvName):
-    cls = services.classMap.get(srvName, None)
-    if cls is None:
-        return textPlain('service name: '+srvName, 400)
-    err = cls().start()
+def _startService(srvc):
+    err = srvc.start()
     if err is not None:
         return textPlain(err, 400)
     return None
 
 
 # -- docker stop service container
-def _stopService(cli, srvName):
-    cls = services.classMap.get(srvName, None)
-    if cls is None:
-        return textPlain('service name: '+srvName, 400)
-    err = cls().stop()
+def _stopService(srvc):
+    err = srvc.stop()
     if err is not None:
         return textPlain(err, 400)
     return None
 
 
 # -- docker pull image
-def _pullImage(cli, srvName):
-    srv = services.classMap.get(srvName, None)
-    if srv is None:
-        return HTTPError(400, 'service name: '+srvName)
-    imgInfo = srv().imageInfo()
+def _pullImage(cli, srvc):
+    imgInfo = srvc.imageInfo()
     err = checkOutput(cli.pull(repository=imgInfo.repo(), tag=imgInfo.tag()))
-    if err is not None:
+    if err is not None: # coverage: exclude
         return HTTPError(500, 'docker pull: '+err)
 
 
 # -- docker action manager
-def dockman(srvName=None, action=None):
+def dockman(service=None, action=None):
     err = None
     sT = time.time()
     try:
         cli = getClient()
         cli.ping()
-    except Exception as e:
+    except Exception as e: # coverage: exclude
         abort(500, e)
 
+    srvc = None
+    if action is not None:
+        klass = services.classMap.get(service, None)
+        if klass is None:
+            return HTTPError(400, 'invalid service: '+str(service))
+        srvc = klass()
+
     if action is None:
-        return render('dockman', docker=cli, dockmanServices=services.classList(), startTime=sT)
+        return render('dockman',
+            docker=cli, dockmanServices=services.classList(), startTime=sT)
 
     elif action == 'pull-image':
-        err = _pullImage(cli, srvName)
+        err = _pullImage(cli, srvc)
 
     elif action == 'start':
-        err = _startService(cli, srvName)
+        err = _startService(srvc)
 
     elif action == 'stop':
-        err = _stopService(cli, srvName)
+        err = _stopService(srvc)
 
     else:
         err = textPlain('bad request', 400)
@@ -70,5 +69,5 @@ def dockman(srvName=None, action=None):
 
 # -- package init
 def init(app):
-    app.route('/dockman/<srvName>/<action>', callback=dockman)
+    app.route('/dockman/<service>/<action>', callback=dockman)
     app.route('/dockman', callback=dockman)

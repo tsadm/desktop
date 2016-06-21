@@ -15,7 +15,7 @@ def checkOutput(out):
             l = json.loads(line)
             if 'error' in l.keys():
                 return l.get('error')
-        except json.decoder.JSONDecodeError as e:
+        except ValueError:
             # XXX: ignoring json decode errors...
             pass
     return None

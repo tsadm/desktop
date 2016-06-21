@@ -1,8 +1,18 @@
 from time import time
-from ..utils import render
+from ..utils import render, textPlain
 from bottle import request, HTTPError, redirect, html_escape
 from tsdesktop import config
 from tsdesktop.siteman import sitesAll, siteGet, siteAdd, site_name_re
+
+
+# -- remove site
+def siteRemove(name):
+    site = siteGet(name)
+    if site is None:
+        return textPlain('site not found: '+name, 404)
+    config.cfg.remove_section('site:'+name)
+    config.write()
+    return textPlain('site removed: '+name)
 
 
 # -- edit site
@@ -10,6 +20,8 @@ def siteEdit(name):
     # FIXME!!
     st = time()
     site = siteGet(name)
+    if site is None:
+        return HTTPError(404, 'site not found: '+name)
     err = site.load()
     if err is not None:
         return HTTPError(400, 'could not load site: '+str(err))
@@ -18,9 +30,10 @@ def siteEdit(name):
 
 # -- site info
 def siteView(name):
-    # FIXME!!
     st = time()
     site = siteGet(name)
+    if site is None:
+        return HTTPError(404, 'site not found: '+name)
     err = site.load()
     if err is not None:
         return HTTPError(400, 'could not load site: '+str(err))
@@ -39,27 +52,25 @@ def siteOpen():
         return HTTPError(400, 'site already exists: '+name)
     # get docroot
     docroot = request.params.get('site_docroot', None)
-    # load site
-    site = Site(name, docroot)
-    err = site.load()
+    # add site to config and save it to disk
+    err = siteAdd(name, docroot)
     if err is not None:
-        return HTTPError(400, 'could not open site: '+str(err))
-    # add site to config and save it to disk (write)
-    siteAdd(name, docroot)
+        return HTTPError(400, 'could not add site: '+str(err))
     # redirect to site's view
-    return redirect('/sites/'+name+'/view')
+    return redirect('/siteman/'+name+'/view')
 
 
 
-# -- sites index
+# -- add site / all sites status
 def sites():
     st = time()
-    return render('sites', sitesAll=sitesAll(), startTime=st)
+    return render('siteman', sitesAll=sitesAll(), startTime=st)
 
 
 # -- init views
 def init(app):
-    app.route('/sites/<name>/edit', callback=siteEdit)
-    app.route('/sites/<name>/view', callback=siteView)
-    app.route('/sites/open', method='POST', callback=siteOpen)
-    app.route('/sites', callback=sites)
+    app.route('/siteman/<name>/remove', method='POST', callback=siteRemove)
+    app.route('/siteman/<name>/edit', callback=siteEdit)
+    app.route('/siteman/<name>/view', callback=siteView)
+    app.route('/siteman/open', method='POST', callback=siteOpen)
+    app.route('/siteman', callback=sites)

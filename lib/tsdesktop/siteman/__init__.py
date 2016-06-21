@@ -2,6 +2,7 @@ import re
 import sys
 from os import path
 from tsdesktop import config
+from configparser import NoSectionError
 
 
 class Site:
@@ -31,14 +32,23 @@ site_name_re = re.compile(r'^[a-zA-Z0-9.-_]+$')
 
 # -- add site to config
 def siteAdd(name, docroot):
+    # load site
+    site = Site(name, docroot)
+    err = site.load()
+    if err is not None:
+        return err
     config.cfg.add_section('site:'+name)
     config.cfg.set('site:'+name, 'docroot', docroot)
     config.write()
+    return None
 
 
 # -- get site from config
 def siteGet(name):
-    docroot = config.cfg.get('site:'+name, 'docroot')
+    try:
+        docroot = config.cfg.get('site:'+name, 'docroot')
+    except NoSectionError:
+        return None
     if docroot is not None:
         return Site(name, docroot)
     return None
