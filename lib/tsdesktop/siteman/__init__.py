@@ -2,6 +2,7 @@ import re
 import sys
 from os import path
 from tsdesktop import config
+from configparser import NoSectionError
 
 
 class Site:
@@ -44,7 +45,10 @@ def siteAdd(name, docroot):
 
 # -- get site from config
 def siteGet(name):
-    docroot = config.cfg.get('site:'+name, 'docroot')
+    try:
+        docroot = config.cfg.get('site:'+name, 'docroot')
+    except NoSectionError:
+        return None
     if docroot is not None:
         return Site(name, docroot)
     return None

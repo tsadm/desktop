@@ -1,8 +1,18 @@
 from time import time
-from ..utils import render
+from ..utils import render, textPlain
 from bottle import request, HTTPError, redirect, html_escape
 from tsdesktop import config
 from tsdesktop.siteman import sitesAll, siteGet, siteAdd, site_name_re
+
+
+# -- remove site
+def siteRemove(name):
+    site = siteGet(name)
+    if site is None:
+        return textPlain('site not found: '+name, 404)
+    config.cfg.remove_section('site:'+name)
+    config.write()
+    return textPlain('site removed: '+name)
 
 
 # -- edit site
@@ -10,6 +20,8 @@ def siteEdit(name):
     # FIXME!!
     st = time()
     site = siteGet(name)
+    if site is None:
+        return HTTPError(404, 'site not found: '+name)
     err = site.load()
     if err is not None:
         return HTTPError(400, 'could not load site: '+str(err))
@@ -18,9 +30,10 @@ def siteEdit(name):
 
 # -- site info
 def siteView(name):
-    # FIXME!!
     st = time()
     site = siteGet(name)
+    if site is None:
+        return HTTPError(404, 'site not found: '+name)
     err = site.load()
     if err is not None:
         return HTTPError(400, 'could not load site: '+str(err))
@@ -56,6 +69,7 @@ def sites():
 
 # -- init views
 def init(app):
+    app.route('/siteman/<name>/remove', callback=siteRemove)
     app.route('/siteman/<name>/edit', callback=siteEdit)
     app.route('/siteman/<name>/view', callback=siteView)
     app.route('/siteman/open', method='POST', callback=siteOpen)
