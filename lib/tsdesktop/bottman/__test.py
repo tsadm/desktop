@@ -1,5 +1,5 @@
 from tsdesktop.testing import TSDesktopTest
-from . import static, error400, error404, error500, settings, about
+from . import static, error400, error404, error405, error500, settings, about
 import bottle
 
 class Views(TSDesktopTest):
@@ -15,6 +15,10 @@ class Views(TSDesktopTest):
     def test_error404(self):
         v = error404(bottle.HTTPError(404, 'fake error'))
         self.assertLinesContains(v, '<h3>ERROR - 404')
+
+    def test_error405(self):
+        v = error405(bottle.HTTPError(405, 'fake error'))
+        self.assertLinesContains(v, '<h3>ERROR - 405')
 
     def test_error500(self):
         v = error500(bottle.HTTPError(500, 'fake error'))
