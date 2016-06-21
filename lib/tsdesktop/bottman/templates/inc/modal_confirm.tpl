@@ -1,6 +1,6 @@
 <!-- modal_confirm START -->
 <div id="modalConfirm" class="w3-modal">
-    <div class="w3-modal-content w3-card-8 w3-animate-top">
+    <div class="w3-modal-content w3-card-8">
         <div class="w3-container w3-border">
             <p class="w3-theme-dark w3-tiny w3-center">!</p>
             <p id="modalConfirm-message"></p>
