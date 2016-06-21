@@ -1,6 +1,6 @@
 from tsdesktop.testing import TSDesktopTest
 from .dockman import dockman
-from bottle import HTTPResponse
+from bottle import HTTPResponse, HTTPError
 
 class Views(TSDesktopTest):
 
@@ -16,3 +16,8 @@ class Views(TSDesktopTest):
         self.assertEqual(resp.status_code, 302)
         loc = resp.get_header('Location')
         self.assertEqual(loc, 'http://127.0.0.1/dockman')
+
+    def test_pullImageError(self):
+        r = dockman('faked', 'pull-image')
+        self.assertIsInstance(r, HTTPError)
+        self.assertEqual(r.status_code, 400)

@@ -33,7 +33,7 @@ def _pullImage(cli, srvName):
         return HTTPError(400, 'service name: '+srvName)
     imgInfo = srv().imageInfo()
     err = checkOutput(cli.pull(repository=imgInfo.repo(), tag=imgInfo.tag()))
-    if err is not None:
+    if err is not None: # coverage: exclude
         return HTTPError(500, 'docker pull: '+err)
 
 
