@@ -51,7 +51,7 @@ def siteOpen():
 # -- add site / all sites status
 def sites():
     st = time()
-    return render('sites', sitesAll=sitesAll(), startTime=st)
+    return render('siteman', sitesAll=sitesAll(), startTime=st)
 
 
 # -- init views
