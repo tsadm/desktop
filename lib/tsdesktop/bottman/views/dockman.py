@@ -44,7 +44,7 @@ def dockman(srvName=None, action=None):
     try:
         cli = getClient()
         cli.ping()
-    except Exception as e:
+    except Exception as e: # coverage: exclude
         abort(500, e)
 
     if action is None:

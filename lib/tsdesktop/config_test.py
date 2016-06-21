@@ -4,6 +4,7 @@ from tsdesktop import config
 class Config(TestCase):
 
     def setUp(self):
+        config.filepath = '/dev/null'
         config.read()
 
 
@@ -11,7 +12,6 @@ class Config(TestCase):
         from os.path import expanduser
         fpathPrev = config.filepath
         config.cfg = None
-        config.filepath = '/dev/null'
         config.read()
         with self.assertRaises(KeyError):
             config.cfg['tsadm']
@@ -20,6 +20,10 @@ class Config(TestCase):
             expanduser('~/.cache/tsdesktop'))
 
         self.assertEqual(config.cfg.get('site', 'docroot'), 'docroot')
+
+
+    def test_write(self):
+        config.write()
 
 
     def test_httpd(self):

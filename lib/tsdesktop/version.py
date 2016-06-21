@@ -27,7 +27,7 @@ def readBuildInfo():
         with open(binfoFile, 'r') as fh:
             buildinfo = json.load(fh)
             fh.close()
-    except IOError:
+    except IOError: # coverage: exclude
         pass
 
 def _version():
