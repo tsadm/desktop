@@ -7,7 +7,7 @@
             <span class="w3-closebtn"
                 onclick="modalHide('modal-site-actions')">&times;</span>
             <h2>site: {{site.name}}</h2>
-            <hr>
+            <hr class="w3-border">
             <p>
                 <button class="w3-btn"
                     onclick="siteAction('start', '{{site.name}}')">
