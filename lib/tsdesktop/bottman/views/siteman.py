@@ -69,7 +69,7 @@ def sites():
 
 # -- init views
 def init(app):
-    app.route('/siteman/<name>/remove', callback=siteRemove)
+    app.route('/siteman/<name>/remove', method='POST', callback=siteRemove)
     app.route('/siteman/<name>/edit', callback=siteEdit)
     app.route('/siteman/<name>/view', callback=siteView)
     app.route('/siteman/open', method='POST', callback=siteOpen)
