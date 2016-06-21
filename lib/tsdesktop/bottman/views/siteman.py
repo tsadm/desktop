@@ -44,11 +44,11 @@ def siteOpen():
     if err is not None:
         return HTTPError(400, 'could not add site: '+str(err))
     # redirect to site's view
-    return redirect('/sites/'+name+'/view')
+    return redirect('/siteman/'+name+'/view')
 
 
 
-# -- sites index
+# -- add site / all sites status
 def sites():
     st = time()
     return render('sites', sitesAll=sitesAll(), startTime=st)
@@ -56,7 +56,7 @@ def sites():
 
 # -- init views
 def init(app):
-    app.route('/sites/<name>/edit', callback=siteEdit)
-    app.route('/sites/<name>/view', callback=siteView)
-    app.route('/sites/open', method='POST', callback=siteOpen)
-    app.route('/sites', callback=sites)
+    app.route('/siteman/<name>/edit', callback=siteEdit)
+    app.route('/siteman/<name>/view', callback=siteView)
+    app.route('/siteman/open', method='POST', callback=siteOpen)
+    app.route('/siteman', callback=sites)

@@ -1,6 +1,6 @@
 % rebase('inc/base.tpl')
 <br>
-<form class="w3-container w3-border" action="/sites/open" method="post">
+<form class="w3-container w3-border" action="/siteman/open" method="post">
 
 <label>site name<sup>*</sup></label>
 <input class="w3-input w3-border" required name="site_name"
