@@ -3,6 +3,7 @@ from .dockman import view
 from tsdesktop import dockman
 from bottle import HTTPResponse, HTTPError
 
+images = [{}]
 containers = [{'Status': None}]
 
 class Views(TSDesktopTest):
@@ -36,7 +37,7 @@ class Views(TSDesktopTest):
         self.assertResponse(r, 400)
 
     def test_pullImageError(self):
-        self.cli.mock('{"error": "fake error"}')
+        self.cli.mock(images, '{"error": "fake error"}')
         r = view('mysqld', 'pull-image')
         self.assertResponseError(r)
 

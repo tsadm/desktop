@@ -1,4 +1,5 @@
 from tsdesktop.testing import TSDesktopTest
+from tsdesktop import dockman
 from tsdesktop.dockman import services
 
 class ImageInfo(TSDesktopTest):
@@ -22,3 +23,17 @@ class ImageInfo(TSDesktopTest):
     def test_tagError(self):
         i = services.ImageInfo('faked', info=True)
         self.assertEqual(i.tag(), '')
+
+images = [{'name': 'tsadm/desktop:faked'}]
+
+class Service(TSDesktopTest):
+
+    def setUp(self):
+        self.cli = dockman._mockClient()
+        self.srvc = services.Service()
+        self.srvc.name = 'faked'
+
+    def test_imageInfoMissing(self):
+        self.cli.mock(images)
+        i = self.srvc.imageInfo()
+        self.assertEqual(i.status, 'missing')

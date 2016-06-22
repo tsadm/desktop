@@ -27,7 +27,10 @@ def checkOutput(out):
 class _mock:
 
     pingFail = False
-    queue = tuple()
+    queue = None
+
+    def __init__(self):
+        self.queue = tuple()
 
     def mock(self, *args):
         self.queue += tuple(args)
@@ -48,7 +51,7 @@ class _mock:
         return self._qget(default=[{}])
 
     def images(self, **kwargs):
-        pass
+        return self._qget(default=[{}])
 
     def version(self):
         return {}
