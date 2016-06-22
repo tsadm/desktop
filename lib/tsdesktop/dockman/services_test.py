@@ -24,7 +24,7 @@ class ImageInfo(TSDesktopTest):
         i = services.ImageInfo('faked', info=True)
         self.assertEqual(i.tag(), '')
 
-images = [{'name': 'tsadm/desktop:faked'}]
+images = [{'RepoTags': ['tsadm/desktop:faked']}]
 
 class Service(TSDesktopTest):
 
@@ -33,7 +33,17 @@ class Service(TSDesktopTest):
         self.srvc = services.Service()
         self.srvc.name = 'faked'
 
-    def test_imageInfoMissing(self):
+    def test_imageInfo(self):
         self.cli.mock(images)
         i = self.srvc.imageInfo()
+        self.assertEqual(i.status, 'ok')
+
+    def test_imageInfoMissing(self):
+        self.cli.mock([{}])
+        i = self.srvc.imageInfo()
         self.assertEqual(i.status, 'missing')
+
+    def test_imageInfoError(self):
+        self.cli.mock([])
+        i = self.srvc.imageInfo()
+        self.assertEqual(i.status, 'error')
