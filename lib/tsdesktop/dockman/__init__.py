@@ -45,7 +45,7 @@ class _mock:
             raise Exception('fake ping exception')
 
     def containers(self, **kwargs):
-        pass
+        return self._qget(default=[{}])
 
     def images(self, **kwargs):
         pass
@@ -57,9 +57,15 @@ class _mock:
         return self._qget(default='')
 
     def create_container(self, **kwargs):
-        return dict()
+        return {}
+
+    def remove_container(self, **kwargs):
+        pass
 
     def start(self, **kwargs):
+        return self._qget()
+
+    def stop(self, *args, **kwargs):
         return self._qget()
 
 def _mockClient():

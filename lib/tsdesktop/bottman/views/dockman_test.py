@@ -3,6 +3,8 @@ from .dockman import view
 from tsdesktop import dockman
 from bottle import HTTPResponse, HTTPError
 
+containers = [{'Status': None}]
+
 class Views(TSDesktopTest):
     cli = None
 
@@ -54,7 +56,25 @@ class Views(TSDesktopTest):
         self.assertEqual(loc, 'http://127.0.0.1/dockman')
 
     def test_serviceStartError(self):
+        self.cli.mock(containers)
         self.cli.mock('{"error": "service start fake error"}')
         r = view('mysqld', 'start')
+        self.assertIsInstance(r, HTTPResponse)
+        self.assertEqual(r.status_code, 400)
+
+    def test_serviceStop(self):
+        self.cli.mock([{'Status': 'Up since...'}])
+        with self.assertRaises(HTTPResponse) as cm:
+            r = view('mysqld', 'stop')
+            print(type(cm), cm, type(r), r)
+        r = cm.exception
+        self.assertEqual(r.status_code, 302)
+        loc = r.get_header('Location')
+        self.assertEqual(loc, 'http://127.0.0.1/dockman')
+
+    def test_serviceStopError(self):
+        self.cli.mock(containers)
+        self.cli.mock('{"error": "service stop fake error"}')
+        r = view('mysqld', 'stop')
         self.assertIsInstance(r, HTTPResponse)
         self.assertEqual(r.status_code, 400)
