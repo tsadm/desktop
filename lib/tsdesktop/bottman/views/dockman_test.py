@@ -47,3 +47,9 @@ class Views(TSDesktopTest):
         self.assertEqual(r.status_code, 302)
         loc = r.get_header('Location')
         self.assertEqual(loc, 'http://127.0.0.1/dockman')
+
+    def test_serviceStartError(self):
+        self.cli.mock('{"error": "service start fake error"}')
+        r = view('mysqld', 'start')
+        self.assertIsInstance(r, HTTPResponse)
+        self.assertEqual(r.status_code, 400)

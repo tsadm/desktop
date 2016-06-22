@@ -32,11 +32,11 @@ class _mock:
     def mock(self, *args):
         self.queue += tuple(args)
 
-    def _qget(self):
+    def _qget(self, default=None):
         try:
             r = self.queue[0]
         except IndexError:
-            return None
+            return default
         self.queue = self.queue[1:]
         return r
 
@@ -54,16 +54,13 @@ class _mock:
         return {}
 
     def pull(self, **kwargs):
-        r = self._qget()
-        if r is not None:
-            return r
-        return ''
+        return self._qget(default='')
 
     def create_container(self, **kwargs):
         return dict()
 
     def start(self, **kwargs):
-        pass
+        return self._qget()
 
 def _mockClient():
     global _cli
