@@ -25,6 +25,7 @@ class ImageInfo(TSDesktopTest):
         self.assertEqual(i.tag(), '')
 
 images = [{'RepoTags': ['tsadm/desktop:faked']}]
+containers = [{'Status': None}]
 
 class Service(TSDesktopTest):
 
@@ -47,3 +48,28 @@ class Service(TSDesktopTest):
         self.cli.mock([])
         i = self.srvc.imageInfo()
         self.assertEqual(i.status, 'error')
+
+    def test_statusEmpty(self):
+        self.cli.mock([])
+        s = self.srvc.status()
+        self.assertEqual(s, '')
+
+    def test_statusNone(self):
+        self.cli.mock(containers)
+        s = self.srvc.status()
+        self.assertEqual(s, 'error')
+
+    def test_statusRunning(self):
+        self.cli.mock([{'Status': 'Up since...'}])
+        s = self.srvc.status()
+        self.assertEqual(s, 'running')
+
+    def test_statusExit(self):
+        self.cli.mock([{'Status': 'Exited at...'}])
+        s = self.srvc.status()
+        self.assertEqual(s, 'exit')
+
+    def test_statusError(self):
+        self.cli.mock([{'Status': ''}])
+        s = self.srvc.status()
+        self.assertEqual(s, 'error')
