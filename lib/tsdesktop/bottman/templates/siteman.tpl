@@ -11,7 +11,7 @@
 <input class="w3-input w3-border" required name="site_docroot"
     placeholder="/home/sweet/sites/my-php-site/docroot" type="text">
 
-<sub>*only: a-z, A-Z, 0-9 and .-_ (no spaces)</sub>
+<small>*only: a-z, A-Z, 0-9 and .-_ (no spaces)</small>
 
 <div class="w3-right">
 <button class="w3-btn">add</button><br>

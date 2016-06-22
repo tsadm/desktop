@@ -3,6 +3,9 @@ from .dashboard import view
 
 class Views(TSDesktopTest):
 
+    def setUp(self):
+        self.skipOSX()
+
     def test_dashboard(self):
         v = view()
         self.assertLinesContains(v,
