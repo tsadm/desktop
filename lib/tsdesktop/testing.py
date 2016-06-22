@@ -24,3 +24,8 @@ class TSDesktopTest(TestCase):
     def assertResponseError(self, resp, code=500):
         self.assertResponse(resp, code=code, klass=HTTPError)
 
+    def assertRedirect(self, resp, location='/', code=302):
+        self.assertIsInstance(resp, HTTPResponse)
+        self.assertEqual(resp.status_code, code)
+        loc = resp.get_header('Location')
+        self.assertEqual(loc, location)

@@ -29,10 +29,7 @@ class Views(TSDesktopTest):
     def test_pullImage(self):
         with self.assertRaises(HTTPResponse) as cm:
             view('mysqld', 'pull-image')
-        r = cm.exception
-        self.assertEqual(r.status_code, 302)
-        loc = r.get_header('Location')
-        self.assertEqual(loc, 'http://127.0.0.1/dockman')
+        self.assertRedirect(cm.exception, location='http://127.0.0.1/dockman')
 
     def test_pullImageInvalid(self):
         r = view('faked', 'pull-image')
@@ -46,10 +43,7 @@ class Views(TSDesktopTest):
     def test_serviceStart(self):
         with self.assertRaises(HTTPResponse) as cm:
             view('mysqld', 'start')
-        r = cm.exception
-        self.assertEqual(r.status_code, 302)
-        loc = r.get_header('Location')
-        self.assertEqual(loc, 'http://127.0.0.1/dockman')
+        self.assertRedirect(cm.exception, location='http://127.0.0.1/dockman')
 
     def test_serviceStartError(self):
         self.cli.mock(containers)
@@ -62,10 +56,7 @@ class Views(TSDesktopTest):
         with self.assertRaises(HTTPResponse) as cm:
             r = view('mysqld', 'stop')
             print(type(cm), cm, type(r), r)
-        r = cm.exception
-        self.assertEqual(r.status_code, 302)
-        loc = r.get_header('Location')
-        self.assertEqual(loc, 'http://127.0.0.1/dockman')
+        self.assertRedirect(cm.exception, location='http://127.0.0.1/dockman')
 
     def test_serviceStopError(self):
         self.cli.mock(containers)
