@@ -57,6 +57,12 @@ class _mock:
             return r
         return ''
 
+    def create_container(self, **kwargs):
+        return dict()
+
+    def start(self, **kwargs):
+        pass
+
 def _mockClient():
     global _cli
     _cli = _mock()

@@ -32,3 +32,11 @@ class Views(TSDesktopTest):
         r = view('mysqld', 'pull-image')
         self.assertIsInstance(r, HTTPError)
         self.assertEqual(r.status_code, 500)
+
+    def test_serviceStart(self):
+        with self.assertRaises(HTTPResponse) as cm:
+            view('mysqld', 'start')
+        r = cm.exception
+        self.assertEqual(r.status_code, 302)
+        loc = r.get_header('Location')
+        self.assertEqual(loc, 'http://127.0.0.1/dockman')

@@ -24,7 +24,7 @@ def _stopService(srvc):
 def _pullImage(cli, srvc):
     imgInfo = srvc.imageInfo()
     err = checkOutput(cli.pull(repository=imgInfo.repo(), tag=imgInfo.tag()))
-    if err is not None: # coverage: exclude
+    if err is not None:
         return HTTPError(500, 'docker pull: '+err)
 
 
