@@ -18,8 +18,7 @@ class Views(TSDesktopTest):
 
     def test_dockmanActionInvalid(self):
         r = view('mysqld', 'invalid')
-        self.assertIsInstance(r, HTTPResponse)
-        self.assertEqual(r.status_code, 400)
+        self.assertResponse(r, 400)
 
     def test_dockmanPingFail(self):
         self.cli.pingFail = True
@@ -38,8 +37,7 @@ class Views(TSDesktopTest):
 
     def test_pullImageInvalid(self):
         r = view('faked', 'pull-image')
-        self.assertIsInstance(r, HTTPError)
-        self.assertEqual(r.status_code, 400)
+        self.assertResponse(r, 400)
 
     def test_pullImageError(self):
         self.cli.mock('{"error": "fake error"}')
@@ -59,8 +57,7 @@ class Views(TSDesktopTest):
         self.cli.mock(containers)
         self.cli.mock('{"error": "service start fake error"}')
         r = view('mysqld', 'start')
-        self.assertIsInstance(r, HTTPResponse)
-        self.assertEqual(r.status_code, 400)
+        self.assertResponse(r, 400)
 
     def test_serviceStop(self):
         self.cli.mock([{'Status': 'Up since...'}])
@@ -76,5 +73,4 @@ class Views(TSDesktopTest):
         self.cli.mock(containers)
         self.cli.mock('{"error": "service stop fake error"}')
         r = view('mysqld', 'stop')
-        self.assertIsInstance(r, HTTPResponse)
-        self.assertEqual(r.status_code, 400)
+        self.assertResponse(r, 400)
