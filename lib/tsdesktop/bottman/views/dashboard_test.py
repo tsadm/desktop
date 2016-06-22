@@ -1,10 +1,11 @@
+from tsdesktop import dockman
 from tsdesktop.testing import TSDesktopTest
 from .dashboard import view
 
 class Views(TSDesktopTest):
 
     def setUp(self):
-        self.skipOSX()
+        dockman._mockClient()
 
     def test_dashboard(self):
         v = view()

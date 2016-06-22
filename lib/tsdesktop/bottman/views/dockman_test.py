@@ -6,8 +6,7 @@ from bottle import HTTPResponse, HTTPError
 class Views(TSDesktopTest):
 
     def setUp(self):
-        if not self.skipOSX():
-            dockman._mockClient()
+        dockman._mockClient()
 
     def test_dockman(self):
         r = view()
