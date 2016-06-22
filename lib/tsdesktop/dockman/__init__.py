@@ -26,6 +26,7 @@ def checkOutput(out):
 
 class _mock:
 
+    pingFail = False
     queue = tuple()
 
     def mock(self, *args):
@@ -40,7 +41,8 @@ class _mock:
         return r
 
     def ping(self):
-        pass
+        if self.pingFail:
+            raise Exception('fake ping exception')
 
     def containers(self, **kwargs):
         pass

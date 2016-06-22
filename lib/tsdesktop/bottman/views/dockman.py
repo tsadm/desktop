@@ -35,7 +35,7 @@ def view(service=None, action=None):
     try:
         cli = getClient()
         cli.ping()
-    except Exception as e: # coverage: exclude
+    except Exception as e:
         abort(500, e)
 
     srvc = None

@@ -14,6 +14,13 @@ class Views(TSDesktopTest):
         self.assertLinesContains(r,
             '<div id="dockman_mysqld" class="w3-modal">')
 
+    def test_dockmanPingFail(self):
+        self.cli.pingFail = True
+        with self.assertRaises(HTTPError) as cm:
+            r = view()
+        r = cm.exception
+        self.assertEqual(r.status_code, 500)
+
     def test_pullImage(self):
         with self.assertRaises(HTTPResponse) as cm:
             view('mysqld', 'pull-image')
