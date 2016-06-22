@@ -17,7 +17,11 @@ install_requires=[
 if sys.version_info.major == 2:
     install_requires.append('configparser>=3.5.0')
 
-version.writeBuildInfo()
+try:
+    if sys.argv[1] == 'install':
+        version.writeBuildInfo()
+except Exception:
+    pass
 
 setup(
     name=version.APPNAME,
