@@ -14,6 +14,11 @@ class Views(TSDesktopTest):
         self.assertLinesContains(r,
             '<div id="dockman_mysqld" class="w3-modal">')
 
+    def test_dockmanActionInvalid(self):
+        r = view('mysqld', 'invalid')
+        self.assertIsInstance(r, HTTPResponse)
+        self.assertEqual(r.status_code, 400)
+
     def test_dockmanPingFail(self):
         self.cli.pingFail = True
         with self.assertRaises(HTTPError) as cm:
