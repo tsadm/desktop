@@ -24,8 +24,7 @@ class Views(TSDesktopTest):
         self.cli.pingFail = True
         with self.assertRaises(HTTPError) as cm:
             r = view()
-        r = cm.exception
-        self.assertEqual(r.status_code, 500)
+        self.assertResponseError(cm.exception)
 
     def test_pullImage(self):
         with self.assertRaises(HTTPResponse) as cm:
@@ -42,8 +41,7 @@ class Views(TSDesktopTest):
     def test_pullImageError(self):
         self.cli.mock('{"error": "fake error"}')
         r = view('mysqld', 'pull-image')
-        self.assertIsInstance(r, HTTPError)
-        self.assertEqual(r.status_code, 500)
+        self.assertResponseError(r)
 
     def test_serviceStart(self):
         with self.assertRaises(HTTPResponse) as cm:

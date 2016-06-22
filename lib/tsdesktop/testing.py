@@ -1,5 +1,5 @@
 from unittest import TestCase
-from bottle import HTTPResponse
+from bottle import HTTPResponse, HTTPError
 
 class TSDesktopTest(TestCase):
 
@@ -17,6 +17,10 @@ class TSDesktopTest(TestCase):
                 break
         self.assertTrue(found, msg='not found: '+text)
 
-    def assertResponse(self, resp, code=200):
-        self.assertIsInstance(resp, HTTPResponse)
+    def assertResponse(self, resp, code=200, klass=HTTPResponse):
+        self.assertIsInstance(resp, klass)
         self.assertEqual(resp.status_code, code)
+
+    def assertResponseError(self, resp, code=500):
+        self.assertResponse(resp, code=code, klass=HTTPError)
+
