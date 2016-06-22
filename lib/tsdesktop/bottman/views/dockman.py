@@ -29,7 +29,7 @@ def _pullImage(cli, srvc):
 
 
 # -- docker action manager
-def dockman(service=None, action=None):
+def view(service=None, action=None):
     err = None
     sT = time.time()
     try:
@@ -69,5 +69,5 @@ def dockman(service=None, action=None):
 
 # -- package init
 def init(app):
-    app.route('/dockman/<service>/<action>', callback=dockman)
-    app.route('/dockman', callback=dockman)
+    app.route('/dockman/<service>/<action>', callback=view)
+    app.route('/dockman', callback=view)
