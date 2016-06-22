@@ -19,3 +19,29 @@ def checkOutput(out):
             # XXX: ignoring json decode errors...
             pass
     return None
+
+#
+# -- mock client for testing
+#
+
+class _mock:
+
+    def ping(self):
+        pass
+
+    def containers(self, **kwargs):
+        pass
+
+    def images(self, **kwargs):
+        pass
+
+    def version(self):
+        return {}
+
+    def pull(self, **kwargs):
+        return ''
+
+def _mockClient():
+    global _cli
+    _cli = _mock()
+    return _cli
