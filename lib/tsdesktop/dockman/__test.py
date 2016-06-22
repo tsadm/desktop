@@ -8,3 +8,7 @@ class Client(TSDesktopTest):
         dockman._cli = None
         cli = dockman.getClient()
         self.assertIsInstance(cli, docker.Client)
+
+    def test_outputDecodeError(self):
+        r = dockman.checkOutput('{}{}')
+        self.assertIsNone(r)
