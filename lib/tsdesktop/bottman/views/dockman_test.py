@@ -4,9 +4,10 @@ from tsdesktop import dockman
 from bottle import HTTPResponse, HTTPError
 
 class Views(TSDesktopTest):
+    cli = None
 
     def setUp(self):
-        dockman._mockClient()
+        self.cli = dockman._mockClient()
 
     def test_dockman(self):
         r = view()
@@ -21,7 +22,13 @@ class Views(TSDesktopTest):
         loc = r.get_header('Location')
         self.assertEqual(loc, 'http://127.0.0.1/dockman')
 
-    def test_pullImageError(self):
+    def test_pullImageInvalid(self):
         r = view('faked', 'pull-image')
         self.assertIsInstance(r, HTTPError)
         self.assertEqual(r.status_code, 400)
+
+    def test_pullImageError(self):
+        self.cli.mock('{"error": "fake error"}')
+        r = view('mysqld', 'pull-image')
+        self.assertIsInstance(r, HTTPError)
+        self.assertEqual(r.status_code, 500)

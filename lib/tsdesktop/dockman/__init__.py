@@ -24,7 +24,22 @@ def checkOutput(out):
 # -- mock client for testing
 #
 
+from queue import Queue, Empty
+
 class _mock:
+
+    queue = Queue()
+
+    def mock(self, *args):
+        for a in args:
+            self.queue.put_nowait(a)
+
+    def _qget(self):
+        try:
+            r = self.queue.get_nowait()
+        except Empty:
+            return None
+        return r
 
     def ping(self):
         pass
@@ -39,6 +54,9 @@ class _mock:
         return {}
 
     def pull(self, **kwargs):
+        r = self._qget()
+        if r is not None:
+            return r
         return ''
 
 def _mockClient():
