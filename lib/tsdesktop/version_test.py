@@ -1,5 +1,6 @@
 from unittest import TestCase
 from tsdesktop import version
+from os import remove
 
 class TestVersion(TestCase):
 
@@ -10,3 +11,4 @@ class TestVersion(TestCase):
 
     def test_buildinfo(self):
         version.writeBuildInfo()
+        remove(version.binfoFile)

@@ -33,11 +33,11 @@ test:
 
 .PHONY: test-py2
 test-py2:
-	@make -s test PYCMD=venv.py2/bin/python
+	@venv.py2/bin/python test.py $(TEST_ARGS)
 
 .PHONY: test-py3
 test-py3:
-	@make -s test PYCMD=venv.py3/bin/python
+	@venv.py3/bin/python test.py $(TEST_ARGS)
 
 .PHONY: test-all
 test-all: test-py2 test-py3
