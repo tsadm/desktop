@@ -26,20 +26,50 @@ def checkOutput(out):
 
 class _mock:
 
+    pingFail = False
+    queue = None
+
+    def __init__(self):
+        self.queue = tuple()
+
+    def mock(self, *args):
+        self.queue += tuple(args)
+
+    def _qget(self, default=None):
+        try:
+            r = self.queue[0]
+        except IndexError:
+            return default
+        self.queue = self.queue[1:]
+        return r
+
     def ping(self):
-        pass
+        if self.pingFail:
+            raise Exception('fake ping exception')
 
     def containers(self, **kwargs):
-        pass
+        return self._qget(default=[{}])
 
     def images(self, **kwargs):
-        pass
+        return self._qget(default=[{}])
 
     def version(self):
         return {}
 
     def pull(self, **kwargs):
-        return ''
+        return self._qget(default='')
+
+    def create_container(self, **kwargs):
+        return {}
+
+    def remove_container(self, **kwargs):
+        pass
+
+    def start(self, **kwargs):
+        return self._qget()
+
+    def stop(self, *args, **kwargs):
+        return self._qget()
 
 def _mockClient():
     global _cli

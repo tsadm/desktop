@@ -5,7 +5,7 @@ from unittest import TestLoader, TextTestRunner
 
 print("Python {} ({} {})".format(platform.python_version(), platform.system(), platform.machine()))
 
-if not '--test-installed' in sys.argv:
+if not '--installed' in sys.argv:
     libdir = path.join(path.abspath(path.curdir), 'lib')
     sys.path.insert(0, libdir)
 
