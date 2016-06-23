@@ -73,3 +73,12 @@ class Service(TSDesktopTest):
         self.cli.mock([{'Status': ''}])
         s = self.srvc.status()
         self.assertEqual(s, 'error')
+
+    def test_start(self):
+        self.cli.mock([])
+        self.srvc.start()
+
+    #~ def test_startExited(self):
+        #~ self.cli.mock([{'Status': 'Exited at...'}])
+        #~ s = self.srvc.status()
+        #~ self.assertEqual(s, 'exit')

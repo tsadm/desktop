@@ -42,6 +42,7 @@ class Views(TSDesktopTest):
         self.assertResponseError(r)
 
     def test_serviceStart(self):
+        self.cli.mock([{'Status': ''}])
         with self.assertRaises(HTTPResponse) as cm:
             view('mysqld', 'start')
         self.assertRedirect(cm.exception, location='http://127.0.0.1/dockman')
@@ -56,7 +57,6 @@ class Views(TSDesktopTest):
         self.cli.mock([{'Status': 'Up since...'}])
         with self.assertRaises(HTTPResponse) as cm:
             r = view('mysqld', 'stop')
-            print(type(cm), cm, type(r), r)
         self.assertRedirect(cm.exception, location='http://127.0.0.1/dockman')
 
     def test_serviceStopError(self):

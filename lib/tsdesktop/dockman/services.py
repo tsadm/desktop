@@ -77,7 +77,10 @@ class Service:
         elif stat == 'running':
             return self._contName()+': already running'
         cont = self._container()
-        return cli.start(container=cont.get('Id'))
+        err = cli.start(container=cont.get('Id'))
+        if err is not None:
+            return self._contName()+': error - '+str(err)
+        return None
 
     def stop(self):
         cli = getClient()
