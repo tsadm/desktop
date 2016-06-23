@@ -41,9 +41,10 @@ def siteView(name):
 
 
 # -- open site
-def siteOpen():
+def siteOpen(name=None, docroot=None):
     # get/check site name
-    name = request.params.get('site_name', None)
+    if name is None:
+        name = request.params.get('site_name', None)
     ok = site_name_re.match(name)
     if not ok:
         return HTTPError(400, 'invalid site name: '+name)
@@ -51,7 +52,8 @@ def siteOpen():
     if config.cfg.has_section('site:'+name):
         return HTTPError(400, 'site already exists: '+name)
     # get docroot
-    docroot = request.params.get('site_docroot', None)
+    if docroot is None:
+        docroot = request.params.get('site_docroot', None)
     # add site to config and save it to disk
     err = siteAdd(name, docroot)
     if err is not None:
