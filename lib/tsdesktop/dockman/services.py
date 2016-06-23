@@ -26,6 +26,7 @@ class ImageInfo:
 class Service:
     name = None
     dedicated = False
+    container = None
 
     def status(self):
         cli = getClient()
@@ -80,6 +81,7 @@ class Service:
         err = cli.start(container=cont.get('Id'))
         if err is not None:
             return self._contName()+': error - '+str(err)
+        self.container = cont
         return None
 
     def stop(self):
@@ -87,10 +89,12 @@ class Service:
         stat = self.status()
         if stat == 'exit':
             cli.remove_container(container=self._contName(), v=True)
+            self.container = None
             return None
         elif stat == 'running':
             cli.stop(self._contName())
             cli.remove_container(container=self._contName(), v=True)
+            self.container = None
             return None
         return self._contName()+': not running'
 

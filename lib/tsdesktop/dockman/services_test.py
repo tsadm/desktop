@@ -77,11 +77,14 @@ class Service(TSDesktopTest):
     def test_start(self):
         self.cli.mock([])
         self.srvc.start()
+        self.assertIsInstance(self.srvc.container, dict)
 
     def test_startExited(self):
         self.cli.mock([{'Status': 'Exited at...'}])
         self.srvc.start()
+        self.assertIsInstance(self.srvc.container, dict)
 
     def test_startRunning(self):
         self.cli.mock([{'Status': 'Up since...'}])
         self.srvc.start()
+        self.assertIsNone(self.srvc.container)
