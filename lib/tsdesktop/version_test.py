@@ -11,4 +11,5 @@ class TestVersion(TestCase):
 
     def test_buildinfo(self):
         version.writeBuildInfo()
+        version.readBuildInfo()
         remove(version.binfoFile)
