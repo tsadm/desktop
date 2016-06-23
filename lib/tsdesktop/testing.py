@@ -24,6 +24,11 @@ class TSDesktopTest(TestCase):
     def assertResponseError(self, resp, code=500):
         self.assertResponse(resp, code=code, klass=HTTPError)
 
+    def assertResponsePlain(self, resp, code=200):
+        self.assertResponse(resp, code=code)
+        ct = resp.get_header('Content-Type')
+        self.assertEqual(ct, 'text/plain; charset=UTF-8')
+
     def assertRedirect(self, resp, location='/', code=302):
         self.assertIsInstance(resp, HTTPResponse)
         self.assertEqual(resp.status_code, code)
