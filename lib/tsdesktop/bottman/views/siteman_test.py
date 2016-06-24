@@ -6,8 +6,7 @@ from bottle import HTTPResponse
 class Views(TSDesktopTest):
 
     def setUp(self):
-        d = {'site:fake.test': {'docroot': '/var/www/site.fake/docroot'}}
-        config_test.mock(d)
+        config_test.mock()
 
     def test_siteRemove404(self):
         r = siteRemove('fake.none')

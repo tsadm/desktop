@@ -1,5 +1,5 @@
 from tsdesktop.testing import TSDesktopTest
-from tsdesktop import siteman
+from tsdesktop import siteman, config_test
 
 class Site(TSDesktopTest):
 
@@ -19,6 +19,6 @@ class Site(TSDesktopTest):
         err = s.load()
         self.assertEqual(err, 'not a dir')
 
-    def test_SiteAddError(self):
+    def test_siteAddError(self):
         err = siteman.siteAdd('fake.test', '/nonexistent')
         self.assertEqual(err, 'path not found')

@@ -38,8 +38,12 @@ class Config(TestCase):
 
 # -- mock config for testing
 
-def mock(cfg):
+def mock(cfg=None):
     config.filepath = '/dev/null'
     config.cfg = None
     config._init()
-    config.cfg.read_dict(cfg)
+    config.cfg.read_dict({
+        'site:fake.test': {'docroot': '/var/www/site.fake/docroot'},
+    })
+    if cfg is not None:
+        config.cfg.read_dict(cfg)

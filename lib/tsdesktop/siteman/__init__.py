@@ -2,7 +2,7 @@ import re
 import sys
 from os import path
 from tsdesktop import config
-from configparser import NoSectionError
+from configparser import NoSectionError, NoOptionError
 
 
 class Site:
@@ -49,9 +49,9 @@ def siteGet(name):
         docroot = config.cfg.get('site:'+name, 'docroot')
     except NoSectionError:
         return None
-    if docroot is not None:
-        return Site(name, docroot)
-    return None
+    except NoOptionError:
+        return None
+    return Site(name, docroot)
 
 
 # -- get all sites from config
