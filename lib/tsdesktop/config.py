@@ -47,14 +47,3 @@ def read():
 def cmd(): # coverage: exclude
     cfg.write(sys.stdout)
     return 0
-
-# -- mock config for testing
-
-def _mock():
-    global cfg
-    global filepath
-    filepath = '/dev/null'
-    cfg = None
-    _init()
-    cfg.add_section('site:fake.test')
-    cfg.set('site:fake.test', 'docroot', '/var/www/site.fake/docroot')

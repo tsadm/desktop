@@ -1,4 +1,4 @@
-from tsdesktop import config
+from tsdesktop import config, config_test
 from tsdesktop.testing import TSDesktopTest
 from .siteman import siteRemove, siteAdd, siteOpen
 from bottle import HTTPResponse
@@ -6,7 +6,8 @@ from bottle import HTTPResponse
 class Views(TSDesktopTest):
 
     def setUp(self):
-        config._mock()
+        d = {'site:fake.test': {'docroot': '/var/www/site.fake/docroot'}}
+        config_test.mock(d)
 
     def test_siteRemove404(self):
         r = siteRemove('fake.none')

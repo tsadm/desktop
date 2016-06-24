@@ -34,3 +34,12 @@ class Config(TestCase):
     def test_mysqld(self):
         mysqld = config.cfg['service:mysqld']
         self.assertTrue(mysqld.getboolean('enable'))
+
+
+# -- mock config for testing
+
+def mock(cfg):
+    config.filepath = '/dev/null'
+    config.cfg = None
+    config._init()
+    config.cfg.read_dict(cfg)
