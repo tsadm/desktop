@@ -33,4 +33,5 @@ class TSDesktopTest(TestCase):
         self.assertIsInstance(resp, HTTPResponse)
         self.assertEqual(resp.status_code, code)
         loc = resp.get_header('Location')
+        loc = loc.replace('http://127.0.0.1', '')
         self.assertEqual(loc, location)

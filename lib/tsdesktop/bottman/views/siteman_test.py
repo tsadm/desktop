@@ -23,7 +23,7 @@ class Views(TSDesktopTest):
     def test_siteOpen(self):
         with self.assertRaises(HTTPResponse) as cm:
             siteOpen('fake.test2', '/var/tmp')
-        self.assertRedirect(cm.exception, location='http://127.0.0.1/siteman/fake.test2/view')
+        self.assertRedirect(cm.exception, location='/siteman/fake.test2/view')
 
     def test_siteOpenInvalid(self):
         r = siteOpen('fake/test', '/var/tmp')
