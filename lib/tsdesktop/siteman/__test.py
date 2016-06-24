@@ -22,3 +22,8 @@ class Site(TSDesktopTest):
     def test_siteAddError(self):
         err = siteman.siteAdd('fake.test', '/nonexistent')
         self.assertEqual(err, 'path not found')
+
+    def test_siteGetNoDocroot(self):
+        config_test.mock({'site:fake.test2': {'fake': 'test'}})
+        s = siteman.siteGet('fake.test2')
+        self.assertIsNone(s)

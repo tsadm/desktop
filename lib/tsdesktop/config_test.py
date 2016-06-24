@@ -1,5 +1,6 @@
 from unittest import TestCase
 from tsdesktop import config
+from sys import stdout
 
 class Config(TestCase):
 
@@ -47,3 +48,6 @@ def mock(cfg=None):
     })
     if cfg is not None:
         config.cfg.read_dict(cfg)
+
+def dump():
+    config.cfg.write(stdout)
