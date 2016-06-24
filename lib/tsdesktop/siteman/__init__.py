@@ -27,7 +27,7 @@ class Site:
 
 
 # -- compile regexs
-site_name_re = re.compile(r'^[a-zA-Z0-9.-_]+$')
+site_name_re = re.compile(r'^[a-zA-Z0-9\.\-_]+$')
 
 
 # -- add site to config
