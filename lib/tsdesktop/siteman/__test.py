@@ -18,3 +18,7 @@ class Site(TSDesktopTest):
         s = siteman.Site('fake.test', '/usr/bin/env')
         err = s.load()
         self.assertEqual(err, 'not a dir')
+
+    def test_SiteAddError(self):
+        err = siteman.siteAdd('fake.test', '/nonexistent')
+        self.assertEqual(err, 'path not found')
