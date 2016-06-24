@@ -43,22 +43,27 @@ def siteView(name):
 # -- open site
 def siteOpen(name=None, docroot=None):
     # get site name
-    if name is None:
+    if name is None: # coverage: exclude
         name = request.params.get('site_name', None)
+
     # validate site name
     ok = site_name_re.match(name)
     if not ok:
         return HTTPError(400, 'invalid site name: '+name)
+
     # check it not exists already
     if config.cfg.has_section('site:'+name):
         return HTTPError(400, 'site already exists: '+name)
+
     # get docroot
-    if docroot is None:
+    if docroot is None: # coverage: exclude
         docroot = request.params.get('site_docroot', None)
+
     # add site to config and save it to disk
     err = siteAdd(name, docroot)
-    if err is not None:
+    if err is not None: # coverage: exclude
         return HTTPError(400, 'could not add site: '+str(err))
+
     # redirect to site's view
     return redirect('/siteman/'+name+'/view')
 

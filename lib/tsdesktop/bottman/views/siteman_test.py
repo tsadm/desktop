@@ -28,3 +28,7 @@ class Views(TSDesktopTest):
     def test_siteOpenInvalid(self):
         r = siteOpen('fake/test', '/var/tmp')
         self.assertResponseError(r, code=400)
+
+    def test_siteOpenExists(self):
+        r = siteOpen('fake.test', '/var/tmp')
+        self.assertResponseError(r, code=400)
