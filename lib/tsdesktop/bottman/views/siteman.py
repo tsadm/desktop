@@ -42,9 +42,10 @@ def siteView(name):
 
 # -- open site
 def siteOpen(name=None, docroot=None):
-    # get/check site name
+    # get site name
     if name is None:
         name = request.params.get('site_name', None)
+    # validate site name
     ok = site_name_re.match(name)
     if not ok:
         return HTTPError(400, 'invalid site name: '+name)

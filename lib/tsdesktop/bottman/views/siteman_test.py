@@ -7,7 +7,8 @@ class Views(TSDesktopTest):
 
     def setUp(self):
         config.filepath = '/dev/null'
-        config.read()
+        config.cfg = None
+        config._init()
         config.cfg.add_section('site:fake.test')
         config.cfg.set('site:fake.test', 'docroot', '/var/www/site.fake/docroot')
 
@@ -17,9 +18,13 @@ class Views(TSDesktopTest):
 
     def test_siteRemove(self):
         r = siteRemove('fake.test')
-        self.assertResponsePlain(r, code=200)
+        self.assertResponsePlain(r)
 
     def test_siteOpen(self):
         with self.assertRaises(HTTPResponse) as cm:
             siteOpen('fake.test2', '/var/tmp')
         self.assertRedirect(cm.exception, location='http://127.0.0.1/siteman/fake.test2/view')
+
+    def test_siteOpenInvalid(self):
+        r = siteOpen('fake/test', '/var/tmp')
+        self.assertResponseError(r, code=400)
