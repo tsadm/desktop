@@ -1,3 +1,4 @@
+from tsdesktop import config_test
 from tsdesktop.testing import TSDesktopTest
 from . import static, error400, error404, error405, error500, settings, about
 import bottle
@@ -25,13 +26,10 @@ class Views(TSDesktopTest):
         self.assertLinesContains(v, '<h3>ERROR - 500')
 
     def test_settings(self):
-        from tsdesktop import config
-        config.read()
+        config_test.mock()
         v = settings()
-        self.assertLinesContains(v, '[user]')
-        self.assertLinesContains(v, '[site]')
-        self.assertLinesContains(v, '[service:httpd]')
-        self.assertLinesContains(v, '[service:mysqld]')
+        self.assertLinesContains(v, '[DEFAULT]')
+        self.assertLinesContains(v, 'docroot = docroot')
 
     def test_about(self):
         v = about()

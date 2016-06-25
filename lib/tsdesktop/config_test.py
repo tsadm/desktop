@@ -1,43 +1,23 @@
 from unittest import TestCase
 from tsdesktop import config
 from sys import stdout
+from os.path import expanduser
 
 class Config(TestCase):
 
     def setUp(self):
-        config.filepath = '/dev/null'
-        config.read()
-
+        mock()
 
     def test_defaults(self):
-        from os.path import expanduser
-        fpathPrev = config.filepath
-        config.cfg = None
-        config.read()
-        with self.assertRaises(KeyError):
-            config.cfg['tsadm']
-
+        mock({'user': {}, 'site:fake2': {}})
         self.assertEqual(config.cfg.get('user', 'cachedir'),
             expanduser('~/.cache/tsdesktop'))
-
-        self.assertEqual(config.cfg.get('site', 'docroot'), 'docroot')
-
+        self.assertEqual(config.cfg.get('site:fake2', 'docroot'), 'docroot')
 
     def test_write(self):
         config.write()
 
-
-    def test_httpd(self):
-        httpd = config.cfg['service:httpd']
-        self.assertTrue(httpd.getboolean('enable'))
-
-
-    def test_mysqld(self):
-        mysqld = config.cfg['service:mysqld']
-        self.assertTrue(mysqld.getboolean('enable'))
-
-
-# -- mock config for testing
+# mock config for testing
 
 def mock(cfg=None):
     config.filepath = '/dev/null'

@@ -27,9 +27,9 @@ class Site(TSDesktopTest):
         self.assertEqual(err, 'path not found')
 
     def test_siteGetNoDocroot(self):
-        config_test.mock({'site:fake.test2': {'fake': 'test'}})
+        config_test.mock({'site:fake.test2': {}})
         s = siteman.siteGet('fake.test2')
-        self.assertIsNone(s)
+        self.assertEqual(s.docroot, 'docroot')
 
     def test_sitesAll(self):
         c = {
