@@ -1,5 +1,5 @@
 from tsdesktop.testing import TSDesktopTest
-from tsdesktop import siteman, config_test
+from tsdesktop import siteman, config, config_test
 
 class Site(TSDesktopTest):
 
@@ -25,9 +25,6 @@ class Site(TSDesktopTest):
     def test_siteAdd(self):
         err = siteman.siteAdd('fake2.test', '/var/tmp')
         self.assertIsNone(err)
-        s = siteman.siteGet('fake2.test')
-        self.assertIsInstance(s, siteman.Site)
-        self.assertEqual(s.docroot, '/var/tmp')
 
     def test_siteAddExists(self):
         err = siteman.siteAdd('fake.test', '/ignored')
@@ -37,10 +34,21 @@ class Site(TSDesktopTest):
         err = siteman.siteAdd('fake2.test', '/tmp')
         self.assertEqual(err, '/tmp registered by fake.test')
 
-    def test_siteGetNoDocroot(self):
+    def test_siteGet(self):
+        s = siteman.siteGet('fake.test')
+        self.assertIsInstance(s, siteman.Site)
+        self.assertEqual(s.docroot, '/tmp')
+
+    def test_siteGetDefaultDocroot(self):
         config_test.mock({'site:fake.test2': {}})
         s = siteman.siteGet('fake.test2')
         self.assertEqual(s.docroot, 'docroot')
+
+    def test_siteGetNoDocroot(self):
+        config_test.mock({'site:fake.test2': {}})
+        config.cfg.remove_option('DEFAULT', 'docroot')
+        s = siteman.siteGet('fake.test2')
+        self.assertIsNone(s)
 
     def test_sitesAll(self):
         c = {
