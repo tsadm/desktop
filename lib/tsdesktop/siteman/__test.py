@@ -22,9 +22,13 @@ class Site(TSDesktopTest):
         err = s.load()
         self.assertEqual(err, 'not a dir')
 
-    #~ def test_siteAddError(self):
-        #~ err = siteman.siteAdd('fake.test2', '/nonexistent')
-        #~ self.assertEqual(err, 'path not found')
+    def test_siteAddExists(self):
+        err = siteman.siteAdd('fake.test', '/ignored')
+        self.assertEqual(err, 'site already exists')
+
+    def test_siteAddDupDocroot(self):
+        err = siteman.siteAdd('fake2.test', '/tmp')
+        self.assertEqual(err, '/tmp registered by fake.test')
 
     def test_siteGetNoDocroot(self):
         config_test.mock({'site:fake.test2': {}})
