@@ -3,6 +3,7 @@
 
 % if sitesAll:
     <div class="w3-container w3-tiny w3-wide w3-padding-0">
+
 %   for site in sitesAll:
 %       status = site.status()
 %       if status == 'running':
@@ -19,6 +20,7 @@
             {{site.name}}
         </button>
 %   end
+
     </div>
 %   include('inc/modal_site_actions.tpl')
 %   include('inc/modal_confirm.tpl')
