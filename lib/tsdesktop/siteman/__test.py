@@ -22,6 +22,13 @@ class Site(TSDesktopTest):
         err = s.load()
         self.assertEqual(err, 'not a dir')
 
+    def test_siteAdd(self):
+        err = siteman.siteAdd('fake2.test', '/var/tmp')
+        self.assertIsNone(err)
+        s = siteman.siteGet('fake2.test')
+        self.assertIsInstance(s, siteman.Site)
+        self.assertEqual(s.docroot, '/var/tmp')
+
     def test_siteAddExists(self):
         err = siteman.siteAdd('fake.test', '/ignored')
         self.assertEqual(err, 'site already exists')
