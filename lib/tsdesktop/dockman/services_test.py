@@ -25,7 +25,7 @@ class ImageInfo(TSDesktopTest):
         self.assertEqual(i.tag(), '')
 
 images = [{'RepoTags': ['tsadm/desktop:faked']}]
-containers = [{'Status': None}]
+containers = [{'Status': None, 'Names': ['/tsdesktop-faked']}]
 
 class Service(TSDesktopTest):
 
@@ -60,17 +60,26 @@ class Service(TSDesktopTest):
         self.assertEqual(s, 'error')
 
     def test_statusRunning(self):
-        self.cli.mock([{'Status': 'Up since...'}])
+        self.cli.mock([{
+            'Status': 'Up since...',
+            'Names': ['/tsdesktop-faked'],
+        }])
         s = self.srvc.status()
         self.assertEqual(s, 'running')
 
     def test_statusExit(self):
-        self.cli.mock([{'Status': 'Exited at...'}])
+        self.cli.mock([{
+            'Status': 'Exited at...',
+            'Names': ['/tsdesktop-faked'],
+        }])
         s = self.srvc.status()
         self.assertEqual(s, 'exit')
 
     def test_statusError(self):
-        self.cli.mock([{'Status': ''}])
+        self.cli.mock([{
+            'Status': '',
+            'Names': ['/tsdesktop-faked'],
+        }])
         s = self.srvc.status()
         self.assertEqual(s, 'error')
 
@@ -80,21 +89,33 @@ class Service(TSDesktopTest):
         self.assertIsInstance(self.srvc.container, dict)
 
     def test_startExited(self):
-        self.cli.mock([{'Status': 'Exited at...'}])
+        self.cli.mock([{
+            'Status': 'Exited at...',
+            'Names': ['/tsdesktop-faked'],
+        }])
         self.srvc.start()
         self.assertIsInstance(self.srvc.container, dict)
 
     def test_startRunning(self):
-        self.cli.mock([{'Status': 'Up since...'}])
+        self.cli.mock([{
+            'Status': 'Up since...',
+            'Names': ['/tsdesktop-faked'],
+        }])
         self.srvc.start()
         self.assertIsNone(self.srvc.container)
 
     def test_stopExited(self):
-        self.cli.mock([{'Status': 'Exited at...'}])
+        self.cli.mock([{
+            'Status': 'Exited at...',
+            'Names': ['/tsdesktop-faked'],
+        }])
         self.srvc.stop()
         self.assertIsNone(self.srvc.container)
 
     def test_stopRunning(self):
-        self.cli.mock([{'Status': 'Up since...'}])
+        self.cli.mock([{
+            'Status': 'Up since...',
+            'Names': ['/tsdesktop-faked'],
+        }])
         self.srvc.stop()
         self.assertIsNone(self.srvc.container)

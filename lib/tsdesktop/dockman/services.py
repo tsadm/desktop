@@ -44,8 +44,7 @@ class Service:
         cli = getClient()
         l = cli.containers(all=True, filters={'name': self._contName()})
         for s in l:
-            print(type(s), s)
-            if '/%s' % self._contName() in s['Names']:
+            if '/%s' % self._contName() in s.get('Names', []):
                 stat = s.get('Status', None)
                 if stat is None:
                     return 'error'

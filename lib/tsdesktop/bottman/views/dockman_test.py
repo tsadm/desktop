@@ -54,7 +54,10 @@ class Views(TSDesktopTest):
         self.assertResponse(r, 400)
 
     def test_serviceStop(self):
-        self.cli.mock([{'Status': 'Up since...'}])
+        self.cli.mock([{
+            'Status': 'Up since...',
+            'Names': ['/tsdesktop-mysqld'],
+        }])
         with self.assertRaises(HTTPResponse) as cm:
             r = view('mysqld', 'stop')
         self.assertRedirect(cm.exception, location='/dockman')
