@@ -37,9 +37,9 @@ class Site(TSDesktopTest):
             'site:fake3.test': {'docroot': '/var/www/html'},
         }
         config_test.mock(c)
-        l = [str(i) for i in siteman.sitesAll()]
-        self.assertListEqual(l, [
+        l = sorted([str(i) for i in siteman.sitesAll()])
+        self.assertListEqual(l, sorted([
             str(siteman.Site('fake.test', '/var/www/site.fake/docroot')),
             str(siteman.Site('fake2.test', '/var/www/html')),
             str(siteman.Site('fake3.test', '/var/www/html')),
-        ])
+        ]))
