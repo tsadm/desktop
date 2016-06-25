@@ -3,6 +3,9 @@ from tsdesktop import siteman, config_test
 
 class Site(TSDesktopTest):
 
+    def setUp(self):
+        config_test.mock()
+
     def test_Site(self):
         s = siteman.Site('fake.test', '/var/www/html')
         self.assertEqual(s.name, 'fake.test')
@@ -27,3 +30,16 @@ class Site(TSDesktopTest):
         config_test.mock({'site:fake.test2': {'fake': 'test'}})
         s = siteman.siteGet('fake.test2')
         self.assertIsNone(s)
+
+    def test_sitesAll(self):
+        c = {
+            'site:fake2.test': {'docroot': '/var/www/html'},
+            'site:fake3.test': {'docroot': '/var/www/html'},
+        }
+        config_test.mock(c)
+        l = [str(i) for i in siteman.sitesAll()]
+        self.assertListEqual(l, [
+            str(siteman.Site('fake.test', '/var/www/site.fake/docroot')),
+            str(siteman.Site('fake2.test', '/var/www/html')),
+            str(siteman.Site('fake3.test', '/var/www/html')),
+        ])
