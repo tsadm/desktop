@@ -12,6 +12,7 @@ def _init():
         cfg['DEFAULT'] = {
             'docroot': 'docroot',
             'cachedir': expanduser('~/.cache/tsdesktop'),
+            'webserver': 'httpd',
         }
 
 def write():

@@ -22,7 +22,6 @@ class Site:
             return 'path not found'
         elif not path.isdir(dpath):
             return 'not a dir'
-        inifile = path.join(path.dirname(dpath), '.tsdesktop.ini')
         return None
 
 
