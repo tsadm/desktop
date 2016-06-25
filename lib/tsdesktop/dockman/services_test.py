@@ -27,12 +27,14 @@ class ImageInfo(TSDesktopTest):
 images = [{'RepoTags': ['tsadm/desktop:faked']}]
 containers = [{'Status': None, 'Names': ['/tsdesktop-faked']}]
 
+class faked(services.Service):
+    name = 'faked'
+
 class Service(TSDesktopTest):
 
     def setUp(self):
         self.cli = dockman._mockClient()
-        self.srvc = services.Service()
-        self.srvc.name = 'faked'
+        self.srvc = faked()
 
     def test_imageInfo(self):
         self.cli.mock(images)

@@ -13,7 +13,7 @@
 
             <p>
                 webserver: {{site.webserver.name}}<br>
-                container: {{site.webserver._contName()}}<br>
+                container: {{site.webserver.containerName}}<br>
             </p>
 
             <hr class="w3-border">

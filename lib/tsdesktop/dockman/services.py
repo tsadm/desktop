@@ -30,21 +30,23 @@ class Service:
     dedicated = False
     site = None
     container = None
+    containerName = None
 
     def __init__(self, site=None):
         self.site = site
+        self.containerName = self._contName()
 
     def __str__(self):
-        return "<Service: {}>".format(self._contName())
+        return '<Service: %s>' % self.containerName
 
     def __repr__(self):
         return str(self)
 
     def status(self):
         cli = getClient()
-        l = cli.containers(all=True, filters={'name': self._contName()})
+        l = cli.containers(all=True, filters={'name': self.containerName})
         for s in l:
-            if '/%s' % self._contName() in s.get('Names', []):
+            if '/%s' % self.containerName in s.get('Names', []):
                 stat = s.get('Status', None)
                 if stat is None:
                     return 'error'
@@ -82,7 +84,7 @@ class Service:
     def _container(self):
         cli = getClient()
         return cli.create_container(
-            name=self._contName(),
+            name=self.containerName,
             image=self._imgName(),
         )
 
@@ -90,13 +92,13 @@ class Service:
         cli = getClient()
         stat = self.status()
         if stat == 'exit':
-            cli.remove_container(container=self._contName(), v=True)
+            cli.remove_container(container=self.containerName, v=True)
         elif stat == 'running':
-            return self._contName()+': already running'
+            return self.containerName+': already running'
         cont = self._container()
         err = cli.start(container=cont.get('Id'))
         if err is not None:
-            return self._contName()+': error - '+str(err)
+            return self.containerName+': error - '+str(err)
         self.container = cont
         return None
 
@@ -104,18 +106,18 @@ class Service:
         cli = getClient()
         stat = self.status()
         if stat == 'exit':
-            cli.remove_container(container=self._contName(), v=True)
+            cli.remove_container(container=self.containerName, v=True)
             self.container = None
             return None
         elif stat == 'running':
             try:
-                cli.stop(self._contName())
+                cli.stop(self.containerName)
             except APIError as e:
-                return '%s: %s' % (self._contName(), e)
-            cli.remove_container(container=self._contName(), v=True)
+                return '%s: %s' % (self.containerName, e)
+            cli.remove_container(container=self.containerName, v=True)
             self.container = None
             return None
-        return self._contName()+': not running'
+        return self.containerName+': not running'
 
 
 class _httpd(Service):
