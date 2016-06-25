@@ -81,7 +81,11 @@ class Service:
     def _imgName(self):
         return 'tsadm/desktop:'+self.name
 
-    def _container(self):
+    def _rmContainer(self, cli):
+        cli.remove_container(container=self.containerName, v=True)
+        self.container = None
+
+    def _mkContainer(self):
         cli = getClient()
         return cli.create_container(
             name=self.containerName,
@@ -92,10 +96,10 @@ class Service:
         cli = getClient()
         stat = self.status()
         if stat == 'exit':
-            cli.remove_container(container=self.containerName, v=True)
+            self._rmContainer(cli)
         elif stat == 'running':
             return self.containerName+': already running'
-        cont = self._container()
+        cont = self._mkContainer()
         err = cli.start(container=cont.get('Id'))
         if err is not None:
             return self.containerName+': error - '+str(err)
@@ -106,16 +110,14 @@ class Service:
         cli = getClient()
         stat = self.status()
         if stat == 'exit':
-            cli.remove_container(container=self.containerName, v=True)
-            self.container = None
+            self._rmContainer(cli)
             return None
         elif stat == 'running':
             try:
                 cli.stop(self.containerName)
             except APIError as e:
                 return '%s: %s' % (self.containerName, e)
-            cli.remove_container(container=self.containerName, v=True)
-            self.container = None
+            self._rmContainer(cli)
             return None
         return self.containerName+': not running'
 
