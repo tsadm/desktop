@@ -17,7 +17,7 @@
 %       end
         <button class="w3-btn w3-round-xxlarge {{btnColor}}"
             onclick="modalShow('modal-site-actions-{{site.name}}')">
-            {{site.name}} ({{status}})
+            {{site.name}}
         </button>
 %   end
 
