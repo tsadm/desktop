@@ -1,4 +1,6 @@
 from . import getClient
+from docker.errors import APIError
+
 
 class ImageInfo:
     name = None
@@ -40,17 +42,19 @@ class Service:
 
     def status(self):
         cli = getClient()
-        s = cli.containers(all=True, filters={'name': self._contName()})
-        if s:
-            stat = s[0].get('Status', None)
-            if stat is None:
-                return 'error'
-            elif stat.startswith('Up'):
-                return 'running'
-            elif stat.startswith('Exited'):
-                return 'exit'
-            else:
-                return 'error'
+        l = cli.containers(all=True, filters={'name': self._contName()})
+        for s in l:
+            print(type(s), s)
+            if '/%s' % self._contName() in s['Names']:
+                stat = s.get('Status', None)
+                if stat is None:
+                    return 'error'
+                elif stat.startswith('Up'):
+                    return 'running'
+                elif stat.startswith('Exited'):
+                    return 'exit'
+                else:
+                    return 'error'
         else:
             return ''
 
@@ -105,7 +109,10 @@ class Service:
             self.container = None
             return None
         elif stat == 'running':
-            cli.stop(self._contName())
+            try:
+                cli.stop(self._contName())
+            except APIError as e:
+                return '%s: %s' % (self._contName(), e)
             cli.remove_container(container=self._contName(), v=True)
             self.container = None
             return None

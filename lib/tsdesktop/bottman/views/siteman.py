@@ -5,6 +5,34 @@ from tsdesktop import config
 from tsdesktop.siteman import sitesAll, siteGet, siteAdd, site_name_re
 
 
+# -- site stop
+def siteStop(name):
+    site = siteGet(name)
+    if site is None:
+        return textPlain('site not found: %s' % name, 404)
+    err = site.load()
+    if err is not None:
+        return textPlain('could not load site: %s' % err, 500)
+    err = site.stop()
+    if err is not None:
+        return textPlain(str(err), 500)
+    return textPlain('site started: %s' % name)
+
+
+# -- site start
+def siteStart(name):
+    site = siteGet(name)
+    if site is None:
+        return textPlain('site not found: %s' % name, 404)
+    err = site.load()
+    if err is not None:
+        return textPlain('could not load site: %s' % err, 500)
+    err = site.start()
+    if err is not None:
+        return textPlain('could not start site: %s' % err, 500)
+    return textPlain('site started: %s' % name)
+
+
 # -- remove site
 def siteRemove(name):
     site = siteGet(name)
@@ -90,6 +118,8 @@ def sites():
 
 # -- init views
 def init(app):
+    app.route('/siteman/<name>/stop', method='POST', callback=siteStop)
+    app.route('/siteman/<name>/start', method='POST', callback=siteStart)
     app.route('/siteman/<name>/remove', method='POST', callback=siteRemove)
     app.route('/siteman/<name>/edit', callback=siteEdit)
     app.route('/siteman/<name>/view', callback=siteView)

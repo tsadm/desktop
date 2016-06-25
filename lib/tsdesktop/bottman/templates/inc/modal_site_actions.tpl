@@ -20,13 +20,13 @@
 
             <p>
                 <button class="w3-btn"
-                    onclick="siteAction('start', '{{site.name}}')"
+                    onclick="siteStart('{{site.name}}')"
 %       if status == 'running':
                     disabled
 %       end
                 >start</button>
                 <button class="w3-btn"
-                    onclick="siteAction('stop', '{{site.name}}')"
+                    onclick="siteStop('{{site.name}}')"
 %       if status != 'running':
                     disabled
 %       end

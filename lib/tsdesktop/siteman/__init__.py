@@ -26,16 +26,24 @@ class Site:
             return 'not a dir'
         return None
 
-    def _loadWebserver(self):
-        s = config.cfg.get('site:'+self.name, 'webserver')
-        k = services.classMap.get(s)
-        if k is not None:
+    def _initws(self):
+        if self.webserver is None:
+            s = config.cfg.get('site:'+self.name, 'webserver')
+            k = services.classMap.get(s)
             self.webserver = k(site=self.name)
 
     def status(self):
-        if self.webserver is None:
-            self._loadWebserver()
+        self._initws()
         return self.webserver.status()
+
+    def start(self):
+        self._initws()
+        return self.webserver.start()
+
+    def stop(self):
+        self._initws()
+        return self.webserver.stop()
+
 
 
 # -- compile regexs
