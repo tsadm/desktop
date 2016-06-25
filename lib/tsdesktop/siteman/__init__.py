@@ -2,12 +2,14 @@ import re
 import sys
 from os import path
 from tsdesktop import config
+from tsdesktop.dockman import services
 from configparser import NoSectionError, NoOptionError
 
 
 class Site:
     name = None
     docroot = None
+    webserver = None
 
     def __init__(self, name, docroot):
         self.name = name
@@ -24,6 +26,17 @@ class Site:
             return 'not a dir'
         return None
 
+    def _loadWebserver(self):
+        s = config.cfg.get('site:'+self.name, 'webserver')
+        k = services.classMap.get(s)
+        if k is not None:
+            self.webserver = k()
+
+    def status(self):
+        if self.webserver is None:
+            self._loadWebserver()
+        return self.webserver.status()
+
 
 # -- compile regexs
 site_name_re = re.compile(r'^[a-zA-Z0-9\.\-_]+$')
@@ -36,6 +49,7 @@ def siteAdd(name, docroot):
     err = site.load()
     if err is not None:
         return err
+    # save to config
     config.cfg.add_section('site:'+name)
     config.cfg.set('site:'+name, 'docroot', docroot)
     config.write()
@@ -65,5 +79,8 @@ def sitesAll():
                 return None
             else:
                 site = siteGet(name)
-                rl.append(site)
+                err = site.load()
+                if err is None:
+                    rl.append(site)
+                # FIXME: else log a message at least
     return rl

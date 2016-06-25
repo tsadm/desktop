@@ -33,8 +33,8 @@ class Site(TSDesktopTest):
 
     def test_sitesAll(self):
         c = {
-            'site:fake2.test': {'docroot': '/var/www/html'},
-            'site:fake3.test': {'docroot': '/var/www/html'},
+            'site:fake2.test': {'docroot': '/tmp'},
+            'site:fake3.test': {'docroot': '/tmp'},
         }
         config_test.mock(c)
         l = sorted([str(i) for i in siteman.sitesAll()])

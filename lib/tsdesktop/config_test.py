@@ -24,7 +24,7 @@ def mock(cfg=None):
     config.cfg = None
     config._init()
     config.cfg.read_dict({
-        'site:fake.test': {'docroot': '/var/www/site.fake/docroot'},
+        'site:fake.test': {'docroot': '/tmp'},
     })
     if cfg is not None:
         config.cfg.read_dict(cfg)
