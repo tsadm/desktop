@@ -28,3 +28,7 @@ class Views(TSDesktopTest):
     def test_siteOpenExists(self):
         r = siteOpen('fake.test', '/var/tmp')
         self.assertResponseError(r, code=400)
+
+    def test_siteOpenDupDocroot(self):
+        r = siteOpen('fake.test3', '/var/www/site.fake/docroot')
+        self.assertResponseError(r, code=400)
