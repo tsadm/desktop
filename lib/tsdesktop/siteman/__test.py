@@ -43,3 +43,9 @@ class Site(TSDesktopTest):
             str(siteman.Site('fake2.test', '/var/www/html')),
             str(siteman.Site('fake3.test', '/var/www/html')),
         ]))
+
+    def test_sitesAllInvalidName(self):
+        c = {'site:test;invalid': {'docroot': '/var/www/html'}}
+        config_test.mock(c)
+        l = siteman.sitesAll()
+        self.assertIsNone(l)

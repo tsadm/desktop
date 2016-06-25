@@ -62,7 +62,7 @@ def sitesAll():
             name = ':'.join(sect.split(':')[1:])
             ok = site_name_re.match(name)
             if not ok:
-                sys.stderr.write('ignore invalid site name: '+name)
+                # FIXME: print/log a message about the invalid site name
                 return None
             else:
                 site = siteGet(name)
