@@ -30,7 +30,7 @@ class Site:
         s = config.cfg.get('site:'+self.name, 'webserver')
         k = services.classMap.get(s)
         if k is not None:
-            self.webserver = k()
+            self.webserver = k(site=self.name)
 
     def status(self):
         if self.webserver is None:

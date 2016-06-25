@@ -26,7 +26,17 @@ class ImageInfo:
 class Service:
     name = None
     dedicated = False
+    site = None
     container = None
+
+    def __init__(self, site=None):
+        self.site = site
+
+    def __str__(self):
+        return "<Service: {}>".format(self._contName())
+
+    def __repr__(self):
+        return str(self)
 
     def status(self):
         cli = getClient()
@@ -45,7 +55,10 @@ class Service:
             return ''
 
     def _contName(self):
-        return 'tsdesktop-'+self.name
+        n = 'tsdesktop-'+self.name
+        if self.site is not None:
+            n = n+'-'+self.site
+        return n
 
     def imageInfo(self):
         imgName = self._imgName()
