@@ -42,17 +42,25 @@ class Site:
 site_name_re = re.compile(r'^[a-zA-Z0-9\.\-_]+$')
 
 
+# -- check if docroot is already in use by a site
+def _dupDocroot(dpath):
+    for s in sitesAll():
+        if s.docroot == dpath:
+            return "{} registered by {}".format(dpath, s.name)
+    return None
+
+
 # -- add site to config
 def siteAdd(name, docroot):
-    # load site
-    site = Site(name, docroot)
-    err = site.load()
+    if config.cfg.has_section('site:'+name):
+        return 'site already exists'
+
+    err = _dupDocroot(docroot)
     if err is not None:
         return err
-    # save to config
+
     config.cfg.add_section('site:'+name)
     config.cfg.set('site:'+name, 'docroot', docroot)
-    config.write()
     return None
 
 

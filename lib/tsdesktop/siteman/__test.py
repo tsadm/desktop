@@ -22,9 +22,9 @@ class Site(TSDesktopTest):
         err = s.load()
         self.assertEqual(err, 'not a dir')
 
-    def test_siteAddError(self):
-        err = siteman.siteAdd('fake.test', '/nonexistent')
-        self.assertEqual(err, 'path not found')
+    #~ def test_siteAddError(self):
+        #~ err = siteman.siteAdd('fake.test2', '/nonexistent')
+        #~ self.assertEqual(err, 'path not found')
 
     def test_siteGetNoDocroot(self):
         config_test.mock({'site:fake.test2': {}})
@@ -39,13 +39,13 @@ class Site(TSDesktopTest):
         config_test.mock(c)
         l = sorted([str(i) for i in siteman.sitesAll()])
         self.assertListEqual(l, sorted([
-            str(siteman.Site('fake.test', '/var/www/site.fake/docroot')),
-            str(siteman.Site('fake2.test', '/var/www/html')),
-            str(siteman.Site('fake3.test', '/var/www/html')),
+            str(siteman.Site('fake.test', '/ignored')),
+            str(siteman.Site('fake2.test', '/ignored')),
+            str(siteman.Site('fake3.test', '/ignored')),
         ]))
 
     def test_sitesAllInvalidName(self):
-        c = {'site:test;invalid': {'docroot': '/var/www/html'}}
+        c = {'site:test;invalid': {'docroot': '/ignored'}}
         config_test.mock(c)
         l = siteman.sitesAll()
         self.assertIsNone(l)

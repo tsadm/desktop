@@ -40,13 +40,6 @@ def siteView(name):
     return render('site_view', site=site, startTime=st)
 
 
-# -- check if docroot is already in use by a site
-def _dupDocroot(dpath):
-    for s in sitesAll():
-        if s.docroot == dpath:
-            return "{} registered by {}".format(dpath, s.name)
-
-
 # -- open site
 def siteOpen(name=None, docroot=None):
     # get site name
@@ -66,15 +59,23 @@ def siteOpen(name=None, docroot=None):
     if docroot is None: # coverage: exclude
         docroot = request.params.get('site_docroot', None)
 
-    # check docroot is not duplicate
-    err = _dupDocroot(docroot)
-    if err is not None:
-        return HTTPError(400, 'duplicate docroot: '+err)
-
     # add site to config and save it to disk
     err = siteAdd(name, docroot)
     if err is not None: # coverage: exclude
         return HTTPError(400, 'could not add site: '+str(err))
+
+    # init site
+    site = siteGet(name)
+    if site is None:
+        return HTTPError(400, 'could not init site: '+name)
+
+    # load site
+    err = site.load()
+    if err is not None:
+        return HTTPError(400, 'could not load site: '+str(err))
+
+    # save config
+    config.write()
 
     # redirect to site's view
     return redirect('/siteman/'+name+'/view')
