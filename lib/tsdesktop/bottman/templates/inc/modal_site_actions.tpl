@@ -18,6 +18,10 @@
 
             <hr class="w3-border">
 
+%       if status == 'running':
+            <a href="http://localhost:4080" target="_blank">http://localhost:4080</a>
+%       end
+
             <p>
                 <button class="w3-btn"
                     onclick="siteStart('{{site.name}}')"
