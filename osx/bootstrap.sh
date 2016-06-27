@@ -10,13 +10,17 @@ test -x $(which brew) || {
 
 brew update
 
-brew tap caskroom/cask
-brew cask install virtualbox
+brew install python
+brew install python3
 
-for pkg in python python3 docker docker-machine; do
-    brew install $pkg
-done
+if test $1 != '--testing'; then
+    brew tap caskroom/cask
+    brew cask install virtualbox
 
-docker-machine create --driver virtualbox default
+    brew install docker
+    brew install docker-machine
+
+    docker-machine create --driver virtualbox default
+fi
 
 exit 0

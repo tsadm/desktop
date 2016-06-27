@@ -4,7 +4,7 @@
 
 <label>site name<sup>*</sup></label>
 <input class="w3-input w3-border" required name="site_name"
-    pattern="^[a-zA-Z0-9.-_]+$"
+    pattern="^[a-zA-Z0-9\.\-_]+$"
     placeholder="my-php-site" type="text">
 
 <label>site docroot (public_html) full path</label>

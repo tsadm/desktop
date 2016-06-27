@@ -7,7 +7,7 @@ osx_image: xcode7.3
 sudo: required
 
 install:
-  - ./osx/bootstrap.sh
+  - ./osx/bootstrap.sh --testing
   - pip3 install virtualenv
   - make virtualenv
 

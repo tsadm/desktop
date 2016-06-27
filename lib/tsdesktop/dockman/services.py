@@ -1,4 +1,6 @@
 from . import getClient
+from docker.errors import APIError
+
 
 class ImageInfo:
     name = None
@@ -26,26 +28,42 @@ class ImageInfo:
 class Service:
     name = None
     dedicated = False
+    site = None
     container = None
+    containerName = None
+
+    def __init__(self, site=None):
+        self.site = site
+        self.containerName = self._contName()
+
+    def __str__(self):
+        return '<Service: %s>' % self.containerName
+
+    def __repr__(self):
+        return str(self)
 
     def status(self):
         cli = getClient()
-        s = cli.containers(all=True, filters={'name': self._contName()})
-        if s:
-            stat = s[0].get('Status', None)
-            if stat is None:
-                return 'error'
-            elif stat.startswith('Up'):
-                return 'running'
-            elif stat.startswith('Exited'):
-                return 'exit'
-            else:
-                return 'error'
+        l = cli.containers(all=True, filters={'name': self.containerName})
+        for s in l:
+            if '/%s' % self.containerName in s.get('Names', []):
+                stat = s.get('Status', None)
+                if stat is None:
+                    return 'error'
+                elif stat.startswith('Up'):
+                    return 'running'
+                elif stat.startswith('Exited'):
+                    return 'exit'
+                else:
+                    return 'error'
         else:
             return ''
 
     def _contName(self):
-        return 'tsdesktop-'+self.name
+        n = 'tsdesktop-'+self.name
+        if self.site is not None:
+            n = n+'-'+self.site
+        return n
 
     def imageInfo(self):
         imgName = self._imgName()
@@ -63,10 +81,14 @@ class Service:
     def _imgName(self):
         return 'tsadm/desktop:'+self.name
 
-    def _container(self):
+    def _rmContainer(self, cli):
+        cli.remove_container(container=self.containerName, v=True)
+        self.container = None
+
+    def _mkContainer(self):
         cli = getClient()
         return cli.create_container(
-            name=self._contName(),
+            name=self.containerName,
             image=self._imgName(),
         )
 
@@ -74,13 +96,13 @@ class Service:
         cli = getClient()
         stat = self.status()
         if stat == 'exit':
-            cli.remove_container(container=self._contName(), v=True)
+            self._rmContainer(cli)
         elif stat == 'running':
-            return self._contName()+': already running'
-        cont = self._container()
+            return self.containerName+': already running'
+        cont = self._mkContainer()
         err = cli.start(container=cont.get('Id'))
         if err is not None:
-            return self._contName()+': error - '+str(err)
+            return self.containerName+': error - '+str(err)
         self.container = cont
         return None
 
@@ -88,15 +110,16 @@ class Service:
         cli = getClient()
         stat = self.status()
         if stat == 'exit':
-            cli.remove_container(container=self._contName(), v=True)
-            self.container = None
+            self._rmContainer(cli)
             return None
         elif stat == 'running':
-            cli.stop(self._contName())
-            cli.remove_container(container=self._contName(), v=True)
-            self.container = None
+            try:
+                cli.stop(self.containerName)
+            except APIError as e:
+                return '%s: %s' % (self.containerName, e)
+            self._rmContainer(cli)
             return None
-        return self._contName()+': not running'
+        return self.containerName+': not running'
 
 
 class _httpd(Service):

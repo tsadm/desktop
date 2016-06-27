@@ -2,12 +2,14 @@ import re
 import sys
 from os import path
 from tsdesktop import config
-from configparser import NoSectionError
+from tsdesktop.dockman import services
+from configparser import NoSectionError, NoOptionError
 
 
 class Site:
     name = None
     docroot = None
+    webserver = None
 
     def __init__(self, name, docroot):
         self.name = name
@@ -22,24 +24,51 @@ class Site:
             return 'path not found'
         elif not path.isdir(dpath):
             return 'not a dir'
-        inifile = path.join(path.dirname(dpath), '.tsdesktop.ini')
         return None
+
+    def _initws(self):
+        if self.webserver is None:
+            s = config.cfg.get('site:'+self.name, 'webserver')
+            k = services.classMap.get(s)
+            self.webserver = k(site=self.name)
+
+    def status(self):
+        self._initws()
+        return self.webserver.status()
+
+    def start(self):
+        self._initws()
+        return self.webserver.start()
+
+    def stop(self):
+        self._initws()
+        return self.webserver.stop()
+
 
 
 # -- compile regexs
-site_name_re = re.compile(r'^[a-zA-Z0-9.-_]+$')
+site_name_re = re.compile(r'^[a-zA-Z0-9\.\-_]+$')
+
+
+# -- check if docroot is already in use by a site
+def _dupDocroot(dpath):
+    for s in sitesAll():
+        if s.docroot == dpath:
+            return "{} registered by {}".format(dpath, s.name)
+    return None
 
 
 # -- add site to config
 def siteAdd(name, docroot):
-    # load site
-    site = Site(name, docroot)
-    err = site.load()
+    if config.cfg.has_section('site:'+name):
+        return 'site already exists'
+
+    err = _dupDocroot(docroot)
     if err is not None:
         return err
+
     config.cfg.add_section('site:'+name)
     config.cfg.set('site:'+name, 'docroot', docroot)
-    config.write()
     return None
 
 
@@ -49,9 +78,9 @@ def siteGet(name):
         docroot = config.cfg.get('site:'+name, 'docroot')
     except NoSectionError:
         return None
-    if docroot is not None:
-        return Site(name, docroot)
-    return None
+    except NoOptionError:
+        return None
+    return Site(name, docroot)
 
 
 # -- get all sites from config
@@ -62,9 +91,12 @@ def sitesAll():
             name = ':'.join(sect.split(':')[1:])
             ok = site_name_re.match(name)
             if not ok:
-                sys.stderr.write('ignore invalid site name: '+name)
+                # FIXME: print/log a message about the invalid site name
                 return None
             else:
                 site = siteGet(name)
-                rl.append(site)
+                err = site.load()
+                if err is None:
+                    rl.append(site)
+                # FIXME: else log a message at least
     return rl

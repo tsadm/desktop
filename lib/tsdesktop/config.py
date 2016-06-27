@@ -9,18 +9,10 @@ def _init():
     global cfg
     if cfg is None:
         cfg = ConfigParser()
-        cfg['DEFAULT'] = {}
-        cfg['user'] = {
-            'cachedir': expanduser('~/.cache/tsdesktop'),
-        }
-        cfg['service:httpd'] = {
-            'enable': True,
-        }
-        cfg['service:mysqld'] = {
-            'enable': True,
-        }
-        cfg['site'] = {
+        cfg['DEFAULT'] = {
             'docroot': 'docroot',
+            'cachedir': expanduser('~/.cache/tsdesktop'),
+            'webserver': 'httpd',
         }
 
 def write():
