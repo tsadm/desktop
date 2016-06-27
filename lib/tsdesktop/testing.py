@@ -1,7 +1,14 @@
+import platform
 from unittest import TestCase
 from bottle import HTTPResponse, HTTPError
 
 class TSDesktopTest(TestCase):
+
+    def skipOSX(self):
+        if platform.system().lower() == 'darwin':
+            self.skipTest('skip test under mac osx')
+            return True
+        return False
 
     def assertLinesContains(self, src, text):
         lno = 0

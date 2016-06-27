@@ -5,9 +5,10 @@ import docker
 class Client(TSDesktopTest):
 
     def test_getClient(self):
-        dockman._cli = None
-        cli = dockman.getClient()
-        self.assertIsInstance(cli, docker.Client)
+        if not self.skipOSX():
+            dockman._cli = None
+            cli = dockman.getClient()
+            self.assertIsInstance(cli, docker.Client)
 
     def test_outputDecodeError(self):
         r = dockman.checkOutput('{}{}')
