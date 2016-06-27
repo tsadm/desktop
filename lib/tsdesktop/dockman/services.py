@@ -31,6 +31,8 @@ class Service:
     site = None
     container = None
     containerName = None
+    ports = None
+    hostConfig = {}
 
     def __init__(self, site=None):
         self.site = site
@@ -86,10 +88,13 @@ class Service:
         self.container = None
 
     def _mkContainer(self):
+        """creates docker container"""
         cli = getClient()
-        return cli.create_container(
+        self.container = cli.create_container(
             name=self.containerName,
             image=self._imgName(),
+            ports=self.ports,
+            host_config=cli.create_host_config(**self.hostConfig),
         )
 
     def start(self):
@@ -99,11 +104,10 @@ class Service:
             self._rmContainer(cli)
         elif stat == 'running':
             return self.containerName+': already running'
-        cont = self._mkContainer()
-        err = cli.start(container=cont.get('Id'))
+        self._mkContainer()
+        err = cli.start(container=self.container.get('Id'))
         if err is not None:
             return self.containerName+': error - '+str(err)
-        self.container = cont
         return None
 
     def stop(self):
@@ -125,6 +129,13 @@ class Service:
 class _httpd(Service):
     name = 'httpd'
     dedicated = True
+    ports = [80, 443]
+    hostConfig = {
+        'port_bindings': {
+            80: ('127.0.0.1', 4080),
+            443: ('127.0.0.1', 4443),
+        },
+    }
 
 
 class _mysqld(Service):
