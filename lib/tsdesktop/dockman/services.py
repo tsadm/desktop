@@ -100,7 +100,7 @@ class Service:
     def start(self):
         cli = getClient()
         stat = self.status()
-        if stat == 'exit':
+        if stat in ('exit', 'error'):
             self._rmContainer(cli)
         elif stat == 'running':
             return self.containerName+': already running'
