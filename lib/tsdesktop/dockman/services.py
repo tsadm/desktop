@@ -104,10 +104,13 @@ class Service:
             self._rmContainer(cli)
         elif stat == 'running':
             return self.containerName+': already running'
-        self._mkContainer()
-        err = cli.start(container=self.container.get('Id'))
-        if err is not None:
-            return self.containerName+': error - '+str(err)
+        try:
+            self._mkContainer()
+            err = cli.start(container=self.container.get('Id'))
+            if err is not None:
+                return self.containerName+': error - '+str(err)
+        except APIError as e:
+            return '%s - %s' % (self.containerName, e.explanation.decode())
         return None
 
     def stop(self):
