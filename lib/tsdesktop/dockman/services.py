@@ -32,11 +32,15 @@ class Service:
     container = None
     containerName = None
     ports = None
-    hostConfig = {}
+    volumes = None
+    hostConfig = None
 
     def __init__(self, site=None):
         self.site = site
         self.containerName = self._contName()
+        self.ports = []
+        self.volumes = []
+        self.hostConfig = {}
 
     def __str__(self):
         return '<Service: %s>' % self.containerName
