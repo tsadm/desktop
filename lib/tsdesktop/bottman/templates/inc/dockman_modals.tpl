@@ -6,6 +6,9 @@
         <div class="w3-container">
             <span class="w3-closebtn" onclick="modalHide('dockman_{{srv.name}}')">&times;</span>
             <h2>service: {{srv.name}}</h2>
+            <p>
+                container: {{srv.containerName}}
+            </p>
             <hr class="w3-border">
 %   if status == 'running':
             <p>
