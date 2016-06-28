@@ -10,3 +10,7 @@ build:
 	docker build -t tsadm/desktop base
 	docker build -t tsadm/desktop:mysqld mysqld
 	docker build -t tsadm/desktop:httpd httpd
+
+.PHONY: hub-push
+hub-push:
+	docker push tsadm/desktop
