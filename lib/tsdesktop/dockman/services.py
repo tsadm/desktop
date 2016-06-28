@@ -1,3 +1,4 @@
+import os
 from . import getClient
 from docker.errors import APIError
 
@@ -31,22 +32,27 @@ class Service:
     site = None
     container = None
     containerName = None
-    ports = None
-    volumes = None
-    hostConfig = None
+    ports = []
+    volumes = []
+    hostConfig = {}
+    environ = {}
 
     def __init__(self, site=None):
         self.site = site
         self.containerName = self._contName()
-        self.ports = []
-        self.volumes = []
-        self.hostConfig = {}
+        self._defaultEnviron()
 
     def __str__(self):
         return '<Service: %s>' % self.containerName
 
     def __repr__(self):
         return str(self)
+
+    def _defaultEnviron(self):
+        self.environ.update({
+            'TSDESKTOP_UID': os.getuid(),
+            'TSDESKTOP_GID': os.getgid(),
+        })
 
     def status(self):
         cli = getClient()
@@ -98,6 +104,8 @@ class Service:
             name=self.containerName,
             image=self._imgName(),
             ports=self.ports,
+            volumes=self.volumes,
+            environment=self.environ,
             host_config=cli.create_host_config(**self.hostConfig),
         )
 
@@ -132,6 +140,15 @@ class Service:
             return None
         return self.containerName+': not running'
 
+    def volAdd(self, orig, dest, mode='rw'):
+        self.volumes.append(dest)
+        self.hostConfig.update({'binds': {
+            orig: {
+                'bind': dest,
+                'mode': mode,
+            },
+        }})
+
 
 class _httpd(Service):
     name = 'httpd'
@@ -147,6 +164,12 @@ class _httpd(Service):
 
 class _mysqld(Service):
     name = 'mysqld'
+    ports = [80]
+    hostConfig = {
+        'port_bindings': {
+            80: ('127.0.0.1', 4980),
+        },
+    }
 
 
 classMap = {
