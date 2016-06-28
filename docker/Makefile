@@ -3,7 +3,7 @@ default:
 
 .PHONY: pull-deps
 pull-deps:
-	docker pull debian:stable
+	docker pull debian
 
 .PHONY: build
 build:

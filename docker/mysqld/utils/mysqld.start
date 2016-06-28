@@ -6,14 +6,6 @@ datadir=/var/lib/mysql
 rundir=/var/run/mysqld
 
 /etc/init.d/lighttpd start
+/opt/tsdesktop/mysqld.init
 
-usermod -o -u ${TSDESKTOP_UID} mysql
-groupmod -o -g ${TSDESKTOP_GID} mysql
-
-chown mysql ${rundir}
-
-test -d ${datadir}/mysql || {
-    mysql_install_db
-}
-
-mysqld_safe --defaults-extra-file=/etc/mysql/tsdesktop.cnf
+mysqld_safe

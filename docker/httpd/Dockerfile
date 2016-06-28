@@ -23,5 +23,6 @@ RUN chmod 644 /home/tsadm/*.php
 COPY utils/ /opt/tsdesktop/
 RUN chmod 755 /opt/tsdesktop/*.*
 
+RUN a2ensite default-ssl
 
 CMD ["/opt/tsdesktop/httpd.start"]

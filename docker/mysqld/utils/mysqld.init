@@ -1,0 +1,18 @@
+#!/bin/bash
+
+datadir=/var/lib/mysql
+rundir=/var/run/mysqld
+
+usermod -o -u ${TSDESKTOP_UID} mysql
+groupmod -o -g ${TSDESKTOP_GID} mysql
+
+chown -R mysql:mysql ${rundir} ${datadir}
+
+test -d ${datadir}/mysql || {
+    mysql_install_db 2>/dev/null
+    mysqld_safe --skip-syslog &
+    sleep 2
+    echo "GRANT ALL ON *.* TO 'tsdesktop'@'localhost' IDENTIFIED BY 'tsdesktop'" | mysql mysql
+    mysqladmin reload
+    mysqladmin -v shutdown
+}
