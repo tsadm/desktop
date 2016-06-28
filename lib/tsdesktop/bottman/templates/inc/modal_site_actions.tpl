@@ -19,7 +19,10 @@
             <hr class="w3-border">
 
 %       if status == 'running':
-            <a href="http://localhost:4080" target="_blank">http://localhost:4080</a>
+            <a href="{{site.webserver.URI}}" target="_blank">{{site.webserver.URI}}</a>
+%           if site.webserver.URIDesc:
+            <br><small>{{site.webserver.URIDesc}}</small>
+%           end
 %       end
 
             <p>

@@ -36,6 +36,8 @@ class Service:
     volumes = []
     hostConfig = {}
     environ = {}
+    URI = None
+    URIDesc = None
 
     def __init__(self, site=None):
         self.site = site
@@ -160,6 +162,7 @@ class _httpd(Service):
             443: ('127.0.0.1', 4443),
         },
     }
+    URI = 'http://localhost:4080/'
 
 
 class _mysqld(Service):
@@ -170,6 +173,8 @@ class _mysqld(Service):
             80: ('127.0.0.1', 4980),
         },
     }
+    URI = 'http://localhost:4980/phpmyadmin'
+    URIDesc = 'login as tsdesktop:tsdesktop'
 
 
 classMap = {
