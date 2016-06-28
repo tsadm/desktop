@@ -5,6 +5,8 @@ env | sort
 datadir=/var/lib/mysql
 rundir=/var/run/mysqld
 
+/etc/init.d/lighttpd start
+
 usermod -o -u ${TSDESKTOP_UID} mysql
 groupmod -o -g ${TSDESKTOP_GID} mysql
 
