@@ -16,3 +16,11 @@ test -d ${datadir}/mysql || {
     mysqladmin reload
     mysqladmin -v shutdown
 }
+
+test -d ${datadir}/phpmyadmin || {
+    mysqld_safe --skip-syslog &
+    sleep 2
+    /var/lib/dpkg/info/phpmyadmin.postinst configure
+    mysqladmin reload
+    mysqladmin -v shutdown
+}

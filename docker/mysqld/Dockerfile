@@ -14,9 +14,6 @@ RUN chmod 644 /etc/mysql/conf.d/*.cnf
 COPY utils/ /opt/tsdesktop/
 RUN chmod 755 /opt/tsdesktop/*.*
 
-COPY phpmyadmin/ /etc/phpmyadmin/
-RUN chmod 644 /etc/phpmyadmin/conf.d/*.php
-
 RUN ln -s /etc/phpmyadmin/lighttpd.conf \
             /etc/lighttpd/conf-available/99-phpmyadmin.conf
 

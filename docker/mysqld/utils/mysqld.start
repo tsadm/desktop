@@ -8,4 +8,4 @@ rundir=/var/run/mysqld
 /etc/init.d/lighttpd start
 /opt/tsdesktop/mysqld.init
 
-mysqld_safe
+mysqld_safe --skip-syslog
