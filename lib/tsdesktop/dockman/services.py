@@ -3,7 +3,7 @@ from . import getClient
 from docker.errors import APIError
 
 
-class ImageInfo:
+class ImageInfo(object):
     """docker image information and status"""
     name = None
     status = None
@@ -29,7 +29,7 @@ class ImageInfo:
             return ''
 
 
-class Service:
+class Service(object):
     """manages docker images and containers for services"""
     name = None
     dedicated = False
@@ -121,10 +121,9 @@ class Service:
             host_config=cli.create_host_config(**self.hostConfig),
         )
 
-    def start(self, cli=None):
+    def start(self):
         """starts service container"""
-        if cli is None:
-            cli = getClient()
+        cli = getClient()
         stat = self.status()
         if stat in ('exit', 'error'):
             self._rmContainer(cli)
@@ -195,8 +194,8 @@ class _mysqld(Service):
     URIDesc = 'login as tsdesktop:tsdesktop'
 
     def start(self):
-        cli = getClient()
-        return super().start(cli=cli)
+        self.volAdd('/home/jrms/.cache/tsdesktop/mysqld', '/var/lib/mysql')
+        return super(_mysqld, self).start()
 
 
 classMap = {
