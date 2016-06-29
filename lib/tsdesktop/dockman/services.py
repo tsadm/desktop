@@ -4,6 +4,7 @@ from docker.errors import APIError
 
 
 class ImageInfo:
+    """docker image information and status"""
     name = None
     status = None
 
@@ -17,9 +18,11 @@ class ImageInfo:
             self.status = 'ok'
 
     def repo(self):
+        """returns image repository part of the name (repo:tag)"""
         return self.name.split(':')[0]
 
     def tag(self):
+        """returns image tag part of the name (repo:tag)"""
         try:
             return self.name.split(':')[1]
         except IndexError:
@@ -27,6 +30,7 @@ class ImageInfo:
 
 
 class Service:
+    """manages docker images and containers for services"""
     name = None
     dedicated = False
     site = None
@@ -51,12 +55,14 @@ class Service:
         return str(self)
 
     def _defaultEnviron(self):
+        """sets common environment variables for all containers"""
         self.environ.update({
             'TSDESKTOP_UID': os.getuid(),
             'TSDESKTOP_GID': os.getgid(),
         })
 
     def status(self):
+        """returns container status ('error'|'running'|'exit'|'')"""
         cli = getClient()
         l = cli.containers(all=True, filters={'name': self.containerName})
         for s in l:
@@ -74,12 +80,14 @@ class Service:
             return ''
 
     def _contName(self):
+        """builds and returns container name, based on the service name"""
         n = 'tsdesktop-'+self.name
         if self.site is not None:
             n = n+'-'+self.site
         return n
 
     def imageInfo(self):
+        """returns service image information (ImageInfo)"""
         imgName = self._imgName()
         cli = getClient()
         il = cli.images(name='tsadm/desktop')
@@ -93,9 +101,11 @@ class Service:
             return ImageInfo(imgName, error=True)
 
     def _imgName(self):
+        """builds and returns image name, based on the service name"""
         return 'tsadm/desktop:'+self.name
 
     def _rmContainer(self, cli):
+        """removes docker container"""
         cli.remove_container(container=self.containerName, v=True)
         self.container = None
 
@@ -111,8 +121,10 @@ class Service:
             host_config=cli.create_host_config(**self.hostConfig),
         )
 
-    def start(self):
-        cli = getClient()
+    def start(self, cli=None):
+        """starts service container"""
+        if cli is None:
+            cli = getClient()
         stat = self.status()
         if stat in ('exit', 'error'):
             self._rmContainer(cli)
@@ -128,6 +140,7 @@ class Service:
         return None
 
     def stop(self):
+        """stops service container"""
         cli = getClient()
         stat = self.status()
         if stat == 'exit':
@@ -143,6 +156,9 @@ class Service:
         return self.containerName+': not running'
 
     def volAdd(self, orig, dest, mode='rw'):
+        """adds a volume to the docker container"""
+        if self.container is not None:
+            raise RuntimeError('volAdd called after container was created')
         self.volumes.append(dest)
         self.hostConfig.update({'binds': {
             orig: {
@@ -153,6 +169,7 @@ class Service:
 
 
 class _httpd(Service):
+    """http (apache2) service manager"""
     name = 'httpd'
     dedicated = True
     ports = [80, 443]
@@ -166,6 +183,7 @@ class _httpd(Service):
 
 
 class _mysqld(Service):
+    """mysql service container manager"""
     name = 'mysqld'
     ports = [80]
     hostConfig = {
@@ -175,6 +193,10 @@ class _mysqld(Service):
     }
     URI = 'http://localhost:4980/phpmyadmin'
     URIDesc = 'login as tsdesktop:tsdesktop'
+
+    def start(self):
+        cli = getClient()
+        return super().start(cli=cli)
 
 
 classMap = {
