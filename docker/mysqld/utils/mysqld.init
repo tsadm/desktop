@@ -9,18 +9,17 @@ groupmod -o -g ${TSDESKTOP_GID} mysql
 chown -R mysql:mysql ${rundir} ${datadir}
 
 test -d ${datadir}/mysql || {
+    echo '** init datadir'
     mysql_install_db 2>/dev/null
+    echo '** start daemon'
     mysqld_safe --skip-syslog &
-    sleep 2
-    echo "GRANT ALL ON *.* TO 'tsdesktop'@'localhost' IDENTIFIED BY 'tsdesktop'" | mysql mysql
+    sleep 3
+    echo '** grant tsdesktop@localhost access'
+    echo "GRANT ALL ON *.* TO 'tsdesktop'@'localhost' IDENTIFIED BY 'tsdesktop'" |
+        mysql mysql
     mysqladmin reload
-    mysqladmin -v shutdown
-}
-
-test -d ${datadir}/phpmyadmin || {
-    mysqld_safe --skip-syslog &
-    sleep 2
+    echo '** phpmyadmin postinst configure'
     /var/lib/dpkg/info/phpmyadmin.postinst configure
-    mysqladmin reload
+    echo '** shutdown daemon'
     mysqladmin -v shutdown
 }

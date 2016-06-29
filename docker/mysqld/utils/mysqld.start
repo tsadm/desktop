@@ -5,7 +5,11 @@ env | sort
 datadir=/var/lib/mysql
 rundir=/var/run/mysqld
 
+echo '** start lighttpd'
 /etc/init.d/lighttpd start
+
+echo '** mysqld init'
 /opt/tsdesktop/mysqld.init
 
+echo '** start mysqld'
 mysqld_safe --skip-syslog
