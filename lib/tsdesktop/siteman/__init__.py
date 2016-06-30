@@ -38,7 +38,7 @@ class Site:
 
     def start(self):
         self._initws()
-        self.webserver.volAdd('/home/jrms', '/var/www', 'ro')
+        self.webserver.volAdd(self.docroot, '/var/www/html')
         return self.webserver.start()
 
     def stop(self):
