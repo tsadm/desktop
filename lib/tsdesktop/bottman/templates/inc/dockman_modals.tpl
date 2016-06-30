@@ -13,11 +13,11 @@
             <p>
 %   if status == 'running':
                 <a href="{{srv.URI}}" target="_blank">{{srv.URI}}</a>
+%       if srv.URIDesc:
+                <br><small>{{srv.URIDesc}}</small>
+%       end
 %   else:
                 <span class="w3-opacity">{{srv.URI}}</span>
-%   end
-%   if srv.URIDesc:
-                <br><small>{{srv.URIDesc}}</small>
 %   end
             </p>
             <p>

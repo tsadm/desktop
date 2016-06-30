@@ -12,6 +12,7 @@ def _init():
         cfg['DEFAULT'] = {
             'docroot': 'docroot',
             'webserver': 'httpd',
+            'dbserver': 'mysqld',
         }
         cfg['user'] = {
             'cachedir': expanduser('~/.local/tsdesktop'),
