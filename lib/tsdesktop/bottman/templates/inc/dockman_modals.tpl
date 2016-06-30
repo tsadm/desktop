@@ -10,14 +10,16 @@
                 container: {{srv.containerName}}
             </p>
             <hr class="w3-border">
-%   if status == 'running':
             <p>
-                <a href="{{srv.URI}}" target="_blank">{{srv.URI}}</a><br>
-%       if srv.URIDesc:
-                <small>{{srv.URIDesc}}</small>
-%       end
-            </p>
+%   if status == 'running':
+                <a href="{{srv.URI}}" target="_blank">{{srv.URI}}</a>
+%   else:
+                <span class="w3-opacity">{{srv.URI}}</span>
 %   end
+%   if srv.URIDesc:
+                <br><small>{{srv.URIDesc}}</small>
+%   end
+            </p>
             <p>
                 <button class="w3-btn"
                     onclick="dockmanStart('{{srv.name}}')"

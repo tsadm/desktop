@@ -19,9 +19,11 @@
 
 %       if status == 'running':
             <a href="{{site.webserver.URI}}" target="_blank">{{site.webserver.URI}}</a>
-%           if site.webserver.URIDesc:
+%       else:
+            <span class="w3-opacity">{{site.webserver.URI}}</span>
+%       end
+%       if site.webserver.URIDesc:
             <br><small>{{site.webserver.URIDesc}}</small>
-%           end
 %       end
 
             <p>
