@@ -1,6 +1,8 @@
 import os
+from os import path
 from . import getClient
 from docker.errors import APIError
+from tsdesktop import config
 
 
 class ImageInfo(object):
@@ -166,6 +168,9 @@ class Service(object):
             },
         }})
 
+    def cachePath(self, *args):
+        p = path.expanduser(config.cfg.get('user', 'cachedir'))
+        return path.abspath(path.join(p, self.name, *args))
 
 class _httpd(Service):
     """http (apache2) service manager"""
@@ -194,7 +199,7 @@ class _mysqld(Service):
     URIDesc = 'login as tsdesktop:tsdesktop'
 
     def start(self):
-        self.volAdd('/home/jrms/.cache/tsdesktop/mysqld', '/var/lib/mysql')
+        self.volAdd(self.cachePath('datadir'), '/var/lib/mysql')
         return super(_mysqld, self).start()
 
 

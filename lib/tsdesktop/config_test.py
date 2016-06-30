@@ -11,7 +11,7 @@ class Config(TestCase):
     def test_defaults(self):
         mock({'user': {}, 'site:fake2': {}})
         self.assertEqual(config.cfg.get('user', 'cachedir'),
-            expanduser('~/.cache/tsdesktop'))
+            expanduser('~/.local/tsdesktop'))
         self.assertEqual(config.cfg.get('site:fake2', 'docroot'), 'docroot')
 
     def test_write(self):
