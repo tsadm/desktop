@@ -203,10 +203,11 @@ class _httpd(Service):
 class _mysqld(Service):
     """mysql service container manager"""
     name = 'mysqld'
-    ports = [80]
+    ports = [80, 3306]
     hostConfig = {
         'port_bindings': {
             80: ('127.0.0.1', 4980),
+            3306: ('127.0.0.1', 4936),
         },
     }
     URI = 'http://localhost:4980/phpmyadmin'
