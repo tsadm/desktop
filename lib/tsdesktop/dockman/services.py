@@ -172,6 +172,7 @@ class Service(object):
         p = path.expanduser(config.cfg.get('user', 'cachedir'))
         return path.abspath(path.join(p, self.name, *args))
 
+
 class _httpd(Service):
     """http (apache2) service manager"""
     name = 'httpd'
@@ -184,6 +185,19 @@ class _httpd(Service):
         },
     }
     URI = 'http://localhost:4080/'
+
+    def start(self):
+        dbserver = config.cfg.get('site:'+self.site, 'dbserver')
+        k = classMap.get(dbserver, None)
+        if k is not None:
+            dbs = k()
+            if dbs.status() != 'running':
+                return '%s service should be started first (%s)' % (dbserver, dbs.status())
+            err = dbs.createDB('%sdb' % self.site, self.site, self.containerName)
+            if err:
+                return err
+        self.environ['TSDESKTOP_SITE'] = self.site
+        return super(_httpd, self).start()
 
 
 class _mysqld(Service):
@@ -201,6 +215,14 @@ class _mysqld(Service):
     def start(self):
         self.volAdd(self.cachePath('datadir'), '/var/lib/mysql')
         return super(_mysqld, self).start()
+
+    def createDB(self, dbname, user, host):
+        cli = getClient()
+        proc = cli.exec_create(
+            container=self.containerName,
+            cmd='/opt/tsdesktop/site.initdb %s %s %s' % (dbname, user, host),
+        )
+        return cli.exec_start(proc).decode()
 
 
 classMap = {
