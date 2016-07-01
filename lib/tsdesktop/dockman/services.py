@@ -214,13 +214,14 @@ class _mysqld(Service):
 
     def start(self):
         self.volAdd(self.cachePath('datadir'), '/var/lib/mysql')
+        self.volAdd(self.cachePath('upload'), '/var/tmp/upload')
         return super(_mysqld, self).start()
 
     def createDB(self, dbname, user, host):
         cli = getClient()
         proc = cli.exec_create(
             container=self.containerName,
-            cmd='/opt/tsdesktop/site.initdb %s %s %s' % (dbname, user, host),
+            cmd='/opt/tsdesktop/mysqld.createdb %s %s %s' % (dbname, user, host),
         )
         return cli.exec_start(proc).decode()
 
