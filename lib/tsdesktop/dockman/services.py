@@ -161,12 +161,12 @@ class Service(object):
         if self.container is not None:
             raise RuntimeError('volAdd called after container was created')
         self.volumes.append(dest)
-        self.hostConfig.update({'binds': {
-            orig: {
-                'bind': dest,
-                'mode': mode,
-            },
-        }})
+        if not 'binds' in self.hostConfig.keys():
+            self.hostConfig['binds'] = {}
+        self.hostConfig['binds'][orig] = {
+            'bind': dest,
+            'mode': mode,
+        }
 
     def cachePath(self, *args):
         p = path.expanduser(config.cfg.get('user', 'cachedir'))
