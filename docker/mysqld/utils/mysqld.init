@@ -15,8 +15,7 @@ test -d ${datadir}/mysql || {
     mysqld_safe --skip-syslog &
     sleep 3
     echo '** grant tsdesktop@localhost access'
-    echo "GRANT ALL ON *.* TO 'tsdesktop'@'localhost' IDENTIFIED BY 'tsdesktop'" |
-        mysql mysql
+    echo "GRANT ALL ON *.* TO 'tsdesktop'@'%' IDENTIFIED BY 'tsdesktop'" | mysql mysql
     mysqladmin reload
     echo '** phpmyadmin postinst configure'
     /var/lib/dpkg/info/phpmyadmin.postinst configure
