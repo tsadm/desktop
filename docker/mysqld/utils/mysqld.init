@@ -3,9 +3,11 @@
 datadir=/var/lib/mysql
 rundir=/var/run/mysqld
 
+echo '** mysql user and group'
 usermod -o -u ${TSDESKTOP_UID} mysql
 groupmod -o -g ${TSDESKTOP_GID} mysql
 
+echo '** mysql run and data dirs perms'
 chown -R mysql:mysql ${rundir} ${datadir}
 
 test -d ${datadir}/mysql || {
@@ -22,3 +24,6 @@ test -d ${datadir}/mysql || {
     echo '** shutdown daemon'
     mysqladmin -v shutdown
 }
+
+echo '** phpmyadmin upload dir perms'
+chown -R mysql:mysql /var/tmp/upload
