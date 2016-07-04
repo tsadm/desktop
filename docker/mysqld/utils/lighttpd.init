@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo '** webserver user and group'
+usermod -o -u ${TSDESKTOP_UID} www-data
+groupmod -o -g ${TSDESKTOP_GID} www-data
+
+echo '** phpmyadmin upload dir perms'
+chown -R www-data:www-data /var/tmp/upload /var/log/lighttpd
+
+echo '** /etc/phpmyadmin/conf.d/tsdesktop.php'
+cat /etc/phpmyadmin/conf.d/tsdesktop.php

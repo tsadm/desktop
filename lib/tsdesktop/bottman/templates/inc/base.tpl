@@ -14,7 +14,7 @@
 </head>
 <body class="w3-theme-l1" style="font-family:monospace;font-size:16px">
 
-    %include('inc/navbar.tpl')
+%   include('inc/navbar.tpl')
 
     <!-- main -->
     <div class="w3-content w3-theme-l5 w3-padding-0 w3-card-8"
@@ -22,7 +22,7 @@
 
         <!-- content -->
         <div class="w3-container">
-            %include('inc/umesg.tpl')
+%           include('inc/umesg.tpl')
             {{!base}}
         </div>
         <!-- content -->
@@ -32,7 +32,7 @@
     </div>
     <!-- main  -->
 
-    %include('inc/footer.tpl')
+%   include('inc/footer.tpl')
 
 </body>
 </html>

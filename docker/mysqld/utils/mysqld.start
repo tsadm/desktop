@@ -5,13 +5,14 @@ env | sort
 datadir=/var/lib/mysql
 rundir=/var/run/mysqld
 
-usermod -o -u ${TSDESKTOP_UID} mysql
-groupmod -o -g ${TSDESKTOP_GID} mysql
+echo '** lighttpd init'
+/opt/tsdesktop/lighttpd.init
 
-chown mysql ${rundir}
+echo '** start lighttpd'
+/etc/init.d/lighttpd start
 
-test -d ${datadir}/mysql || {
-    mysql_install_db
-}
+echo '** mysqld init'
+/opt/tsdesktop/mysqld.init
 
-mysqld_safe --defaults-extra-file=/etc/mysql/tsdesktop.cnf
+echo '** start mysqld'
+mysqld_safe --skip-syslog

@@ -11,8 +11,11 @@ def _init():
         cfg = ConfigParser()
         cfg['DEFAULT'] = {
             'docroot': 'docroot',
-            'cachedir': expanduser('~/.cache/tsdesktop'),
             'webserver': 'httpd',
+            'dbserver': 'mysqld',
+        }
+        cfg['user'] = {
+            'cachedir': expanduser('~/.local/tsdesktop'),
         }
 
 def write():

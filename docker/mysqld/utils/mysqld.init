@@ -1,0 +1,26 @@
+#!/bin/bash
+
+datadir=/var/lib/mysql
+rundir=/var/run/mysqld
+
+echo '** mysql user and group'
+usermod -o -u ${TSDESKTOP_UID} mysql
+groupmod -o -g ${TSDESKTOP_GID} mysql
+
+echo '** mysql run and data dirs perms'
+chown -R mysql:mysql ${rundir} ${datadir}
+
+test -d ${datadir}/mysql || {
+    echo '** init datadir'
+    mysql_install_db 2>/dev/null
+    echo '** start daemon'
+    mysqld_safe --skip-syslog &
+    sleep 3
+    echo '** grant tsdesktop@localhost access'
+    echo "GRANT ALL ON *.* TO 'tsdesktop'@'%' IDENTIFIED BY 'tsdesktop'" | mysql mysql
+    mysqladmin reload
+    echo '** phpmyadmin postinst configure'
+    /var/lib/dpkg/info/phpmyadmin.postinst configure
+    echo '** shutdown daemon'
+    mysqladmin -v shutdown
+}

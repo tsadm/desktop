@@ -12,11 +12,19 @@
             <h2>site: <a href="/siteman/{{site.name}}/view">{{site.name}}</a></h2>
 
             <p>
-                webserver: {{site.webserver.name}}<br>
-                container: {{site.webserver.containerName}}<br>
+                container: {{site.webserver.containerName}}
             </p>
 
             <hr class="w3-border">
+
+%       if status == 'running':
+            <a href="{{site.webserver.URI}}" target="_blank">{{site.webserver.URI}}</a>
+%           if site.webserver.URIDesc:
+            <br><small>{{site.webserver.URIDesc}}</small>
+%           end
+%       else:
+            <span class="w3-opacity">{{site.webserver.URI}}</span>
+%       end
 
             <p>
                 <button class="w3-btn"

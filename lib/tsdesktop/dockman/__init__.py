@@ -71,6 +71,9 @@ class _mock:
     def stop(self, *args, **kwargs):
         return self._qget()
 
+    def create_host_config(self, *args, **kwargs):
+        pass
+
 def _mockClient():
     global _cli
     _cli = _mock()

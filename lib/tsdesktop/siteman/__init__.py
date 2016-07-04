@@ -38,6 +38,7 @@ class Site:
 
     def start(self):
         self._initws()
+        self.webserver.volAdd(self.docroot, '/var/www/html')
         return self.webserver.start()
 
     def stop(self):
@@ -100,3 +101,12 @@ def sitesAll():
                     rl.append(site)
                 # FIXME: else log a message at least
     return rl
+
+
+def sitesRunning():
+    """returns list of running sites"""
+    r = list()
+    for s in sitesAll():
+        if s.status() == 'running':
+            r.append(s)
+    return r
