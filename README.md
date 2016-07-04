@@ -27,6 +27,8 @@ $HOME/src/tsadm/desktop/bin should be added to the PATH environment variable:
 
 ## usage
 
+### web interface
+
 > ~$ tsdesktop
 
 Then access the web interface at `http://localhost:3680/`.
@@ -34,3 +36,27 @@ Then access the web interface at `http://localhost:3680/`.
 If you need to use a different port for the web interface, use `-p PORT`:
 
 > ~$ tsdesktop -p 8080
+
+### command line
+
+Run `tsdesktop --help` for the full list of options.
+
+#### start service container
+
+> ~$ tsdesktop -S mysqld
+
+#### stop service container
+
+> ~$ tsdesktop -K mysqld
+
+#### start site container
+
+> ~$ tsdesktop -S httpd -s sitename
+
+#### stop site container
+
+> ~$ tsdesktop -K httpd -s sitename
+
+#### database import
+
+> ~$ tsdesktop -I dbname <file.sql
