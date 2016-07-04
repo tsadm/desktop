@@ -2,18 +2,18 @@
 
 tsadm desktop client - docker based environments for running web sites locally
 
-## requirements
+## Requirements
 
 Python3 (>=3.4.4) or Python2 (>=2.7.10)
 Docker (>=1.8.2)
 
 Install dependencies: [GNU/Linux](docs/linux-deps.md) - [Mac OSX](docs/osx-deps.md)
 
-## install using pip
+## Install using pip
 
 > ~$ pip3 install https://github.com/tsadm/desktop/tarball/master
 
-## run from source
+## Run from source
 
 > ~$ mkdir -vp src/tsadm && cd src/tsadm
 >
@@ -25,7 +25,9 @@ $HOME/src/tsadm/desktop/bin should be added to the PATH environment variable:
 >
 > ~$ exec bash
 
-## usage
+## Usage
+
+### Web interface
 
 > ~$ tsdesktop
 
@@ -34,3 +36,33 @@ Then access the web interface at `http://localhost:3680/`.
 If you need to use a different port for the web interface, use `-p PORT`:
 
 > ~$ tsdesktop -p 8080
+
+### Command line
+
+Run `tsdesktop --help` for the full list of options.
+
+#### Start service container
+
+> ~$ tsdesktop -S mysqld
+
+#### Stop service container
+
+> ~$ tsdesktop -K mysqld
+
+#### Start site container
+
+> ~$ tsdesktop -S httpd -s sitename
+
+#### Stop site container
+
+> ~$ tsdesktop -K httpd -s sitename
+
+#### Database sql-cli
+
+> ~$ tsdesktop -I dbname
+
+#### Database import
+
+> ~$ tsdesktop -I dbname <file.sql
+
+> ~$ gunzip -c file.sql.gz | tsdesktop -I dbname
