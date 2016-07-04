@@ -5,6 +5,9 @@ env | sort
 datadir=/var/lib/mysql
 rundir=/var/run/mysqld
 
+echo '** lighttpd init'
+/opt/tsdesktop/lighttpd.init
+
 echo '** start lighttpd'
 /etc/init.d/lighttpd start
 

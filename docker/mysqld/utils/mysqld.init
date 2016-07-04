@@ -24,6 +24,3 @@ test -d ${datadir}/mysql || {
     echo '** shutdown daemon'
     mysqladmin -v shutdown
 }
-
-echo '** phpmyadmin upload dir perms'
-chown -R mysql:mysql /var/tmp/upload
