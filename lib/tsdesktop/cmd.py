@@ -15,7 +15,7 @@ def _parseArgs():
     )
     parser.add_argument('-d', '--debug',
         action='store_true', help='enable debug mode')
-    parser.add_argument('-D', '--config',
+    parser.add_argument('-C', '--config',
         action='store_true', help='dump config')
     return parser
 
