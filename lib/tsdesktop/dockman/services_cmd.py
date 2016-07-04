@@ -18,6 +18,8 @@ def start(service):
     if err is not None:
         print('service error: %s' % err)
         return 2
+    print(s.URI)
+    print(s.URIDesc)
     return 0
 
 def stop(service):
