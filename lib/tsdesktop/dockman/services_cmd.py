@@ -1,3 +1,5 @@
+import os
+import subprocess
 from tsdesktop.dockman import services
 
 def _newService(name):
@@ -29,3 +31,16 @@ def stop(service):
         print('service error: %s' % err)
         return 2
     return 0
+
+def importDB(dbserver, dbname):
+    print('%s database import: %s' % (dbserver, dbname))
+    s = _newService(dbserver)
+    if s is None:
+        print('invalid database server: %s' % dbserver)
+        return 1
+    cmd = ['mysql', '-h', '127.0.0.1', '-P', '4936',
+                                    '-u', 'tsdesktop', '-ptsdesktop', dbname]
+    print('cmd:', ' '.join(cmd))
+    p = subprocess.Popen(cmd)
+    _, sts = os.waitpid(p.pid, 0)
+    return sts
