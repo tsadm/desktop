@@ -3,42 +3,43 @@ import time
 import subprocess
 from tsdesktop.dockman import services
 
-def _newService(name):
+def _newService(name, site=None):
     k = services.classMap.get(name, None)
     if k is None:
         return None
-    return k()
+    return k(site=site)
 
-def start(service):
-    print('start service: %s' % service)
-    s = _newService(service)
+def start(service, site=None):
+    s = _newService(service, site)
     if s is None:
         print('invalid service: %s' % service)
         return 1
+    print('start service: %s' % s.containerName)
     err = s.start()
     if err is not None:
         print('service error: %s' % err)
         return 2
     print(s.URI)
-    print(s.URIDesc)
+    if s.URIDesc:
+        print(s.URIDesc)
     return 0
 
-def stop(service):
-    print('stop service: %s' % service)
-    s = _newService(service)
+def stop(service, site=None):
+    s = _newService(service, site)
     if s is None:
         print('invalid service: %s' % service)
         return 1
+    print('stop service: %s' % s.containerName)
     err = s.stop()
     if err is not None:
         print('service error: %s' % err)
         return 2
     return 0
 
-def restart(service):
-    stop(service)
+def restart(service, site=None):
+    stop(service, site)
     time.sleep(1)
-    return start(service)
+    return start(service, site)
 
 def importDB(dbserver, dbname):
     print('%s database import: %s' % (dbserver, dbname))
