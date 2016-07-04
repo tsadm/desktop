@@ -18,6 +18,8 @@ def _parseArgs():
         help='start container', metavar='service')
     parser.add_argument('-K', '--stop',
         help='stop container', metavar='service')
+    parser.add_argument('-R', '--restart',
+        help='restart container', metavar='service')
     parser.add_argument('--dbserver',
         help='database server (default: mysqld)', default='mysqld', metavar='name')
     parser.add_argument('-I', '--importdb',
@@ -37,6 +39,9 @@ def main():
 
     elif args.version:
         return 0
+
+    elif args.restart:
+        return services_cmd.restart(args.restart)
 
     elif args.start:
         return services_cmd.start(args.start)

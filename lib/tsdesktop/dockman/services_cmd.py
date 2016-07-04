@@ -1,4 +1,5 @@
 import os
+import time
 import subprocess
 from tsdesktop.dockman import services
 
@@ -33,6 +34,11 @@ def stop(service):
         print('service error: %s' % err)
         return 2
     return 0
+
+def restart(service):
+    stop(service)
+    time.sleep(1)
+    return start(service)
 
 def importDB(dbserver, dbname):
     print('%s database import: %s' % (dbserver, dbname))
