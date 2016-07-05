@@ -1,18 +1,28 @@
 import os
 import time
 import subprocess
+from tsdesktop import siteman
 from tsdesktop.dockman import services
 
 def _newService(name, site=None):
-    k = services.classMap.get(name, None)
-    if k is None:
-        return None
-    return k(site=site)
+    if site is None:
+        k = services.classMap.get(name, None)
+        if k is None:
+            print('invalid service: %s' % name)
+            return None
+        return k(site=site)
+    else:
+        s = siteman.siteGet(site)
+        if s is None:
+            print('invalid site: %s' % site)
+            return None
+        s._initws()
+        return s.webserver
+    return None
 
 def start(service, site=None):
     s = _newService(service, site)
     if s is None:
-        print('invalid service: %s' % service)
         return 1
     print('start service: %s' % s.containerName)
     err = s.start()
@@ -27,7 +37,6 @@ def start(service, site=None):
 def stop(service, site=None):
     s = _newService(service, site)
     if s is None:
-        print('invalid service: %s' % service)
         return 1
     print('stop service: %s' % s.containerName)
     err = s.stop()
@@ -44,7 +53,6 @@ def restart(service, site=None):
 def login(service, site=None):
     s = _newService(service, site)
     if s is None:
-        print('invalid service: %s' % service)
         return 1
     stopService = False
     if s.status() != 'running':
@@ -63,14 +71,12 @@ def login(service, site=None):
     return 0
 
 def importDB(dbserver, dbname):
-    print('%s database import: %s' % (dbserver, dbname))
     s = _newService(dbserver)
     if s is None:
-        print('invalid database server: %s' % dbserver)
         return 1
+    print('%s database import: %s' % (dbserver, dbname))
     cmd = ['mysql', '-h', '127.0.0.1', '-P', '4936',
                                     '-u', 'tsdesktop', '-ptsdesktop', dbname]
-    print('cmd:', ' '.join(cmd))
     p = subprocess.Popen(cmd)
     _, sts = os.waitpid(p.pid, 0)
     return sts

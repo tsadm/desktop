@@ -31,6 +31,7 @@ class Site:
             s = config.cfg.get('site:'+self.name, 'webserver')
             k = services.classMap.get(s)
             self.webserver = k(site=self.name)
+            self.webserver.volAdd(self.docroot, '/var/www/html')
 
     def status(self):
         self._initws()
@@ -38,7 +39,6 @@ class Site:
 
     def start(self):
         self._initws()
-        self.webserver.volAdd(self.docroot, '/var/www/html')
         return self.webserver.start()
 
     def stop(self):
