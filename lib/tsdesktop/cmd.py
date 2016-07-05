@@ -27,7 +27,7 @@ def _parseArgs():
 
     parser.add_argument('--dbserver',
         help='database server (default: mysqld)', default='mysqld', metavar='name')
-    parser.add_argument('-I', '--importdb',
+    parser.add_argument('-J', '--importdb',
         help='database import reading from stdin', metavar='dbname')
 
     parser.add_argument('-s', '--site',

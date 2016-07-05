@@ -61,5 +61,5 @@ Run `tsdesktop --help` for the full list of options.
     ~$ tsdesktop -I dbname
 
     # import .sql and compressed .sql.gz files
-    ~$ tsdesktop -I dbname <file.sql
-    ~$ gunzip -c file.sql.gz | tsdesktop -I dbname
+    ~$ tsdesktop -J dbname <file.sql
+    ~$ gunzip -c file.sql.gz | tsdesktop -J dbname
