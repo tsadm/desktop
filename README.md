@@ -37,7 +37,15 @@ If you need to use a different port for the web interface, use `-p PORT`:
 
 ### Command line
 
-Run `tsdesktop --help` for the full list of options.
+Run `tsdesktop --usage` for the full list.
+
+#### Site add/remove
+
+    # add
+    tsdesktop -s sitename --add /path/to/site/docroot
+
+    # remove
+    tsdesktop -s sitename --remove
 
 #### Service container
 
@@ -50,10 +58,10 @@ Run `tsdesktop --help` for the full list of options.
 #### Site container
 
     # start
-    tsdesktop -S httpd -s sitename
+    tsdesktop -s sitename -S httpd
 
     # stop
-    tsdesktop -K httpd -s sitename
+    tsdesktop -s sitename -K httpd
 
 #### Database tools
 

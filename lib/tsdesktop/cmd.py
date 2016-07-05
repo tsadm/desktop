@@ -32,6 +32,20 @@ _USE = """
     # login
     {app} -L service
 
+*** site container
+
+    # start
+    {app} -s sitename -S service
+
+    # stop
+    {app} -s sitename -K service
+
+    # restart
+    {app} -s sitename -R service
+
+    # login
+    {app} -s sitename -L service
+
 *** database tools
 
     # sql command line client
