@@ -14,6 +14,7 @@ class Site:
     def __init__(self, name, docroot):
         self.name = name
         self.docroot = docroot
+        self._initws()
 
     def __str__(self):
         return "<Site: {}>".format(self.name)
@@ -27,22 +28,20 @@ class Site:
         return None
 
     def _initws(self):
+        """initializes webserver manager"""
         if self.webserver is None:
             s = config.cfg.get('site:'+self.name, 'webserver')
             k = services.classMap.get(s)
             self.webserver = k(site=self.name)
+            self.webserver.volAdd(self.docroot, '/var/www/html')
 
     def status(self):
-        self._initws()
         return self.webserver.status()
 
     def start(self):
-        self._initws()
-        self.webserver.volAdd(self.docroot, '/var/www/html')
         return self.webserver.start()
 
     def stop(self):
-        self._initws()
         return self.webserver.stop()
 
 

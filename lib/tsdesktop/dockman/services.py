@@ -156,6 +156,11 @@ class Service(object):
             return None
         return self.containerName+': not running'
 
+    def run(self, cmd):
+        cli = getClient()
+        proc = cli.exec_create(container=self.containerName, cmd=cmd)
+        return cli.exec_start(proc).decode()
+
     def volAdd(self, orig, dest, mode='rw'):
         """adds a volume to the docker container"""
         if self.container is not None:
@@ -219,12 +224,7 @@ class _mysqld(Service):
         return super(_mysqld, self).start()
 
     def createDB(self, dbname, user, host):
-        cli = getClient()
-        proc = cli.exec_create(
-            container=self.containerName,
-            cmd='/opt/tsdesktop/mysqld.createdb %s %s %s' % (dbname, user, host),
-        )
-        return cli.exec_start(proc).decode()
+        return self.run('/opt/tsdesktop/mysqld.createdb %s %s %s' % (dbname, user, host))
 
 
 classMap = {
