@@ -2,7 +2,7 @@ from time import time
 from ..utils import render, textPlain
 from bottle import request, HTTPError, redirect, html_escape
 from tsdesktop import config
-from tsdesktop.siteman import sitesAll, siteGet, siteAdd, site_name_re
+from tsdesktop.siteman import sitesAll, siteGet, siteAdd, siteRemove, site_name_re
 
 
 # -- site stop
@@ -34,12 +34,13 @@ def siteStart(name):
 
 
 # -- remove site
-def siteRemove(name):
+def rmSite(name):
     site = siteGet(name)
     if site is None:
         return textPlain('site not found: '+name, 404)
-    config.cfg.remove_section('site:'+name)
-    config.write()
+    err = siteRemove(name)
+    if err is not None:
+        return textPlain('remove site error: %s' % err)
     return textPlain('site removed: '+name)
 
 
@@ -120,7 +121,7 @@ def sites():
 def init(app):
     app.route('/siteman/<name>/stop', method='POST', callback=siteStop)
     app.route('/siteman/<name>/start', method='POST', callback=siteStart)
-    app.route('/siteman/<name>/remove', method='POST', callback=siteRemove)
+    app.route('/siteman/<name>/remove', method='POST', callback=rmSite)
     app.route('/siteman/<name>/edit', callback=siteEdit)
     app.route('/siteman/<name>/view', callback=siteView)
     app.route('/siteman/open', method='POST', callback=siteOpen)

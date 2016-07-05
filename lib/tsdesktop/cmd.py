@@ -1,12 +1,75 @@
 from argparse import ArgumentParser
 from tsdesktop import config, version, bottman
 from tsdesktop.dockman import services_cmd
+from tsdesktop.siteman import sites_cmd
+
+
+_USE = """
+*** web interface
+
+    # using default port 3680
+    {app}
+
+    # change port
+    {app} -p PORT
+
+*** site add/remove
+
+    {app} -s sitename --add /path/to/site/docroot
+    {app} -s sitename --remove
+
+*** service container
+
+    # start
+    {app} -S service
+
+    # stop
+    {app} -K service
+
+    # restart
+    {app} -R service
+
+    # login
+    {app} -L service
+
+*** site container
+
+    # start
+    {app} -s sitename -S service
+
+    # stop
+    {app} -s sitename -K service
+
+    # restart
+    {app} -s sitename -R service
+
+    # login
+    {app} -s sitename -L service
+
+*** database tools
+
+    # sql command line client
+    {app} -J dbname
+
+    # import a .sql file
+    {app} -J dbname <file.sql
+
+    # import a compressed .sql.gz file
+    gunzip -c file.sql.gz | {app} -J dbname
+"""
+
+
+def _usage():
+    print(_USE.format(app=version.APPNAME))
+    return 0
 
 
 def _parseArgs():
     parser = ArgumentParser(description='tsadm desktop client')
     parser.add_argument('-V', '--version',
         help='show version and build info', action='store_true')
+    parser.add_argument('--usage',
+        action='store_true', help='show usage information')
     parser.add_argument('-d', '--debug',
         action='store_true', help='enable debug mode')
 
@@ -27,11 +90,15 @@ def _parseArgs():
 
     parser.add_argument('--dbserver',
         help='database server (default: mysqld)', default='mysqld', metavar='name')
-    parser.add_argument('-I', '--importdb',
+    parser.add_argument('-J', '--importdb',
         help='database import reading from stdin', metavar='dbname')
 
     parser.add_argument('-s', '--site',
-        help='database import reading from stdin', metavar='dbname', default=None)
+        help='site name', metavar='name', default=None)
+    parser.add_argument('--add',
+        help='add site docroot/public_html to configuration', metavar='docroot')
+    parser.add_argument('--remove',
+        action='store_true', help='remove site from configuration')
     return parser
 
 
@@ -41,7 +108,10 @@ def main():
     parser = _parseArgs()
     args = parser.parse_args()
 
-    if args.config:
+    if args.usage:
+        return _usage()
+
+    elif args.config:
         print("read: {}".format(cfgFile))
         return config.cmd()
 
@@ -62,6 +132,12 @@ def main():
 
     elif args.importdb:
         return services_cmd.importDB(args.dbserver, args.importdb)
+
+    elif args.site:
+        if args.add:
+            return sites_cmd.add(args.site, args.add)
+        elif args.remove:
+            return sites_cmd.remove(args.site)
 
     else:
         return bottman.app.run(host='localhost', port=args.port, debug=args.debug)

@@ -11,58 +11,65 @@ Install dependencies: [GNU/Linux](docs/linux-deps.md) - [Mac OSX](docs/osx-deps.
 
 ## Install using pip
 
-> ~$ pip3 install https://github.com/tsadm/desktop/tarball/master
+    pip3 install https://github.com/tsadm/desktop/tarball/master
 
 ## Run from source
 
-> ~$ mkdir -vp src/tsadm && cd src/tsadm
->
-> tsadm$ git clone https://github.com/tsadm/desktop.git
+    mkdir -vp src/tsadm && cd src/tsadm
+    tsadm$ git clone https://github.com/tsadm/desktop.git
 
 $HOME/src/tsadm/desktop/bin should be added to the PATH environment variable:
 
-> ~$ echo 'export PATH=$HOME/src/tsadm/desktop/bin:$PATH' >>.bash_profile
->
-> ~$ exec bash
+    echo 'export PATH=$HOME/src/tsadm/desktop/bin:$PATH' >>.bash_profile
+    exec bash
 
 ## Usage
 
 ### Web interface
 
-> ~$ tsdesktop
+    tsdesktop
 
 Then access the web interface at `http://localhost:3680/`.
 
 If you need to use a different port for the web interface, use `-p PORT`:
 
-> ~$ tsdesktop -p 8080
+    tsdesktop -p 8080
 
 ### Command line
 
-Run `tsdesktop --help` for the full list of options.
+Run `tsdesktop --usage` for the full list.
 
-#### Start service container
+#### Site add/remove
 
-> ~$ tsdesktop -S mysqld
+    # add
+    tsdesktop -s sitename --add /path/to/site/docroot
 
-#### Stop service container
+    # remove
+    tsdesktop -s sitename --remove
 
-> ~$ tsdesktop -K mysqld
+#### Service container
 
-#### Start site container
+    # start
+    tsdesktop -S mysqld
 
-> ~$ tsdesktop -S httpd -s sitename
+    # stop
+    tsdesktop -K mysqld
 
-#### Stop site container
+#### Site container
 
-> ~$ tsdesktop -K httpd -s sitename
+    # start
+    tsdesktop -s sitename -S httpd
 
-#### Database sql-cli
+    # stop
+    tsdesktop -s sitename -K httpd
 
-> ~$ tsdesktop -I dbname
+#### Database tools
 
-#### Database import
+    # sql command line client
+    tsdesktop -J dbname
 
-> ~$ tsdesktop -I dbname <file.sql
+    # import a .sql file
+    tsdesktop -J dbname <file.sql
 
-> ~$ gunzip -c file.sql.gz | tsdesktop -I dbname
+    # import a compressed .sql.gz file
+    gunzip -c file.sql.gz | tsdesktop -J dbname
