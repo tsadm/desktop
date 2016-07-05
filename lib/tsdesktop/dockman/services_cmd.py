@@ -16,7 +16,6 @@ def _newService(name, site=None):
         if s is None:
             print('invalid site: %s' % site)
             return None
-        s._initws()
         return s.webserver
     return None
 
