@@ -11,29 +11,29 @@ Install dependencies: [GNU/Linux](docs/linux-deps.md) - [Mac OSX](docs/osx-deps.
 
 ## Install using pip
 
-    ~$ pip3 install https://github.com/tsadm/desktop/tarball/master
+    pip3 install https://github.com/tsadm/desktop/tarball/master
 
 ## Run from source
 
-    ~$ mkdir -vp src/tsadm && cd src/tsadm
+    mkdir -vp src/tsadm && cd src/tsadm
     tsadm$ git clone https://github.com/tsadm/desktop.git
 
 $HOME/src/tsadm/desktop/bin should be added to the PATH environment variable:
 
-    ~$ echo 'export PATH=$HOME/src/tsadm/desktop/bin:$PATH' >>.bash_profile
-    ~$ exec bash
+    echo 'export PATH=$HOME/src/tsadm/desktop/bin:$PATH' >>.bash_profile
+    exec bash
 
 ## Usage
 
 ### Web interface
 
-    ~$ tsdesktop
+    tsdesktop
 
 Then access the web interface at `http://localhost:3680/`.
 
 If you need to use a different port for the web interface, use `-p PORT`:
 
-    ~$ tsdesktop -p 8080
+    tsdesktop -p 8080
 
 ### Command line
 
@@ -42,24 +42,24 @@ Run `tsdesktop --help` for the full list of options.
 #### Service container
 
     # start
-    ~$ tsdesktop -S mysqld
+    tsdesktop -S mysqld
 
     # stop
-    ~$ tsdesktop -K mysqld
+    tsdesktop -K mysqld
 
 #### Site container
 
     # start
-    ~$ tsdesktop -S httpd -s sitename
+    tsdesktop -S httpd -s sitename
 
     # stop
-    ~$ tsdesktop -K httpd -s sitename
+    tsdesktop -K httpd -s sitename
 
 #### Database tools
 
     # sql command line client
-    ~$ tsdesktop -J dbname
+    tsdesktop -J dbname
 
     # import .sql and compressed .sql.gz files
-    ~$ tsdesktop -J dbname <file.sql
-    ~$ gunzip -c file.sql.gz | tsdesktop -J dbname
+    tsdesktop -J dbname <file.sql
+    gunzip -c file.sql.gz | tsdesktop -J dbname
