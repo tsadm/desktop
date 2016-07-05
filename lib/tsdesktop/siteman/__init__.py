@@ -62,13 +62,18 @@ def _dupDocroot(dpath):
 def siteAdd(name, docroot):
     if config.cfg.has_section('site:'+name):
         return 'site already exists'
-
     err = _dupDocroot(docroot)
     if err is not None:
         return err
-
     config.cfg.add_section('site:'+name)
     config.cfg.set('site:'+name, 'docroot', docroot)
+    return None
+
+
+# -- remove site from config
+def siteRemove(name):
+    config.cfg.remove_section('site:'+name)
+    config.write()
     return None
 
 

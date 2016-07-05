@@ -1,6 +1,6 @@
 from tsdesktop import config, config_test
 from tsdesktop.testing import TSDesktopTest
-from .siteman import siteRemove, siteAdd, siteOpen
+from .siteman import rmSite, siteAdd, siteOpen
 from bottle import HTTPResponse
 
 class Views(TSDesktopTest):
@@ -9,12 +9,12 @@ class Views(TSDesktopTest):
         config_test.mock()
 
     def test_siteRemove404(self):
-        r = siteRemove('fake.none')
+        r = rmSite('fake.none')
         self.assertResponsePlain(r, code=404)
         self.assertEqual(r.body, 'site not found: fake.none')
 
     def test_siteRemove(self):
-        r = siteRemove('fake.test')
+        r = rmSite('fake.test')
         self.assertResponsePlain(r)
         self.assertEqual(r.body, 'site removed: fake.test')
 
