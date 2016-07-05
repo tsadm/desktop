@@ -58,7 +58,7 @@ Run `tsdesktop --help` for the full list of options.
 #### Database tools
 
     # sql command line client
-    ~$ tsdesktop -I dbname
+    ~$ tsdesktop -J dbname
 
     # import .sql and compressed .sql.gz files
     ~$ tsdesktop -J dbname <file.sql
