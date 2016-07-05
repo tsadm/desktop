@@ -156,7 +156,7 @@ class Service(object):
             return None
         return self.containerName+': not running'
 
-    def exec(self, cmd):
+    def run(self, cmd):
         cli = getClient()
         proc = cli.exec_create(container=self.containerName, cmd=cmd)
         return cli.exec_start(proc).decode()
@@ -224,7 +224,7 @@ class _mysqld(Service):
         return super(_mysqld, self).start()
 
     def createDB(self, dbname, user, host):
-        return self.exec('/opt/tsdesktop/mysqld.createdb %s %s %s' % (dbname, user, host))
+        return self.run('/opt/tsdesktop/mysqld.createdb %s %s %s' % (dbname, user, host))
 
 
 classMap = {
