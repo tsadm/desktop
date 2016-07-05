@@ -24,5 +24,6 @@ COPY utils/ /opt/tsdesktop/
 RUN chmod 755 /opt/tsdesktop/*.*
 
 RUN a2ensite default-ssl
+RUN a2enmod rewrite
 
 CMD ["/opt/tsdesktop/httpd.start"]
