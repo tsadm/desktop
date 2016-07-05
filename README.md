@@ -60,6 +60,8 @@ Run `tsdesktop --help` for the full list of options.
     # sql command line client
     tsdesktop -J dbname
 
-    # import .sql and compressed .sql.gz files
+    # import a .sql file
     tsdesktop -J dbname <file.sql
+
+    # import a compressed .sql.gz file
     gunzip -c file.sql.gz | tsdesktop -J dbname
