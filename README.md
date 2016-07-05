@@ -39,27 +39,27 @@ If you need to use a different port for the web interface, use `-p PORT`:
 
 Run `tsdesktop --help` for the full list of options.
 
-#### Start service container
+#### Service container
 
+    # start
     ~$ tsdesktop -S mysqld
 
-#### Stop service container
-
+    # stop
     ~$ tsdesktop -K mysqld
 
-#### Start site container
+#### Site container
 
+    # start
     ~$ tsdesktop -S httpd -s sitename
 
-#### Stop site container
-
+    # stop
     ~$ tsdesktop -K httpd -s sitename
 
-#### Database sql-cli
+#### Database tools
 
+    # sql command line client
     ~$ tsdesktop -I dbname
 
-#### Database import
-
+    # import .sql and compressed .sql.gz files
     ~$ tsdesktop -I dbname <file.sql
     ~$ gunzip -c file.sql.gz | tsdesktop -I dbname
