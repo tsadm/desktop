@@ -41,6 +41,27 @@ def restart(service, site=None):
     time.sleep(1)
     return start(service, site)
 
+def login(service, site=None):
+    s = _newService(service, site)
+    if s is None:
+        print('invalid service: %s' % service)
+        return 1
+    stopService = False
+    if s.status() != 'running':
+        sts = start(service, site)
+        if sts != 0:
+            return sts
+        stopService = True
+    print('service login: %s' % s.containerName)
+    cmd = ['docker', 'exec', '-it', s.containerName, '/bin/bash']
+    p = subprocess.Popen(cmd)
+    _, sts = os.waitpid(p.pid, 0)
+    if sts != 0:
+        return sts
+    if stopService:
+        return stop(service, site)
+    return 0
+
 def importDB(dbserver, dbname):
     print('%s database import: %s' % (dbserver, dbname))
     s = _newService(dbserver)

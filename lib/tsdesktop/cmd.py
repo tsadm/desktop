@@ -22,6 +22,8 @@ def _parseArgs():
         help='stop container', metavar='service')
     parser.add_argument('-R', '--restart',
         help='restart container', metavar='service')
+    parser.add_argument('-L', '--login',
+        help='login to container', metavar='service')
 
     parser.add_argument('--dbserver',
         help='database server (default: mysqld)', default='mysqld', metavar='name')
@@ -54,6 +56,9 @@ def main():
 
     elif args.stop:
         return services_cmd.stop(args.stop, args.site)
+
+    elif args.login:
+        return services_cmd.login(args.login, args.site)
 
     elif args.importdb:
         return services_cmd.importDB(args.dbserver, args.importdb)
