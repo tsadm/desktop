@@ -5,5 +5,5 @@ env | sort
 usermod -o -u ${TSDESKTOP_UID} www-data
 groupmod -o -g ${TSDESKTOP_GID} www-data
 
-apachectl -k start
-tail -f /var/log/apache2/*.log
+apachectl -M
+apachectl -e info -X

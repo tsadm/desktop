@@ -16,14 +16,19 @@ RUN cd /etc/php5/apache2 \
     && rm -f php.ini \
     && ln -s /usr/share/php5/php.ini-development php.ini
 
-COPY apache2/ /etc/apache2/
 COPY tsadm.home/ /home/tsadm/
 RUN chmod 644 /home/tsadm/*.php
 
 COPY utils/ /opt/tsdesktop/
 RUN chmod 755 /opt/tsdesktop/*.*
 
+COPY apache2/ /etc/apache2/
+RUN cd /etc/apache2 \
+    && chmod 644 *.conf \
+    && chmod 644 conf-available/*.conf
+
 RUN a2ensite default-ssl
 RUN a2enmod rewrite
+RUN a2enconf tsdesktop
 
 CMD ["/opt/tsdesktop/httpd.start"]
