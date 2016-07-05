@@ -17,8 +17,12 @@ def add(site, docroot):
     return 0
 
 def remove(site):
+    s = siteman.siteGet(site)
+    if s is None:
+        print('invalid site: %s' % site)
+        return 1
     err = siteman.siteRemove(site)
     if err is not None:
         print('remove site error: %s' % err)
-        return 1
+        return 2
     return 0
