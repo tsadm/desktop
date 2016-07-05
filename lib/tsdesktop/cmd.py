@@ -4,10 +4,58 @@ from tsdesktop.dockman import services_cmd
 from tsdesktop.siteman import sites_cmd
 
 
+_USE = """
+*** web interface
+
+    # using default port 3680
+    {app}
+
+    # change port
+    {app} -p PORT
+
+*** site add/remove
+
+    {app} -s sitename --add /path/to/site/docroot
+    {app} -s sitename --remove
+
+*** service container
+
+    # start
+    {app} -S service
+
+    # stop
+    {app} -K service
+
+    # restart
+    {app} -R service
+
+    # login
+    {app} -L service
+
+*** database tools
+
+    # sql command line client
+    {app} -J dbname
+
+    # import a .sql file
+    {app} -J dbname <file.sql
+
+    # import a compressed .sql.gz file
+    gunzip -c file.sql.gz | {app} -J dbname
+"""
+
+
+def _usage():
+    print(_USE.format(app=version.APPNAME))
+    return 0
+
+
 def _parseArgs():
     parser = ArgumentParser(description='tsadm desktop client')
     parser.add_argument('-V', '--version',
         help='show version and build info', action='store_true')
+    parser.add_argument('--usage',
+        action='store_true', help='show usage information')
     parser.add_argument('-d', '--debug',
         action='store_true', help='enable debug mode')
 
@@ -46,7 +94,10 @@ def main():
     parser = _parseArgs()
     args = parser.parse_args()
 
-    if args.config:
+    if args.usage:
+        return _usage()
+
+    elif args.config:
         print("read: {}".format(cfgFile))
         return config.cmd()
 
