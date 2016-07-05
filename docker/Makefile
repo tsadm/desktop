@@ -14,3 +14,4 @@ build:
 .PHONY: hub-push
 hub-push:
 	docker push tsadm/desktop
+	docker logout
