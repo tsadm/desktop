@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 from tsdesktop import config, version, bottman
 from tsdesktop.dockman import services_cmd
+from tsdesktop.siteman import sites_cmd
 
 
 def _parseArgs():
@@ -31,7 +32,11 @@ def _parseArgs():
         help='database import reading from stdin', metavar='dbname')
 
     parser.add_argument('-s', '--site',
-        help='database import reading from stdin', metavar='dbname', default=None)
+        help='site name', metavar='name', default=None)
+    parser.add_argument('--add',
+        help='add site docroot/public_html to configuration', metavar='docroot')
+    parser.add_argument('--remove',
+        action='store_true', help='remove site from configuration')
     return parser
 
 
@@ -62,6 +67,12 @@ def main():
 
     elif args.importdb:
         return services_cmd.importDB(args.dbserver, args.importdb)
+
+    elif args.site:
+        if args.add:
+            return sites_cmd.add(args.site, args.add)
+        elif args.remove:
+            return sites_cmd.remove(args.site)
 
     else:
         return bottman.app.run(host='localhost', port=args.port, debug=args.debug)
