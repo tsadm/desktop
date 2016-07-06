@@ -4,7 +4,7 @@ from os import path
 from getpass import getuser
 from platform import node
 
-VERSION = (16, 6, '3+next')
+VERSION = (16, 6, 4)
 APPNAME = 'tsdesktop'
 
 buildinfo = {
