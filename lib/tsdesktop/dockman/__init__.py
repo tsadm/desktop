@@ -9,7 +9,7 @@ def getClient():
         _cli = Client(version='auto', timeout=15)
     return _cli
 
-def checkOutput(out):
+def _checkOutput(out):
     for line in out.splitlines():
         try:
             l = json.loads(line)
@@ -19,6 +19,10 @@ def checkOutput(out):
             # XXX: ignoring json decode errors...
             pass
     return None
+
+def pullImage(repo, tag):
+    cli = getClient()
+    return _checkOutput(cli.pull(repository=repo, tag=tag))
 
 #
 # -- mock client for testing

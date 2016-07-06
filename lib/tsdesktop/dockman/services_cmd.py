@@ -2,7 +2,7 @@ import os
 import time
 import subprocess
 from tsdesktop import siteman
-from tsdesktop.dockman import services
+from tsdesktop.dockman import services, pullImage
 
 def _newService(name, site=None):
     if site is None:
@@ -67,6 +67,17 @@ def login(service, site=None):
         return sts
     if stopService:
         return stop(service, site)
+    return 0
+
+def pull(service):
+    s = _newService(service)
+    if s is None:
+        return 1
+    img = s.imageInfo()
+    err = pullImage(img.repo(), img.tag())
+    if err is not None:
+        print('pull error: %s' % err)
+        return 2
     return 0
 
 def importDB(dbserver, dbname):
