@@ -20,6 +20,9 @@ _USE = """
 
 *** service container
 
+    # pull docker image
+    {app} -P service
+
     # start
     {app} -S service
 
@@ -79,6 +82,8 @@ def _parseArgs():
     parser.add_argument('-C', '--config',
         action='store_true', help='dump config')
 
+    parser.add_argument('-P', '--pull',
+        help='pull docker image', metavar='service')
     parser.add_argument('-S', '--start',
         help='start container', metavar='service')
     parser.add_argument('-K', '--stop',
@@ -117,6 +122,9 @@ def main():
 
     elif args.version:
         return 0
+
+    elif args.pull:
+        return services_cmd.pull(args.pull)
 
     elif args.restart:
         return services_cmd.restart(args.restart, args.site)

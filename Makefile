@@ -6,7 +6,7 @@ default: compile
 
 .PHONY: clean
 clean:
-	@rm -rf .coverage htmlcov __pycache__
+	@rm -rf .coverage htmlcov __pycache__ htdocs
 	@$(PYCMD) setup.py clean -a 2>/dev/null
 	@rm -rf build dist tsdesktop.egg-info
 	@rm -vf lib/tsdesktop/buildinfo.json
@@ -57,3 +57,7 @@ virtualenv:
 	@$(PYCMD) -m virtualenv -p python2 venv.py2
 	@venv.py2/bin/python setup.py install
 	@venv.py2/bin/pip install coverage
+
+.PHONY: htdocs
+htdocs:
+	@./htdocs.sh

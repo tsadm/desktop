@@ -5,6 +5,7 @@
 __pycache__/
 build/
 dist/
+htdocs/
 htmlcov/
 tsdesktop.egg-info/
 venv.py2/

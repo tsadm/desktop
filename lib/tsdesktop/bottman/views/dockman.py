@@ -1,5 +1,5 @@
 import time
-from tsdesktop.dockman import getClient, services, checkOutput
+from tsdesktop.dockman import getClient, services, pullImage
 from ..utils import render, textPlain
 from bottle import abort, HTTPError, redirect
 
@@ -21,9 +21,9 @@ def _stopService(srvc):
 
 
 # -- docker pull image
-def _pullImage(cli, srvc):
+def _pullImage(srvc):
     imgInfo = srvc.imageInfo()
-    err = checkOutput(cli.pull(repository=imgInfo.repo(), tag=imgInfo.tag()))
+    err = pullImage(imgInfo.repo(), imgInfo.tag())
     if err is not None:
         return HTTPError(500, 'docker pull: '+err)
 
@@ -50,7 +50,7 @@ def view(service=None, action=None):
             docker=cli, dockmanServices=services.classList(), startTime=sT)
 
     elif action == 'pull-image':
-        err = _pullImage(cli, srvc)
+        err = _pullImage(srvc)
 
     elif action == 'start':
         err = _startService(srvc)
