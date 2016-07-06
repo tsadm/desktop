@@ -42,7 +42,7 @@ If you need to use a different port for the web interface, use `-p PORT`:
 
 ### Command line
 
-Run `tsdesktop --usage` for the full list.
+Run `tsdesktop --usage` and `tsdesktop --help` for more complete information.
 
 #### Site add/remove
 
@@ -54,6 +54,9 @@ Run `tsdesktop --usage` for the full list.
 
 #### Service container
 
+    # pull docker image
+    tsdesktop -P mysqld
+
     # start
     tsdesktop -S mysqld
 
@@ -61,6 +64,9 @@ Run `tsdesktop --usage` for the full list.
     tsdesktop -K mysqld
 
 #### Site container
+
+    # pull docker image
+    tsdesktop -P httpd
 
     # start
     tsdesktop -s sitename -S httpd
