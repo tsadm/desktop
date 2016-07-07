@@ -6,6 +6,8 @@ Most of GNU/Linux distributions already provide an installation of python3 or yo
 
 ### Install docker
 
-Official docs: [GNU/Linux](https://docs.docker.com/linux/step_one/)
+Official docs: [GNU/Linux](https://docs.docker.com/engine/installation/linux/)
 
 On Debian or Ubuntu systems, you can `sudo apt-get install docker.io`.
+
+After installing Docker, you might need to re-login to your X session or reboot the machine, so you can get proper permissions to access Docker as a normal user (without sudo).

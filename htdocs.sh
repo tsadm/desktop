@@ -8,7 +8,7 @@ html_head() {
 <head>
     <style>
     body {
-        padding:2%;
+        padding:1% 3%;
         margin:0;
         background-color:black;
         color:white;
